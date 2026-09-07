@@ -241,6 +241,8 @@ io.on('connection', (socket) => {
 // 프로덕션 환경에서 프론트엔드 정적 파일 서빙
 const clientDistCandidates = [
   path.resolve(process.cwd(), 'client/dist'),
+  path.resolve(process.cwd(), '../client/dist'),
+  path.resolve(__dirname, '../../../../client/dist'),
   path.resolve(__dirname, '../../../client/dist'),
   path.resolve(__dirname, '../../client/dist'),
   path.resolve(__dirname, '../client/dist')
@@ -250,14 +252,38 @@ let clientBuildPath = clientDistCandidates[0];
 for (const cand of clientDistCandidates) {
   if (require('fs').existsSync(cand)) {
     clientBuildPath = cand;
+    console.log(`📂 Client build found at: ${cand}`);
     break;
   }
 }
 
-app.use('/audio', express.static(path.resolve(process.cwd(), 'client/public/audio')));
-app.use('/audio', express.static(path.resolve(__dirname, '../../client/public/audio')));
-app.use('/images', express.static(path.resolve(process.cwd(), 'client/public/images')));
-app.use('/images', express.static(path.resolve(__dirname, '../../client/public/images')));
+const audioPublicCandidates = [
+  path.resolve(process.cwd(), 'client/public/audio'),
+  path.resolve(process.cwd(), '../client/public/audio'),
+  path.resolve(__dirname, '../../../../client/public/audio'),
+  path.resolve(__dirname, '../../client/public/audio')
+];
+const imagesPublicCandidates = [
+  path.resolve(process.cwd(), 'client/public/images'),
+  path.resolve(process.cwd(), '../client/public/images'),
+  path.resolve(__dirname, '../../../../client/public/images'),
+  path.resolve(__dirname, '../../client/public/images')
+];
+
+for (const p of audioPublicCandidates) {
+  if (require('fs').existsSync(p)) {
+    app.use('/audio', express.static(p));
+    console.log(`🔊 Audio assets found at: ${p}`);
+    break;
+  }
+}
+for (const p of imagesPublicCandidates) {
+  if (require('fs').existsSync(p)) {
+    app.use('/images', express.static(p));
+    console.log(`🖼️ Image assets found at: ${p}`);
+    break;
+  }
+}
 app.use(express.static(clientBuildPath));
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
