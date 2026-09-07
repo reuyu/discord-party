@@ -284,6 +284,12 @@ for (const p of imagesPublicCandidates) {
     break;
   }
 }
+
+app.get('/ads.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('google.com, pub-6602940684312548, DIRECT, f08c47fec0942fa0\n');
+});
+
 app.use(express.static(clientBuildPath));
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
