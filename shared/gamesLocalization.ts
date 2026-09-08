@@ -131,6 +131,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '當約一半的玩家答對時，出題者獲得最高獎勵積分。'
       ],
       tags: ['益智猜謎', '極速搶答', '派對聚會', '熱門']
+    },
+    'de': {
+      title: "💡 Hangul-Konsonanten-Quiz",
+      subtitle: "Der Raumleiter moderiert! Wer tippt das Wort am schnellsten?",
+      description: "Errate die Wörter anhand der Anfangsbuchstaben! Rasante Wortduelle mit Echtzeit-Tastatureingabe.",
+      rulesOverview: [
+        "Der Moderator gibt Anfangsbuchstaben und Kategorien vor.",
+        "Alle Spieler tippen ihre Antworten schnellstmöglich in den Chat.",
+        "Wer als Erster das richtige Wort nennt, sichert sich den Punkt."
+],
+      tags: ["Worträtsel","Schnelligkeit","Wortschatz","Moderation"]
+    },
+    'pt': {
+      title: "💡 Quiz de Consoantes Iniciais",
+      subtitle: "O anfitrião comanda a rodada! Digite rápido para pontuar",
+      description: "Adivinhe palavras através das iniciais! Batalha rápida de vocabulário e digitação em tempo real.",
+      rulesOverview: [
+        "O anfitrião define as letras iniciais e a dica temática.",
+        "Os participantes digitam palpites no chat em tempo real.",
+        "A resposta correta mais rápida ganha a pontuação máxima."
+],
+      tags: ["Quiz de Palavras","Reflexo","Vocabulário","Competitivo"]
+    },
+    'es': {
+      title: "💡 Quiz de Consonantes Rápidas",
+      subtitle: "¡El anfitrión modera! Adivina la palabra antes que nadie",
+      description: "¡Descifra términos a través de las consonantes iniciales! Duelo veloz de vocabulario y reflejos.",
+      rulesOverview: [
+        "El anfitrión presenta las siglas o consonantes con una pista.",
+        "Los jugadores escriben sus respuestas a toda velocidad.",
+        "El primer jugador en acertar se lleva los puntos de la ronda."
+],
+      tags: ["Juego de Palabras","Agilidad Mental","Vocabulario","Competitivo"]
+    },
+    'fr': {
+      title: "💡 Quiz des Consonnes Éclair",
+      subtitle: "L'hôte anime la manche ! Tapez le bon mot en premier",
+      description: "Devinez le mot à partir de ses consonnes initiales ! Un défi ultra-rapide de vocabulaire et de réflexes.",
+      rulesOverview: [
+        "L'hôte propose des lettres initiales et un thème indice.",
+        "Tous les joueurs écrivent leur proposition en direct.",
+        "La réponse exacte la plus rapide remporte le point."
+],
+      tags: ["Jeu de Mots","Rapidité","Vocabulaire","Compétition"]
     }
   },
 
@@ -168,6 +212,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '決賽決出總冠軍後將舉行盛大的優勝慶祝！'
       ],
       tags: ['即時投票', '理想盃', '錦標賽', '自訂題庫']
+    },
+    'de': {
+      title: "🏆 Ultimativer Matchup-Worldcup",
+      subtitle: "Echtzeit-Turnier mit Live-Community-Voting!",
+      description: "Wähle deinen Favoriten in jeder 1-gegen-1-Runde. Welcher Kandidat krönt sich zum Turniersieger?",
+      rulesOverview: [
+        "In jeder Runde treten zwei Kandidaten im Duell an.",
+        "Alle Teilnehmer stimmen per Klick live für ihren Favoriten ab.",
+        "Der Sieger zieht in die nächste Turnierrunde ein."
+],
+      tags: ["Turnier","Voting","Diskussion","Party"]
+    },
+    'pt': {
+      title: "🏆 Copa do Mundo de Confrontos",
+      subtitle: "Batalhas em chaves de torneio com votação ao vivo!",
+      description: "Escolha seu favorito em cada duelo 1v1. Quem será o grande campeão indiscutível?",
+      rulesOverview: [
+        "Dois candidatos se enfrentam a cada rodada eliminatória.",
+        "Todos os espectadores votam ao vivo na sua melhor opção.",
+        "O vencedor avança na chave até a grande final."
+],
+      tags: ["Torneio","Votação","Debate","Competitivo"]
+    },
+    'es': {
+      title: "🏆 Mundial de Elecciones Definitivo",
+      subtitle: "¡Torneo eliminatorio con votaciones en directo!",
+      description: "Elige tu favorito en enfrentamientos cara a cara. ¿Qué candidato ganará la corona?",
+      rulesOverview: [
+        "Dos candidatos compiten cara a cara en cada ronda.",
+        "Todos los jugadores votan en tiempo real por su preferido.",
+        "El candidato con más votos pasa a la siguiente fase."
+],
+      tags: ["Torneo","Votación","Debate","Fiesta"]
+    },
+    'fr': {
+      title: "🏆 Coupe du Monde des Duels",
+      subtitle: "Tournoi à élimination directe avec votes en direct !",
+      description: "Votez pour votre favori dans chaque duel en 1 contre 1. Qui sera sacré grand champion ?",
+      rulesOverview: [
+        "Deux candidats s'affrontent à chaque duel éliminatoire.",
+        "L'ensemble des spectateurs vote en temps réel pour leur choix.",
+        "Le vainqueur se qualifie pour le tour suivant jusqu'au sacre."
+],
+      tags: ["Tournoi","Votes","Débat","Ambiance"]
     }
   },
 
@@ -207,6 +295,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '堅持到最後的唯一倖存者奪得皇冠！'
       ],
       tags: ['大逃殺', '極限生存', '動作競技', '技巧']
+    },
+    'de': {
+      title: "🐍 Schlangen-Battle-Royale",
+      subtitle: "Klassisches Schlangen-Duell! Sei die letzte überlebende Schlange",
+      description: "Friss Äpfel, wachse heran und bringe deine Freunde zum Zusammenstoß! Rasanter Retro-Mehrspieler-Spaß.",
+      rulesOverview: [
+        "Steuere deine Schlange mit Pfeiltasten oder WASD.",
+        "Friss Äpfel, um länger zu werden und das Spielfeld zu dominieren.",
+        "Weiche Wänden und gegnerischen Körpern aus, um zu überleben."
+],
+      tags: ["Battle Royale","Retro","Reflexe","Arcade"]
+    },
+    'pt': {
+      title: "🐍 Arena Snake Battle Royale",
+      subtitle: "Batalha clássica de cobras! Seja a última serpente viva",
+      description: "Devore maçãs, aumente seu tamanho e bloqueie seus rivais nesta batalha eletrizante.",
+      rulesOverview: [
+        "Controle sua serpente com teclado ou toques de navegação.",
+        "Coma maçãs brilhantes para aumentar o comprimento do seu corpo.",
+        "Evite colidir com paredes ou outras cobras para não ser eliminado."
+],
+      tags: ["Battle Royale","Cobrinha","Reflexos","Competitivo"]
+    },
+    'es': {
+      title: "🐍 Arena Snake Battle Royale",
+      subtitle: "¡Batalla clásica de serpientes! Sobrevive hasta el final",
+      description: "Come manzanas, crece sin parar y encierra a tus oponentes en una arena multijugador intensa.",
+      rulesOverview: [
+        "Mueve tu serpiente usando las flechas o teclas WASD.",
+        "Devora manzanas para aumentar tu longitud y bloquear caminos.",
+        "Evita chocar contra los bordes o el cuerpo de otros rivales."
+],
+      tags: ["Battle Royale","Retro","Reflejos","Multijugador"]
+    },
+    'fr': {
+      title: "🐍 Snake Battle Royale Arena",
+      subtitle: "Combattez dans l'arène ! Soyez le dernier serpent en vie",
+      description: "Mangez des pommes, grandissez et piégez vos adversaires dans ce classique rétro multijoueur.",
+      rulesOverview: [
+        "Pilotez votre serpent à l'aide des touches directionnelles.",
+        "Mangez des pommes pour allonger votre corps et bloquer les rivaux.",
+        "Évitez de percuter les parois et les queues des autres serpents."
+],
+      tags: ["Battle Royale","Rétro","Reflexes","Survie"]
     }
   },
 
@@ -243,6 +375,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '透過語音發表自己的觀點，展開歡樂辯論！'
       ],
       tags: ['二選一', '即時辯論', '靈魂拷問', '破冰必備']
+    },
+    'de': {
+      title: "⚖️ Extremes Entscheidungs-Duell",
+      subtitle: "Wähle das geringere Übel bei verrückten Dilemmas!",
+      description: "Zwei unmögliche Optionen! Stimme geheim ab, diskutiere hitzig und ändere deine Meinung in Runde 2.",
+      rulesOverview: [
+        "Wähle in Phase 1 heimlich deine bevorzugte Option.",
+        "Diskutiere per Mikrofon und überzeuge die Gegenseite.",
+        "In Phase 2 können Spieler ihre Stimmen wechseln."
+],
+      tags: ["Debatte","Dilemma","Entscheidung","Diskussion"]
+    },
+    'pt': {
+      title: "⚖️ Debate de Escolhas Extremas",
+      subtitle: "Escolha o menor dos males em dilemas hilários!",
+      description: "Duas opções impossíveis! Vote secretamente, defenda seu ponto de vista e mude de lado na fase 2.",
+      rulesOverview: [
+        "Vote secretamente na opção que achar menos pior na fase 1.",
+        "Abra seu microfone no Discord e tente convencer o grupo.",
+        "Na fase 2, qualquer jogador pode mudar de lado antes do resultado."
+],
+      tags: ["Debate","Dilema","Votação","Amizade"]
+    },
+    'es': {
+      title: "⚖️ Debate de Dilemas Extremos",
+      subtitle: "¡Elige el mal menor en situaciones imposibles y divertidas!",
+      description: "Dos alternativas extremas. Vota en secreto, defiende tu postura en voz alta y cambia de bando al final.",
+      rulesOverview: [
+        "Selecciona en secreto tu opción favorita en la primera fase.",
+        "Debate por micrófono intentando convencer al bando opuesto.",
+        "En la fase final, los indecisos pueden cambiar de equipo."
+],
+      tags: ["Debate","Dilemas","Opinión","Polémica"]
+    },
+    'fr': {
+      title: "⚖️ Débat des Choix Impossibles",
+      subtitle: "Choisissez le moindre mal face à des dilemmes insolites !",
+      description: "Deux choix déchirants ! Votez en secret, débattez en vocal et retournez votre veste en phase 2.",
+      rulesOverview: [
+        "Votez secrètement pour votre option préférée en phase 1.",
+        "Prenez la parole au micro pour convaincre l'équipe adverse.",
+        "En phase 2, changez de camp si les arguments vous ont convaincu."
+],
+      tags: ["Débat","Dilemmes","Discussion","Convivial"]
     }
   },
 
@@ -280,6 +456,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '夜晚特殊角色執行秘密搜查、保護或暗殺。'
       ],
       tags: ['狼人殺', '心理戰', '陣營對抗', '語音必備']
+    },
+    'de': {
+      title: "🤵 Intelligente Mafia",
+      subtitle: "Psychologische Kriegsführung! Mafia gegen Bürger",
+      description: "Tag- und Nachtphasen mit geheimen Rollen. Entlarve die Mafia oder eliminiere die Bürger im Schutz der Dunkelheit.",
+      rulesOverview: [
+        "Geheime Rollen (Mafia, Arzt, Detektiv, Bürger) werden verteilt.",
+        "Nachts agieren die Spezialrollen im Geheimen.",
+        "Tagsüber debattieren die Bürger und stimmen über Hinrichtungen ab."
+],
+      tags: ["Mafia","Deduktion","Rollen","Psychologie"]
+    },
+    'pt': {
+      title: "🤵 Máfia Inteligente",
+      subtitle: "Guerra psicológica! Máfia versus Cidadãos",
+      description: "Ciclos de dia e noite com papéis secretos. Descubra os mafiosos ou elimine os inocentes nas sombras.",
+      rulesOverview: [
+        "Papéis secretos (Máfia, Médico, Policial, Cidadão) são atribuídos.",
+        "À noite, habilidades especiais são ativadas em segredo.",
+        "De dia, o vilarejo debate e vota para levar suspeitos ao julgamento."
+],
+      tags: ["Máfia","Dedução","Estratégia","Suspense"]
+    },
+    'es': {
+      title: "🤵 Mafia Inteligente",
+      subtitle: "¡Guerra psicológica! Mafia contra Ciudadanos",
+      description: "Ciclos de día y noche con roles secretos. Atrapa a los mafiosos o domina la ciudad bajo las sombras.",
+      rulesOverview: [
+        "Se asignan roles secretos (Mafia, Médico, Policía, Ciudadano).",
+        "Por la noche, las habilidades especiales se ejecutan en secreto.",
+        "Durante el día, el pueblo debate y vota quién será ejecutado."
+],
+      tags: ["Mafia","Deducción","Engaño","Estrategia"]
+    },
+    'fr': {
+      title: "🤵 Mafia Stratégique",
+      subtitle: "Guerre psychologique ! La Mafia contre les Citoyens",
+      description: "Alternance de jour et de nuit avec des rôles secrets. Démasquez les mafieux ou éliminez les innocents.",
+      rulesOverview: [
+        "Des rôles secrets (Mafia, Docteur, Enquêteur, Citoyen) sont attribués.",
+        "La nuit, les rôles spéciaux utilisent leurs capacités en secret.",
+        "Le jour, les citoyens débattent et votent pour envoyer un suspect au procès."
+],
+      tags: ["Mafia","Déduction","Psychologie","Suspense"]
     }
   },
 
@@ -316,6 +536,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '聽眾即時投票評判是「超好笑」還是「無聊（大冒險處罰）」。'
       ],
       tags: ['真實故事', '歡樂破冰', '大冒險', '聚會狂歡']
+    },
+    'de': {
+      title: "🎡 Beichten-Roulette & Strafen",
+      subtitle: "Dreh am Rad und erzähle die wildesten Geschichten!",
+      description: "Wer wird vom Glücksrad ausgewählt? Teile peinliche Erlebnisse oder erfülle lustige Strafaufgaben.",
+      rulesOverview: [
+        "Das Roulette wählt den nächsten Sprecher und das Thema.",
+        "Der ausgewählte Spieler erzählt seine Story am Mikrofon.",
+        "Die Gruppe stimmt ab, wie witzig und unterhaltsam die Beichte war."
+],
+      tags: ["Erzählen","Roulette","Partyspaß","Eisbrecher"]
+    },
+    'pt': {
+      title: "🎡 Roleta de Histórias & Desafios",
+      subtitle: "Gire a roleta e conte suas histórias mais hilárias!",
+      description: "Quem a roleta escolherá? Compartilhe segredos embaraçosos ou enfrente punições divertidas.",
+      rulesOverview: [
+        "A roleta sorteia o contador da vez e o tema da história.",
+        "O jogador sorteado abre o microfone e compartilha seu relato.",
+        "Todos os outros avaliam com votos de aprovação ou risadas."
+],
+      tags: ["Histórias","Desafios","Roleta","Descontração"]
+    },
+    'es': {
+      title: "🎡 Ruleta de Anécdotas y Retos",
+      subtitle: "¡Gira la ruleta y comparte tus historias más locas!",
+      description: "¿A quién elegirá la ruleta? Confiesa tus anécdotas más cómicas o cumple retos desternillantes.",
+      rulesOverview: [
+        "La ruleta selecciona al orador y el tema de la confesión.",
+        "El jugador elegido cuenta su vivencia por micrófono.",
+        "El público vota y califica el nivel de diversión de la historia."
+],
+      tags: ["Anécdotas","Retos","Charla","Risas"]
+    },
+    'fr': {
+      title: "🎡 Roulette des Anecdotes & Défis",
+      subtitle: "Faites tourner la roue et racontez vos pires dossiers !",
+      description: "Qui sera désigné par la roue ? Racontez vos anecdotes les plus croustillantes ou relevez des gages.",
+      rulesOverview: [
+        "La roulette sélectionne le conteur et le thème imposé.",
+        "Le joueur désigné active son micro et raconte son anecdote.",
+        "Les spectateurs votent en direct pour juger la prestation."
+],
+      tags: ["Anecdotes","Défis","Gages","Ambiance"]
     }
   },
 
@@ -352,6 +616,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '其他所有觀眾即時投票選出模仿最傳神的選手。'
       ],
       tags: ['聲音模仿', '海選對決', '聲優挑戰', '派對爆笑']
+    },
+    'de': {
+      title: "🎙️ Stimmen-Imitations-Duell 1v1",
+      subtitle: "Höre legendäre Zitate und imitiere sie live am Mikrofon!",
+      description: "1v1-Turnierkämpfe! Höre Kult-Zitate aus Animes, Games und Filmen und parodiere sie live. Das Publikum stimmt ab!",
+      rulesOverview: [
+        "Zwei Spieler treten im Bracket gegeneinander an.",
+        "Beide imitieren nacheinander das vorgegebene Audiosignal.",
+        "Das gesamte Publikum stimmt in Echtzeit für die beste Darbietung."
+],
+      tags: ["Parodie","Stimmen","Duell","Lachen"]
+    },
+    'pt': {
+      title: "🎙️ Batalha de Imitação de Voz 1v1",
+      subtitle: "Ouça falas clássicas e imite ao vivo no microfone!",
+      description: "Chaves de torneio 1v1! Escute citações famosas de animes, jogos e filmes e mostre seu talento. O público decide!",
+      rulesOverview: [
+        "O sistema define duelos 1v1 e toca o áudio original de referência.",
+        "Os dois competidores se revezam imitando a voz no microfone.",
+        "Todos os espectadores votam ao vivo na imitação mais engraçada."
+],
+      tags: ["Imitação","Voz","Duelo 1v1","Humor"]
+    },
+    'es': {
+      title: "🎙️ Duelo de Imitación de Voces 1v1",
+      subtitle: "¡Escucha frases legendarias e imítalas en vivo al micrófono!",
+      description: "¡Torneo eliminatorio 1 contra 1! Reproduce líneas icónicas de anime, videojuegos y cine. ¡La audiencia vota!",
+      rulesOverview: [
+        "El sistema organiza enfrentamientos 1v1 y reproduce el audio original.",
+        "Ambos rivales abren el micrófono por turnos para imitar la voz.",
+        "El resto de los participantes vota en directo quién lo hizo mejor."
+],
+      tags: ["Imitación","Doblaje","Duelo","Cómico"]
+    },
+    'fr': {
+      title: "🎙️ Duel d'Imitation Vocale 1v1",
+      subtitle: "Écoutez des répliques cultes et imitez-les en direct !",
+      description: "Tournoi 1 contre 1 ! Écoutez des extraits légendaires d'animes, de jeux et de films, puis imitez-les au micro.",
+      rulesOverview: [
+        "Le système tire au sort un match 1v1 et joue l'extrait sonore officiel.",
+        "Les deux candidats imitent la voix tour à tour au micro.",
+        "Le public vote instantanément pour la performance la plus réussie."
+],
+      tags: ["Imitation","Doublage","Tournoi","Fou rire"]
     }
   },
 
@@ -388,6 +696,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '全部回合結束後，展示令人捧腹大笑的完整故事！'
       ],
       tags: ['故事接龍', '創意寫作', '腦洞大開', '休閒']
+    },
+    'de': {
+      title: "📖 Staffel-Geschichten-Werkstatt",
+      subtitle: "Ein Satz nach dem anderen! Kreiere verrückte Meisterwerke",
+      description: "Jeder Spieler fügt einen Satz hinzu, ohne die gesamte Geschichte zu kennen! Lest am Ende das bizarre Meisterwerk vor.",
+      rulesOverview: [
+        "Spieler fügen reihum einen Satz zur Handlung hinzu.",
+        "Nur der allerletzte Satz des Vorredners ist für dich sichtbar.",
+        "Am Ende wird die vollendete, urkomische Geschichte enthüllt."
+],
+      tags: ["Kreativ","Schreiben","Staffel","Lustig"]
+    },
+    'pt': {
+      title: "📖 Construtor de Histórias em Revezamento",
+      subtitle: "Uma frase de cada vez! Crie histórias coletivas insanas",
+      description: "Cada jogador escreve a frase seguinte vendo apenas a última linha! Leiam juntos o resultado inacreditável.",
+      rulesOverview: [
+        "Os participantes se revezam adicionando uma frase ao enredo.",
+        "Você só consegue ver a última frase escrita pelo jogador anterior.",
+        "Ao final de todas as rodadas, a história completa é revelada."
+],
+      tags: ["Escrita Criativa","Humor","Revezamento","Casual"]
+    },
+    'es': {
+      title: "📖 Novela Encadenada Colectiva",
+      subtitle: "¡Una frase por turno! Crea historias delirantes con amigos",
+      description: "Cada jugador escribe la siguiente frase viendo solo la anterior. Al terminar, leed la obra maestra en voz alta.",
+      rulesOverview: [
+        "Los jugadores añaden una frase a la trama en su turno.",
+        "Solo puedes ver la última línea dejada por el compañero anterior.",
+        "Al completarse los turnos, se desvela el relato entero para reír."
+],
+      tags: ["Escritura","Creatividad","Humor","Relato"]
+    },
+    'fr': {
+      title: "📖 Créateur de Roman Relais",
+      subtitle: "Une phrase à la fois ! Inventez des récits collectifs délirants",
+      description: "Chaque joueur écrit la suite en ne voyant que la dernière phrase ! Lisez ensemble le chef-d'œuvre final.",
+      rulesOverview: [
+        "Les joueurs ajoutent à tour de rôle une phrase à l'intrigue.",
+        "Seule la dernière phrase du joueur précédent vous est visible.",
+        "À la fin des manches, l'histoire complète hilarante est dévoilée."
+],
+      tags: ["Écriture","Créativité","Relais","Divertissant"]
     }
   },
 
@@ -424,6 +776,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '成功輸入後立即將炸彈傳遞給下一位玩家！'
       ],
       tags: ['炸彈接力', '詞彙挑戰', '極速反應', '緊張刺激']
+    },
+    'de': {
+      title: "💣 Wort-Bomben-Party",
+      subtitle: "Gib die tickende Bombe mit passenden Wörtern weiter!",
+      description: "Die Lunte brennt! Nenne blitzschnell ein Wort mit den vorgegebenen Buchstaben, bevor die Bombe explodiert!",
+      rulesOverview: [
+        "Eine Silbe oder ein Buchstabenkürzel erscheint auf dem Bildschirm.",
+        "Tippe schnell ein gültiges Wort ein, das diese Buchstaben enthält.",
+        "Gib die Bombe rechtzeitig an den nächsten Spieler weiter."
+],
+      tags: ["Schnelligkeit","Wortschatz","Panik","Action"]
+    },
+    'pt': {
+      title: "💣 Festa da Bomba de Palavras",
+      subtitle: "Passe a bomba-relógio digitando a palavra correta!",
+      description: "O pavio está queimando! Digite uma palavra válida contendo a sílaba antes que a bomba exploda nas suas mãos!",
+      rulesOverview: [
+        "Uma sílaba ou letra é exibida no centro da tela.",
+        "Digite uma palavra válida contendo a combinação indicada.",
+        "Passe a bomba adiante antes que o tempo se esgote."
+],
+      tags: ["Bomba","Vocabulário","Pânico","Agilidade"]
+    },
+    'es': {
+      title: "💣 Bomba de Palabras Contrarreloj",
+      subtitle: "¡Pasa la bomba hirviente diciendo palabras válidas!",
+      description: "¡La mecha se agota! Di o escribe una palabra que contenga la combinación exigida antes de que vuele por los aires.",
+      rulesOverview: [
+        "Aparece en pantalla una sílaba o combinación de letras aleatoria.",
+        "Introduce una palabra válida que contenga esas letras.",
+        "Pasa la bomba al siguiente jugador antes de la explosión."
+],
+      tags: ["Bomba","Vocabulario","Tensión","Reflejos"]
+    },
+    'fr': {
+      title: "💣 Passe la Bombe de Mots",
+      subtitle: "Débarrassez-vous de la bombe avant qu'elle n'explose !",
+      description: "La mèche brûle ! Trouvez un mot contenant les lettres imposées pour passer la bombe au suivant avant le bang !",
+      rulesOverview: [
+        "Une syllabe ou combinaison de lettres s'affiche à l'écran.",
+        "Tapez immédiatement un mot valide contenant cette syllabe.",
+        "Transmettez la bombe au joueur suivant avant l'explosion."
+],
+      tags: ["Bombe","Vocabulaire","Panique","Réflexes"]
     }
   },
 
@@ -460,6 +856,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '揭曉全體統計數據，展開爆笑的追問與審判！'
       ],
       tags: ['真心話', '匿名問卷', '靈魂拷問', '社交破冰']
+    },
+    'de': {
+      title: "🎭 Anonyme Beichtkabine",
+      subtitle: "Geheime Fragen, vollkommen anonym beantwortet",
+      description: "Stimme anonym über pikante und schonungslose Fragen über die Gruppe ab! Wer hat wohl für wen gestimmt?",
+      rulesOverview: [
+        "Pikante Fragen werden allen Spielern gestellt.",
+        "Jeder antwortet vollkommen anonym und ehrlich.",
+        "Entdecke die schockierenden Ergebnisse und spekuliert gemeinsam."
+],
+      tags: ["Wahrheit","Eisbrecher","Pikant","Sozial"]
+    },
+    'pt': {
+      title: "🎭 Cabine de Confissão Anônima",
+      subtitle: "Perguntas picantes respondidas em total anonimato",
+      description: "Vote anonimamente em questões polêmicas sobre o grupo! Tente adivinhar quem votou em quem com revelações hilárias.",
+      rulesOverview: [
+        "Perguntas instigantes são feitas a todos os jogadores.",
+        "Todos respondem com total garantia de anonimato.",
+        "Descubra os resultados surpreendentes e debata com os amigos."
+],
+      tags: ["Verdades","Quebra-Gelo","Picante","Social"]
+    },
+    'es': {
+      title: "🎭 Confesionario Anónimo",
+      subtitle: "Preguntas comprometidas respondidas en anonimato total",
+      description: "¡Vota en secreto preguntas picantes sobre tus amigos! Analiza los porcentajes e intenta adivinar las respuestas.",
+      rulesOverview: [
+        "Se formulan preguntas atrevidas y directas a todo el grupo.",
+        "Cada jugador vota con total anonimato y sinceridad.",
+        "Descubre las estadísticas resultantes y abre el debate cómico."
+],
+      tags: ["Sinceridad","Picante","Risas","Social"]
+    },
+    'fr': {
+      title: "🎭 Confessions Anonymes Entre Amis",
+      subtitle: "Des questions piquantes répondues en secret absolu",
+      description: "Votez anonymement sur des questions indiscrètes sur le groupe ! Devinez qui a voté quoi lors des révélations.",
+      rulesOverview: [
+        "Des questions épicées sont posées à l'ensemble des joueurs.",
+        "Tout le monde répond en toute franchise sous anonymat complet.",
+        "Découvrez les statistiques surprenantes et tentez de deviner les coupables."
+],
+      tags: ["Vérité","Soirée","Piquant","Convivial"]
     }
   },
 
@@ -496,6 +936,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '搶先開槍視同走火，直接判定失敗！'
       ],
       tags: ['快槍手', '反應速度', '1v1對決', '西部狂野']
+    },
+    'de': {
+      title: "🤠 High Noon Schnellzieh-Duell",
+      subtitle: "0,001s-Reflexduell! Feuere im Moment des Glockenschlags",
+      description: "Blicke deinem Rivalen um 12:00 Uhr mittags in die Augen. Wenn die Glocke läutet, ziehe blitzschnell deine Waffe!",
+      rulesOverview: [
+        "Halte deinen Finger ruhig, während die Uhr tickt.",
+        "Klicke oder drücke Leertaste exakt im Moment des 12:00-Glockenschlags.",
+        "Ein Frühstart gilt als Fehlschuss und führt zur Niederlage!"
+],
+      tags: ["Reflexe","Western","1v1 Duell","Arcade"]
+    },
+    'pt': {
+      title: "🤠 Duelo de Saque Rápido High Noon",
+      subtitle: "Reflexo de 0,001s! Atire no instante em que o sino tocar",
+      description: "Encare seu oponente sob o sol do meio-dia. Espere o relógio bater 12:00 e puxe o gatilho com reflexos relâmpago!",
+      rulesOverview: [
+        "Mantenha o foco absoluto enquanto o relógio avança.",
+        "Atire imediatamente no instante exato do sino das 12:00.",
+        "Atirar antes do sinal resulta em tiro no pé e derrota imediata!"
+],
+      tags: ["Reflexo","Faroeste","Duelo 1v1","Agilidade"]
+    },
+    'es': {
+      title: "🤠 Duelo al Mediodía (High Noon)",
+      subtitle: "¡Reflejos de 0,001s! Dispara justo al sonar la campana",
+      description: "Mide a tu oponente al mediodía. Espera a que el reloj marque las 12:00 y desenfunda a la velocidad del rayo.",
+      rulesOverview: [
+        "Mantén la calma y la tensión mientras el reloj corre.",
+        "Dispara inmediatamente al sonar la campana de las 12:00 en punto.",
+        "¡Disparar antes de tiempo se penaliza con derrota automática!"
+],
+      tags: ["Reflejos","Western","Duelo 1v1","Reacción"]
+    },
+    'fr': {
+      title: "🤠 Duel de Tir Express (High Noon)",
+      subtitle: "0,001s de réflexe ! Tirez à la seconde où sonne midi",
+      description: "Fixez votre adversaire en plein soleil. Quand la cloche retentit, dégainez à la vitesse de l'éclair !",
+      rulesOverview: [
+        "Gardez votre calme tandis que l'horloge s'approche de midi.",
+        "Cliquez à la seconde précise du gong de 12:00 pour faire feu.",
+        "Tout tir anticipé est sanctionné par une défaite instantanée !"
+],
+      tags: ["Réflexes","Western","Duel 1v1","Vitesse"]
     }
   },
 
@@ -532,6 +1016,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '時限倒數結束時，能量條偏向的一方獲勝！'
       ],
       tags: ['極速連點', '拔河對決', '手速競技', '熱血']
+    },
+    'de': {
+      title: "⚡ Klicker-Tauziehen-Schlacht",
+      subtitle: "Reine CPS-Geschwindigkeit! 10 Sekunden Klick-Wahnsinn",
+      description: "Klicke so schnell du kannst! Ziehe das Tau innerhalb von 10 hochspannenden Sekunden auf deine Seite.",
+      rulesOverview: [
+        "Klicke wiederholt so schnell du menschlich kannst.",
+        "Jeder Klick zieht die Seilanzeige in deine Richtung.",
+        "Die höchste Klickrate pro Sekunde (CPS) gewinnt den Kampf!"
+],
+      tags: ["CPS","Tauziehen","Klicker","Wettkampf"]
+    },
+    'pt': {
+      title: "⚡ Cabo de Guerra de Cliques Rápidos",
+      subtitle: "Velocidade pura de CPS! Disputa de cliques em 10 segundos",
+      description: "Clique com toda a força e velocidade! Puxe a corda para o seu lado em 10 segundos de adrenalina pura.",
+      rulesOverview: [
+        "Clique o mais rápido possível no botão ou na tela.",
+        "Cada clique puxa a barra de força para o seu lado.",
+        "Quem mantiver o maior CPS ao final do tempo é o vencedor!"
+],
+      tags: ["CPS","Cabo de Guerra","Velocidade","Competitivo"]
+    },
+    'es': {
+      title: "⚡ Duelo de Clics y Cuerda Rápida",
+      subtitle: "¡Puro CPS! Tira de la cuerda con clics frenéticos en 10s",
+      description: "¡Machaca el ratón a máxima velocidad! Arrastra la cuerda hacia tu territorio en 10 segundos de pura adrenalina.",
+      rulesOverview: [
+        "Haz clic repetidamente con toda la velocidad que alcances.",
+        "Cada clic desplaza la cuerda hacia tu lado de la arena.",
+        "El jugador con mayor cantidad de clics por segundo gana el duelo."
+],
+      tags: ["CPS","Clics","Tirar Cuerda","Competición"]
+    },
+    'fr': {
+      title: "⚡ Tir à la Corde de Clics Express",
+      subtitle: "Vitesse de CPS pure ! 10 secondes de clics intenses",
+      description: "Cliquez à une vitesse folle ! Tirez la corde dans votre camp pendant 10 secondes d'adrénaline totale.",
+      rulesOverview: [
+        "Cliquez aussi vite que possible sur l'écran ou la barre d'espace.",
+        "Chaque clic attire la jauge de traction vers votre camp.",
+        "Le joueur affichant le meilleur nombre de clics/seconde l'emporte !"
+],
+      tags: ["CPS","Tir à la Corde","Clics","Rapidité"]
     }
   },
 
@@ -568,6 +1096,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '越早搶答出正確物品名稱，獲得的分數越高！'
       ],
       tags: ['特寫猜謎', '觀察力', '眼力大考驗', '趣味']
+    },
+    'de': {
+      title: "🔍 Extrem-Nahaufnahme Zoom-Quiz",
+      subtitle: "Errate Alltagsgegenstände aus extremer 1500%-Makroansicht!",
+      description: "Das Bild beginnt bei 1500% extremer Vergrößerung und zoomt langsam heraus! Errate das Objekt zuerst.",
+      rulesOverview: [
+        "Das Bild startet in extremer mikroskopischer Nahaufnahme.",
+        "Die Kamera zoomt über 20 Sekunden hinweg langsam heraus.",
+        "Tippe deine Antwort so früh wie möglich für maximale Bonuspunkte."
+],
+      tags: ["Makro-Zoom","Quiz","Beobachtung","Wettkampf"]
+    },
+    'pt': {
+      title: "🔍 Quiz de Zoom Macro Extremo",
+      subtitle: "Adivinhe objetos do cotidiano a partir de um zoom de 1500%!",
+      description: "A imagem começa com uma aproximação microscópica e vai se afastando lentamente! Adivinhe antes de todos.",
+      rulesOverview: [
+        "A imagem do quiz inicia com ampliação máxima de 1500%.",
+        "A câmera se afasta gradualmente ao longo de 20 segundos.",
+        "Digite sua resposta o mais rápido possível para pontuar alto."
+],
+      tags: ["Zoom Macro","Quiz","Observação","Adivinhação"]
+    },
+    'es': {
+      title: "🔍 Quiz de Zoom Extremo en Macro",
+      subtitle: "¡Adivina objetos cotidianos desde un aumento del 1500%!",
+      description: "La imagen empieza a 1500% de aumento y se aleja poco a poco. ¡Adivina el objeto antes que tus amigos!",
+      rulesOverview: [
+        "La imagen comienza en un enfoque microscópico.",
+        "La cámara se aleja progresivamente durante 20 segundos.",
+        "Acierta lo antes posible para ganar la máxima puntuación."
+],
+      tags: ["Zoom Macro","Trivia","Observación","Ojo Clínico"]
+    },
+    'fr': {
+      title: "🔍 Quiz Zoom Macro Extrême",
+      subtitle: "Devinez des objets du quotidien grossis à 1500% !",
+      description: "L'image démarre en zoom macro extrême et dézoome lentement ! Devinez l'objet avant les autres pour triompher.",
+      rulesOverview: [
+        "L'image commence avec un grossissement maximal de 1500%.",
+        "La caméra recule progressivement sur une durée de 20 secondes.",
+        "Tapez votre réponse le plus tôt possible pour rafler les points."
+],
+      tags: ["Zoom Macro","Quiz","Observation","Rapidité"]
     }
   },
 
@@ -604,6 +1176,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '率先取得 5 場勝利的玩家榮獲大腦王者稱號！'
       ],
       tags: ['智力博弈', '心理卡牌', '策略計算', '1v1']
+    },
+    'de': {
+      title: "🃏 Schwarz & Weiß Denkduell",
+      subtitle: "Das Genius-Strategiespiel! Überliste deinen Rivalen",
+      description: "Inspiriert von The Genius! Biete verdeckt nummerierte Kacheln von 0 bis 8. Wer zuerst 5 Siege erzielt, gewinnt.",
+      rulesOverview: [
+        "Die Spieler erhalten nummerierte Kacheln von 0 bis 8.",
+        "In jeder Runde legen beide verdeckt eine Kachel aus.",
+        "Die höhere Zahl siegt; wer zuerst 5 Runden gewinnt, holt die Krone."
+],
+      tags: ["Denkspiel","Strategie","The Genius","1v1"]
+    },
+    'pt': {
+      title: "🃏 Duelo Mental Preto & Branco",
+      subtitle: "O jogo mental estilo The Genius! Conquiste 5 vitórias primeiro",
+      description: "Inspirado em The Genius! Aposte peças numeradas de 0 a 8 em segredo. O primeiro a somar 5 vitórias é o campeão.",
+      rulesOverview: [
+        "Os jogadores recebem peças numeradas secretas de 0 a 8.",
+        "A cada turno, ambos jogam uma peça simultaneamente.",
+        "O maior número vence o ponto; o primeiro a atingir 5 vitórias vence."
+],
+      tags: ["Jogo Mental","Estratégia","The Genius","Duelo 1v1"]
+    },
+    'es': {
+      title: "🃏 Duelo Mental Blanco y Negro",
+      subtitle: "¡Estrategia al estilo The Genius! Sé el primero en lograr 5 victorias",
+      description: "Inspirado en The Genius. Juega fichas numeradas del 0 al 8 en secreto. El primero en sumar 5 puntos gana el encuentro.",
+      rulesOverview: [
+        "Cada jugador dispone de fichas numeradas del 0 al 8.",
+        "En cada turno, ambos revelan una ficha simultáneamente.",
+        "El número mayor anota el punto; el primero con 5 victorias gana."
+],
+      tags: ["Estrategia","Juego Mental","The Genius","1v1"]
+    },
+    'fr': {
+      title: "🃏 Duel Cérébral Noir & Blanc",
+      subtitle: "Le jeu d'esprit The Genius ! Soyez le premier à remporter 5 manches",
+      description: "Inspiré de The Genius ! Misez secrètement des tuiles numérotées de 0 à 8. Le premier à 5 victoires l'emporte.",
+      rulesOverview: [
+        "Les joueurs reçoivent des tuiles numérotées de 0 à 8.",
+        "À chaque manche, les deux joueurs jouent une tuile face cachée.",
+        "Le chiffre le plus élevé marque; le premier à 5 points gagne la partie."
+],
+      tags: ["Esprit","Stratégie","The Genius","1v1"]
     }
   },
 
@@ -640,6 +1256,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '觀眾與好友即時競猜這幅靈魂傑作到底是什麼！'
       ],
       tags: ['靈魂畫手', '繪畫猜謎', '歡樂爆笑', '創意']
+    },
+    'de': {
+      title: "🎨 Blindes Skizzieren & Raten",
+      subtitle: "Zeichne, ohne deine Leinwand zu sehen, und erratet das Kunstwerk!",
+      description: "Du siehst nicht, was du zeichnest! Erschaffe herrlich chaotische Kunstwerke, während Freunde den Begriff erraten.",
+      rulesOverview: [
+        "Der Zeichner erhält einen geheimen Begriff.",
+        "Pinselstriche bleiben für den Zeichner während des Malens unsichtbar.",
+        "Zuschauer versuchen in Echtzeit, das Kunstwerk im Chat zu erraten."
+],
+      tags: ["Zeichnen","Kunst","Herrlich","Kreativität"]
+    },
+    'pt': {
+      title: "🎨 Desenho às Cegas & Adivinhação",
+      subtitle: "Desenhe sem ver a tela e deixe seus amigos adivinharem!",
+      description: "Você não pode ver os próprios traços! Crie obras caóticas e hilárias enquanto os participantes tentam decifrar o tema.",
+      rulesOverview: [
+        "O artista recebe uma palavra-chave secreta.",
+        "Os traços permanecem invisíveis para o desenhista na tela.",
+        "Os amigos tentam adivinhar a obra no chat em tempo real."
+],
+      tags: ["Desenho","Arte","Hilário","Criatividade"]
+    },
+    'es': {
+      title: "🎨 Dibujo a Ciegas y Adivinanza",
+      subtitle: "¡Dibuja sin ver tu lienzo y adivinad el resultado!",
+      description: "¡No puedes ver lo que estás dibujando! Crea desastres artísticos divertidos mientras los demás intentan adivinar.",
+      rulesOverview: [
+        "El dibujante recibe una palabra temática secreta.",
+        "Los trazos permanecen ocultos a los ojos del artista.",
+        "El público intenta descifrar la obra en tiempo real."
+],
+      tags: ["Dibujo","Creatividad","Risas","Adivina"]
+    },
+    'fr': {
+      title: "🎨 Dessin à l'Aveugle & Devinette",
+      subtitle: "Dessinez sans voir votre toile et faites deviner l'esquisse !",
+      description: "Vos traits sont invisibles à vos propres yeux ! Créez des chefs-d'œuvre chaotiques que vos amis doivent deviner.",
+      rulesOverview: [
+        "Un thème secret est attribué au dessinateur.",
+        "Les coups de pinceau sont masqués aux yeux de l'artiste.",
+        "Les spectateurs tentent de deviner le mot en direct."
+],
+      tags: ["Dessin","Art","Fou rire","Créativité"]
     }
   },
 
@@ -676,6 +1336,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '繪製兩輪後全員投票，抓出混在其中的偽藝術家！'
       ],
       tags: ['偽藝術家', '繪圖推理', '社交陣營', '派對爆笑']
+    },
+    'de': {
+      title: "🎭 Ein falscher Künstler geht nach New York",
+      subtitle: "Ein Strich pro Zug! Entlarve den Schwindler ohne das Wort zu verraten",
+      description: "Jeder steuert einen einzigen Strich zu einer gemeinsamen Zeichnung bei. Der falsche Künstler kennt das Thema nicht!",
+      rulesOverview: [
+        "Alle kennen das geheime Wort, bis auf den falschen Künstler.",
+        "Jeder fügt reihum genau einen durchgehenden Strich hinzu.",
+        "Stimmt nach Runde 2 ab, um den Hochstapler zu entlarven."
+],
+      tags: ["Zeichnen","Social Deduction","Bluffen","Party"]
+    },
+    'pt': {
+      title: "🎭 O Falso Artista Vai a Nova York",
+      subtitle: "Um traço por vez! Desmascare o impostor sem entregar a palavra",
+      description: "Todos contribuem com um traço no mesmo desenho. O falso artista não faz ideia do tema—vocês conseguem pegá-lo?",
+      rulesOverview: [
+        "Todos os artistas sabem a palavra secreta, exceto o Falso Artista.",
+        "Cada jogador adiciona exatamente um traço contínuo em seu turno.",
+        "Votem para desmascarar o impostor ao término da rodada 2."
+],
+      tags: ["Desenho","Dedução","Blefe","Party Game"]
+    },
+    'es': {
+      title: "🎭 Un Falso Artista va a Nueva York",
+      subtitle: "¡Un trazo por turno! Descubre al impostor sin delatar la palabra",
+      description: "Todos colaboran en un dibujo común con un solo trazo. El Falso Artista no sabe el tema: ¿lograréis atraparlo?",
+      rulesOverview: [
+        "Todos conocen el tema secreto excepto el Falso Artista.",
+        "Cada jugador aporta un único trazo continuo por turno.",
+        "Al final de la segunda ronda, todos votan para cazar al impostor."
+],
+      tags: ["Dibujo","Deducción","Bluff","Social"]
+    },
+    'fr': {
+      title: "🎭 Un Faux Artiste à New York",
+      subtitle: "Un trait chacun ! Démasquez l'imposteur sans révéler le mot",
+      description: "Chacun ajoute un seul trait à un dessin commun. Le faux artiste ignore le thème secret : saurez-vous le démasquer ?",
+      rulesOverview: [
+        "Tous les artistes connaissent le mot secret, sauf le Faux Artiste.",
+        "Chacun ajoute un trait unique et continu à tour de rôle.",
+        "Votez pour démasquer l'imposteur à la fin de la 2e manche."
+],
+      tags: ["Dessin","Déduction","Bluff","Ambiance"]
     }
   },
 
@@ -712,6 +1416,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '對方說出的瞬間立刻點擊 [抓包 🚨] 處決對手！'
       ],
       tags: ['禁忌詞', '極限生存', '語音聊天', '心理博弈']
+    },
+    'de': {
+      title: "🤐 Verbotenes Tabu-Wort-Überleben",
+      subtitle: "Dein Tabuwort schwebt über deinem Kopf – sag es niemals!",
+      description: "Jeder sieht dein verbotenes Wort, nur du nicht! Verleite deine Freunde dazu, ihres auszusprechen, und schütze deins.",
+      rulesOverview: [
+        "Jeder sieht die Tabuwörter aller Mitspieler, aber nicht das eigene.",
+        "Führe normale Gespräche und locke Rivalen in die Wortfalle.",
+        "Klicke auf [ENTLARVT 🚨], sobald jemand sein Tabuwort ausspricht!"
+],
+      tags: ["Tabu","Überleben","Gespräch","Psychologie"]
+    },
+    'pt': {
+      title: "🤐 Sobrevivência à Palavra Tabu",
+      subtitle: "Sua palavra proibida flutua na sua cabeça—nunca a diga!",
+      description: "Uma palavra proibida fica visível para todos, menos para você! Induza seus oponentes a falarem as deles.",
+      rulesOverview: [
+        "Todos veem as palavras tabu dos outros, exceto a sua própria.",
+        "Converse naturalmente e arme armadilhas para os adversários.",
+        "Clique em [FLAGRANTE 🚨] no instante em que alguém disser a palavra proibida!"
+],
+      tags: ["Palavra Tabu","Sobrevivência","Conversa","Estratégia"]
+    },
+    'es': {
+      title: "🤐 Supervivencia a la Palabra Tabú",
+      subtitle: "¡Tu palabra prohibida flota sobre tu cabeza: jamás la pronuncies!",
+      description: "¡Todos ven tu palabra tabú excepto tú! Tiende trampas en la conversación y elimina a tus rivales.",
+      rulesOverview: [
+        "Todos ven las palabras prohibidas de los demás, menos la propia.",
+        "Charla con naturalidad e incita a los demás a decir su palabra prohibida.",
+        "¡Pulsa [ATRAPADO 🚨] en cuanto alguien pronuncie su término tabú!"
+],
+      tags: ["Tabú","Supervivencia","Conversación","Ingenio"]
+    },
+    'fr': {
+      title: "🤐 Survie au Mot Tabou",
+      subtitle: "Votre mot interdit flotte au-dessus de vous : ne le dites jamais !",
+      description: "Tout le monde voit votre mot interdit sauf vous ! Piégez vos adversaires pour qu'ils prononcent le leur.",
+      rulesOverview: [
+        "Chacun voit les mots tabous des autres mais pas le sien.",
+        "Discutez naturellement et tendez des pièges dans la conversation.",
+        "Cliquez sur [PIÉGÉ 🚨] dès qu'un joueur prononce son mot interdit !"
+],
+      tags: ["Mot Tabou","Survie","Conversation","Esprit"]
     }
   },
 
@@ -748,6 +1496,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '全體聽眾即時投票認證是否答對！'
       ],
       tags: ['3秒快問快答', '反應力', '緊張刺激', '派對爆笑']
+    },
+    'de': {
+      title: "⏱️ 3-Sekunden-Regel Geschwindigkeits-Challenge",
+      subtitle: "Nenne 3 Dinge in nur 3 Sekunden!",
+      description: "\"Nenne 3 Pizzabeläge!\", \"3 Ausreden fürs Zuspätkommen!\" Rufe sie heraus, bevor die 3-Sekunden-Sanduhr abläuft!",
+      rulesOverview: [
+        "Eine schnelle Aufgabe, die 3 spezifische Begriffe erfordert.",
+        "Du hast genau 3 Sekunden auf der Uhr!",
+        "Das Publikum entscheidet in Echtzeit, ob die Antworten gültig sind."
+],
+      tags: ["Schnelligkeit","Reflexe","Panik","Lustig"]
+    },
+    'pt': {
+      title: "⏱️ Desafio Relâmpago da Regra dos 3 Segundos",
+      subtitle: "Cite 3 coisas em apenas 3 segundos cravados!",
+      description: "\"Fale 3 sabores de pizza!\", \"3 desculpas para atraso!\" Grite no microfone antes que a areia acabe!",
+      rulesOverview: [
+        "Um comando rápido exigindo 3 respostas específicas.",
+        "Você tem apenas 3 segundos no cronômetro!",
+        "O público vota ao vivo se suas respostas foram válidas ou não."
+],
+      tags: ["Velocidade","Reflexos","Pânico","Diversão"]
+    },
+    'es': {
+      title: "⏱️ Desafío de la Regla de los 3 Segundos",
+      subtitle: "¡Nombra 3 cosas en solo 3 segundos exactos!",
+      description: "\"¡Nombra 3 ingredientes de pizza!\", \"¡3 excusas para llegar tarde!\" Grita las respuestas antes de que caiga la arena.",
+      rulesOverview: [
+        "Un reto veloz que exige 3 respuestas concretas.",
+        "¡Solo dispones de 3 segundos en el cronómetro!",
+        "El público juzga en directo si tus respuestas son válidas."
+],
+      tags: ["Rapidez","Reflejos","Pánico","Risas"]
+    },
+    'fr': {
+      title: "⏱️ Défi Express de la Règle des 3 Secondes",
+      subtitle: "Nommez 3 éléments en 3 secondes chrono !",
+      description: "\"Cite 3 garnitures de pizza !\", \"3 excuses de retard !\" Criez-les avant la fin du sablier de 3 secondes !",
+      rulesOverview: [
+        "Une consigne rapide demandant 3 réponses spécifiques.",
+        "Vous ne disposez que de 3 secondes montre en main !",
+        "Le public valide ou refuse vos réponses en temps réel."
+],
+      tags: ["Rapidité","Réflexes","Panique","Hilarant"]
     }
   },
 
@@ -784,6 +1576,50 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '依據答題手速獲得速度加分，並即時查看百科趣味詳解！'
       ],
       tags: ['百科問答', '知識對決', '錦標賽', '多人聚會']
+    },
+    'de': {
+      title: "🎓 Überlebens-Wissens-Quizshow",
+      subtitle: "1v1, Solo Battle Royale & Rot gegen Blau Team-Kämpfe!",
+      description: "Geschichte, Wissenschaft, Popkultur, Filme und Fun Facts! Kämpfe in 1v1-Brackets oder im Teammodus.",
+      rulesOverview: [
+        "Wähle Einzelüberleben, 1v1-Turnier oder Rot-gegen-Blau-Modus.",
+        "Beantworte 4-Auswahl-Fragen innerhalb von 15 Sekunden.",
+        "Schnelle Antworten bringen Schnelligkeitsboni mit Erklärungen."
+],
+      tags: ["Trivia","Wissen","Turnier","Viele Spieler"]
+    },
+    'pt': {
+      title: "🎓 Show de Quiz de Conhecimentos Gerais",
+      subtitle: "1v1, Batalha Solo & Disputas de Equipes Vermelho vs Azul!",
+      description: "História, ciência, cultura pop, cinema e curiosidades! Dispute em chaves 1v1 ou no modo todos contra todos.",
+      rulesOverview: [
+        "Escolha entre Sobrevivência Individual, Torneio 1v1 ou Batalha de Times.",
+        "Responda a perguntas de múltipla escolha em até 15 segundos.",
+        "Respostas rápidas concedem bônus de velocidade com explicações curiosas."
+],
+      tags: ["Quiz","Conhecimento","Torneio","Multiplayer"]
+    },
+    'es': {
+      title: "🎓 Show de Preguntas y Trivia de Supervivencia",
+      subtitle: "¡1v1, Batalla Todos contra Todos y Equipo Rojo vs Azul!",
+      description: "Historia, ciencia, cultura pop, cine y datos curiosos. Compite en eliminatorias o partidas por equipos.",
+      rulesOverview: [
+        "Elige Supervivencia Individual, Torneo 1v1 o Guerra de Equipos.",
+        "Responde preguntas de 4 opciones en un plazo de 15 segundos.",
+        "Aciertos veloces otorgan puntos extra con explicaciones detalladas."
+],
+      tags: ["Trivia","Conocimiento","Torneo","Multitudinario"]
+    },
+    'fr': {
+      title: "🎓 Quiz Show de Culture Générale",
+      subtitle: "1v1, Battle Royale Solo & Équipes Rouge vs Bleu !",
+      description: "Histoire, sciences, pop culture, cinéma et anecdotes ! Affrontez vos amis en tournoi ou en équipe.",
+      rulesOverview: [
+        "Choisissez le mode Survie Solo, Tournoi 1v1 ou Équipe Rouge vs Bleu.",
+        "Répondez aux questions à 4 choix en moins de 15 secondes.",
+        "La rapidité rapporte des points bonus accompagnés d'explications."
+],
+      tags: ["Culture Générale","Savoir","Tournoi","Multijoueur"]
     }
   }
 };
