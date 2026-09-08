@@ -13,7 +13,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['음식', '야식', '초보추천'],
       itemCount: 50,
       isPublic: true,
-      likes: 8420,
+      likes: 0,
       createdAt: 1700000000000,
       language: 'ko',
       data: {
@@ -30,13 +30,13 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
     {
       id: 'liar_food_en',
       gameId: 'liar-game',
-      title: '🍔 [Official] Delicious Food & Snacks Pack (English)',
-      description: 'Pizza, Burger, Sushi, Taco, Steak, Ramen, Pasta, Donut, Hotdog - 40 Popular Foods',
-      author: 'PartyHub Official',
-      tags: ['Food', 'Snacks', 'Beginner', 'Global'],
+      title: '🍔 [공식] 글로벌 맛있는 음식 & 스낵 제시어 팩 (영단어)',
+      description: '피자, 버거, 스시, 타코, 스테이크, 라멘, 파스타, 도넛 등 글로벌 인기 음식 40종 (영단어)',
+      author: 'PartyHub 공식',
+      tags: ['음식', '야식', '영어단어', '글로벌'],
       itemCount: 40,
       isPublic: true,
-      likes: 5310,
+      likes: 0,
       createdAt: 1700000000000,
       language: 'en',
       data: {
@@ -52,13 +52,13 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
     {
       id: 'liar_food_ja',
       gameId: 'liar-game',
-      title: '🍣 [公式] 美味しい料理＆夜食ワードパック (日本語)',
-      description: '寿司、ラーメン、ピザ、焼肉、カレー、たこ焼き、おにぎりなど人気料理40種',
-      author: 'PartyHub 公式',
-      tags: ['料理', '夜食', '定番', '日本語'],
+      title: '🍣 [공식] 일식 요리 & 심야 식당 제시어 팩 (일본어)',
+      description: '초밥, 라멘, 피자, 야키니쿠, 카레, 타코야끼, 오니기리 등 일본 대표 요리 40종 (일본어)',
+      author: 'PartyHub 공식',
+      tags: ['요리', '야식', '일본어', '초밥'],
       itemCount: 40,
       isPublic: true,
-      likes: 4720,
+      likes: 0,
       createdAt: 1700000000000,
       language: 'ja',
       data: {
@@ -80,7 +80,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['게임', '롤', '챔피언'],
       itemCount: 40,
       isPublic: true,
-      likes: 6210,
+      likes: 0,
       createdAt: 1700000000000,
       data: {
         category: '롤 챔피언',
@@ -101,7 +101,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['영화', '애니', '명작', '천만관객'],
       itemCount: 40,
       isPublic: true,
-      likes: 7350,
+      likes: 0,
       createdAt: 1700000000000,
       data: {
         category: '영화 / 명작',
@@ -122,7 +122,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['추억', '학창시절', '일상', '공감'],
       itemCount: 40,
       isPublic: true,
-      likes: 5890,
+      likes: 0,
       createdAt: 1700000000000,
       data: {
         category: '학창시절 / 일상',
@@ -147,7 +147,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['야식', '음식', '32강', '국민투표'],
       itemCount: 32,
       isPublic: true,
-      likes: 9120,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         {
@@ -321,7 +321,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['라면', '분식', '16강', '소울푸드'],
       itemCount: 16,
       isPublic: true,
-      likes: 8540,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         {
@@ -415,7 +415,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['여행', '랜드마크', '세계여행', '16강'],
       itemCount: 16,
       isPublic: true,
-      likes: 9320,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         {
@@ -513,7 +513,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['깻잎논쟁', '100억', '극단적선택', '토론'],
       itemCount: 30,
       isPublic: true,
-      likes: 9940,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         { id: 1, optionA: '내 애인이 내 절친 깻잎 떼어주기', optionB: '내 절친이 내 애인 깻잎 떼어주기', category: '연애 / 논쟁' },
@@ -557,7 +557,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['직장인', '알바', '월급', '현실공감'],
       itemCount: 30,
       isPublic: true,
-      likes: 8760,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         { id: 1, optionA: '월 250만원 칼퇴 보장 워라밸 극상', optionB: '월 550만원 매일 밤 11시 야근 & 주말출근', category: '급여 / 워라밸' },
@@ -601,7 +601,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['초능력', 'SF', '판타지', '인생역전'],
       itemCount: 30,
       isPublic: true,
-      likes: 9240,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         { id: 1, optionA: '원하는 장소 어디든 마음대로 순간이동 (쿨타임 10분)', optionB: '원하는 시간으로 과거/미래 시간여행 (단, 1년에 1번만 가능)', category: '이동 / 시간' },
@@ -649,7 +649,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['사물', '랜드마크', '초근접', '고화질'],
       itemCount: 25,
       isPublic: true,
-      likes: 7120,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         { id: 1, answer: '피자', aliases: ['페퍼로니피자', '치즈피자'], image: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=800&auto=format&fit=crop&q=80', focusX: 45, focusY: 55 },
@@ -692,7 +692,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['드로잉', '블라인드', '웃음보장', '괴작', '예능'],
       itemCount: 55,
       isPublic: true,
-      likes: 9810,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         '스케이트보드 타는 기린', '선글라스 낀 피카츄', '우주복 입은 고양이', '피자 먹는 티라노사우루스', '춤추는 눈사람',
@@ -721,7 +721,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['한국문화전용', '실제음성', '레전드밈', '김두한', '랄로', '괴물쥐', '오징어게임'],
       itemCount: 14,
       isPublic: true,
-      likes: 4200,
+      likes: 0,
       createdAt: 1700000000000,
       language: 'ko',
       isKoreanCultureOnly: true,
@@ -827,7 +827,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['한국문화전용', '한국밈', '감스트', '랄로', '나문희', '스트리머', '실제음성'],
       itemCount: 12,
       isPublic: true,
-      likes: 3850,
+      likes: 0,
       createdAt: 1700000000000,
       language: 'ko',
       isKoreanCultureOnly: true,
@@ -925,13 +925,13 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
     {
       id: 'voice_global_en',
       gameId: 'voice-battle',
-      title: '🎬 [Global English] Famous Movie & Pop Culture Quotes',
-      description: 'SpongeBob, Star Wars, Terminator, Batman, Gordon Ramsay, Mario - 10 Universal English Voice Lines',
-      author: 'PartyHub Official',
-      tags: ['English', 'Movies', 'PopCulture', 'Global'],
+      title: '🎬 [공식] 전설의 영화 & 팝컬처 영문 명대사 팩 (10선)',
+      description: '스폰지밥, 스타워즈, 터미네이터, 배트맨, 고든 램지, 마리오 등 전 세계인이 아는 영문 명대사 10선',
+      author: 'PartyHub 공식',
+      tags: ['영어대사', '영화', '팝컬처', '글로벌'],
       itemCount: 10,
       isPublic: true,
-      likes: 6410,
+      likes: 0,
       createdAt: 1700000000000,
       language: 'en',
       data: [
@@ -950,13 +950,13 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
     {
       id: 'voice_global_ja',
       gameId: 'voice-battle',
-      title: '⚡ [日本語] アニメ名言＆名セリフ 声真似バトルパック',
-      description: 'ナルト、ワンピース、呪術廻戦、ジョジョ、ポケモンなど世界中で大人気のアニメ決めゼリフ10選',
-      author: 'PartyHub 公式',
-      tags: ['日本語', 'アニメ', '名言', 'ジャンプ'],
+      title: '⚡ [공식] 일본 애니 명대사 & 소년만화 시그니처 팩 (10선)',
+      description: '나루토, 원피스, 주술회전, 죠죠, 포켓몬 등 전 세계에서 사랑받는 명대사 10선',
+      author: 'PartyHub 공식',
+      tags: ['일본어대사', '애니', '명대사', '점프'],
       itemCount: 10,
       isPublic: true,
-      likes: 5820,
+      likes: 0,
       createdAt: 1700000000000,
       language: 'ja',
       data: [
@@ -985,7 +985,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['순발력', '3초룰', '스피드', '예능'],
       itemCount: 50,
       isPublic: true,
-      likes: 8120,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         '치킨 브랜드 3가지!',
@@ -1053,7 +1053,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['초등학생', '기초상식', '초급', '워밍업'],
       itemCount: 15,
       isPublic: true,
-      likes: 5410,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         { question: '대한민국의 수도는 어디일까요?', options: ['부산', '서울', '제주', '대구'], answerIndex: 1, explanation: '대한민국의 수도는 서울특별시입니다.' },
@@ -1082,7 +1082,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['중학생', '교과서', '역사', '과학'],
       itemCount: 15,
       isPublic: true,
-      likes: 6200,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         { question: '조선 시대 훈민정음(한글)을 창제한 왕은 누구일까요?', options: ['태조 이성계', '세종대왕', '정조', '영조'], answerIndex: 1, explanation: '세종대왕은 1443년에 훈민정음을 창제했습니다.' },
@@ -1111,7 +1111,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['성인', '시사', '경제', '교양'],
       itemCount: 15,
       isPublic: true,
-      likes: 8940,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         { question: '물가가 지속적으로 상승하고 화폐 가치가 하락하는 경제 현상은?', options: ['디플레이션', '인플레이션', '스태그플레이션', '모라토리엄'], answerIndex: 1, explanation: '인플레이션(Inflation)은 물가가 지속 상승하는 현상입니다.' },
@@ -1140,7 +1140,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['교수', '박사', '고난도', '멘사', '심화'],
       itemCount: 15,
       isPublic: true,
-      likes: 9150,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         { question: '양자역학에서 관측하기 전까지 입자의 상태가 확률로 중첩된다는 사고실험은?', options: ['맥스웰의 도깨비', '슈뢰딩거의 고양이', '테세우스의 배', '페르미 역설'], answerIndex: 1, explanation: '슈뢰딩거의 고양이는 양자 중첩 상태를 설명하는 유명한 사고실험입니다.' },
@@ -1173,7 +1173,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['흑역사', '비밀', '썰', '예능'],
       itemCount: 35,
       isPublic: true,
-      likes: 6120,
+      likes: 0,
       createdAt: 1700000000000,
       data: {
         topics: [
@@ -1220,7 +1220,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['가짜화가', '한획드로잉', '마피아류', '드로잉'],
       itemCount: 40,
       isPublic: true,
-      likes: 6720,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         '피카츄', '에펠탑', '햄버거', '자전거', '안경', '선풍기', '우산', '선인장', '펭귄', '기린',
@@ -1242,7 +1242,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       tags: ['익명지목', '우정파괴', '디스코드', '매운맛'],
       itemCount: 30,
       isPublic: true,
-      likes: 9140,
+      likes: 0,
       createdAt: 1700000000000,
       data: [
         '우리 중 가장 겉과 속이 다를 것 같은 사람은?',
