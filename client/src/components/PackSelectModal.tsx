@@ -181,6 +181,170 @@ const GAME_PACK_TEMPLATES: Record<string, {
   }
 };
 
+const GAME_PACK_TEMPLATES_EN: Record<string, {
+  title: string;
+  category: string;
+  formatHint: string;
+  defaultContent: string;
+  placeholder: string;
+}> = {
+  'liar-game': {
+    title: 'Favorite Foods & Late-Night Snacks Pack',
+    category: 'Food / Snacks',
+    formatHint: 'Enter one secret word per line.',
+    defaultContent: `Fried Chicken
+Pizza
+Tacos
+Sushi
+Burgers
+Ramen
+Ice Cream
+Steak
+Pasta
+Hot Dog`,
+    placeholder: 'Fried Chicken\nPizza\nTacos...'
+  },
+  'worldcup': {
+    title: 'Top 8 Ultimate Midnight Snacks Tournament',
+    category: 'Food World Cup',
+    formatHint: 'Enter one candidate per line. (Optional: Candidate | ImageURL)',
+    defaultContent: `Crispy Fried Chicken | https://plus.unsplash.com/premium_photo-1683139916670-38113db90cb9?w=800
+Pepperoni Pizza Feast | https://plus.unsplash.com/premium_photo-1733259709671-9dbf22bf02cc?w=800
+Spicy Mexican Tacos | https://plus.unsplash.com/premium_photo-1700161711824-1b28505a8d32?w=800
+Artisan Cheeseburger | https://plus.unsplash.com/premium_photo-1683619761468-b06992704398?w=800
+Sizzling BBQ Ribs | https://plus.unsplash.com/premium_photo-1672938855289-005faf61618d?w=800
+Steaming Hot Ramen | https://plus.unsplash.com/premium_photo-1673809798703-6082a015f931?w=800
+Fresh Salmon Sushi | https://plus.unsplash.com/premium_photo-1723575685216-6dab84c3fd23?w=800
+Crispy Golden French Fries | https://plus.unsplash.com/premium_photo-1701109142322-22b8a71f5b7a?w=800`,
+    placeholder: 'Candidate Name or Candidate Name | ImageURL'
+  },
+  'balance-debate': {
+    title: 'Extreme Would You Rather & Dating Dilemmas',
+    category: 'Dating / Friendship',
+    formatHint: 'Enter in [Option A vs Option B] format per line.',
+    defaultContent: `Live without soda forever vs Live without ramen forever
+Get $10M but never use a smartphone vs Live freely as you are now
+Travel 100 years into the past vs Travel 100 years into the future
+Live without air conditioning in summer vs Live without heating in winter
+Always speak your mind vs Never speak again`,
+    placeholder: 'Option A vs Option B'
+  },
+  'zoom-quiz': {
+    title: 'Everyday Objects Close-Up Zoom Quiz Pack',
+    category: 'Objects / Quiz',
+    formatHint: 'Enter in [Answer | ImageURL] format per line.',
+    defaultContent: `Pizza | https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=800
+Apple | https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=800
+Smartphone | https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800
+Basketball | https://images.unsplash.com/photo-1519766304817-4f37bda74a29?w=800`,
+    placeholder: 'Answer | ImageURL'
+  },
+  'blind-drawing': {
+    title: 'Wild Imagination Animals & Crazy Inventions',
+    category: 'Drawing / Creativity',
+    formatHint: 'Enter one drawing prompt per line.',
+    defaultContent: `Giraffe riding a skateboard
+Panda wearing sunglasses
+Cat in an astronaut spacesuit
+T-Rex eating a pizza slice
+Alien drinking iced latte
+Monkey dancing with DJ headphones
+Octopus driving a yellow submarine`,
+    placeholder: 'Giraffe riding a skateboard...'
+  },
+  'voice-battle': {
+    title: 'Iconic Pop Culture & Meme Voice Battle Pack',
+    category: 'Memes / Quotes',
+    formatHint: 'Enter in [Character | Voice Line | Acting Hint | AudioURL(optional)] format per line.',
+    defaultContent: `SpongeBob | I'm ready! I'm ready! | High-pitched goofy laugh | /audio/voice-battle/saddalra.mp3
+Gordon Ramsay | It's raw! Where's the lamb sauce?! | Furious British chef roar | /audio/voice-battle/maldaeggu.mp3
+Steven He | Emotional damage! | Exaggerated dramatic disbelief | /audio/voice-battle/squid_mugunghwa.mp3
+Cristiano Ronaldo | SIUUUU! | Victorious jump and roar | /audio/voice-battle/gangnam_style.mp3
+Darth Vader | No, I am your father. | Deep menacing robotic whisper | /audio/voice-battle/yasuo_soriegeton.mp3`,
+    placeholder: 'Character | Voice Line | Acting Hint | AudioURL(optional)'
+  },
+  'five-sec-rule': {
+    title: 'Lightning 5-Second Brain Freeze Challenge',
+    category: 'Quick Reflex / Trivia',
+    formatHint: 'Enter one 5-second challenge prompt per line.',
+    defaultContent: `Name 3 pizza toppings!
+Name 3 countries in Europe!
+Name 3 video games!
+Name 3 yellow fruits!
+Name 3 ice cream flavors!
+Name 3 things you find in a bathroom!
+Name 3 movie superheroes!`,
+    placeholder: 'Name 3 pizza toppings!...'
+  },
+  'trivia-quiz': {
+    title: 'Exciting World Knowledge & Fun Trivia Pack',
+    category: 'Trivia / Knowledge',
+    formatHint: 'Enter in [Question | Option1, Option2, Option3, Option4 | CorrectNum(1~4) | Explanation] format per line.',
+    defaultContent: `What is the capital city of Australia? | Sydney, Melbourne, Canberra, Brisbane | 3 | Canberra was selected as the compromise capital between Sydney and Melbourne.
+Which planet is known as the Red Planet? | Mars, Venus, Jupiter, Saturn | 1 | Mars appears reddish due to iron oxide (rust) on its surface.
+How many elements are in the periodic table? | 112, 118, 120, 108 | 2 | There are 118 confirmed elements in the modern periodic table.
+Which is the fastest land animal? | Cheetah, Lion, Greyhound, Gazelle | 1 | Cheetahs can reach sprint speeds of up to 120 km/h (75 mph).`,
+    placeholder: 'Question | Option1, Option2, Option3, Option4 | CorrectNum(1~4) | Explanation'
+  },
+  'story-roulette': {
+    title: 'Party Truths, Wild Confessions & Fun Dares',
+    category: 'Party / Confession',
+    formatHint: 'Enter under # Topics and # Penalties sections per line.',
+    defaultContent: `# Topics
+Most embarrassing moment in your life
+Funniest school story you still laugh at
+Creepiest real-life experience
+Worst date experience ever
+# Penalties
+Change profile picture to a silly meme for 24h
+Sing the chorus of a pop song right now
+Send a funny compliment into the group chat
+Drink a glass of ice cold water in one go`,
+    placeholder: '# Topics\nTopic 1\n# Penalties\nPenalty 1'
+  },
+  'short-trpg': {
+    title: 'Mystery of the Midnight Science Lab',
+    category: 'TRPG / Mystery',
+    formatHint: 'Enter in # Scenario (Title | Intro) and # Secret Missions sections.',
+    defaultContent: `# Scenario
+Midnight Science Lab Mystery | Trapped in the school laboratory at midnight, the anatomy model begins to move!
+# Secret Missions
+You are secretly controlling the model. Divert attention and keep everyone inside.
+You carry a master key in your bag. If anyone suspects you, make an intimidating excuse.
+You have severe pyrosensitivity. If the lights flicker, panic and scream dramatically.
+You are an investigative journalist. Question every player to uncover the root cause.`,
+    placeholder: '# Scenario\nTitle | Intro\n# Secret Missions\nMission 1'
+  },
+  'fake-artist': {
+    title: 'Famous Artworks & Iconic World Wonders Pack',
+    category: 'Drawing / Mystery',
+    formatHint: 'Enter one secret word per line.',
+    defaultContent: `Pikachu
+Eiffel Tower
+Mona Lisa
+Bicycle
+Pizza Slice
+Spaceship
+Giant Panda
+Statue of Liberty
+Soccer Ball
+Sunglasses`,
+    placeholder: 'Pikachu\nEiffel Tower\nMona Lisa...'
+  },
+  'anonymous-exposed': {
+    title: 'Secret Opinions & Anonymous Group Confessions',
+    category: 'Icebreaker / Social',
+    formatHint: 'Enter one anonymous confession question per line.',
+    defaultContent: `Who in our group is most likely to survive on a deserted island?
+Who would spend all their lottery winnings on ridiculous gadgets?
+Who takes the longest time getting ready before hanging out?
+Who would pick up the phone if you called them at 3 AM in an emergency?
+Who is secretly the best actor or actress in the group?
+Who would be the first one to get married?`,
+    placeholder: 'Question 1\nQuestion 2...'
+  }
+};
+
 export const PackSelectModal: React.FC<PackSelectModalProps> = ({
   isOpen,
   onClose,
@@ -404,13 +568,21 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
   if (!isOpen || !game) return null;
 
   // 템플릿 정보
-  const template = GAME_PACK_TEMPLATES[game.id] || {
-    title: `${game.title} 커스텀 팩`,
+  const isKo = language === 'ko';
+  const templateMap = isKo ? GAME_PACK_TEMPLATES : GAME_PACK_TEMPLATES_EN;
+  const template = templateMap[game.id] || (isKo ? {
+    title: `${localizedGame?.title || game.title} 커스텀 팩`,
     category: '커스텀',
     formatHint: '한 줄에 항목을 하나씩 입력하세요.',
     defaultContent: '항목 1\n항목 2\n항목 3\n항목 4',
     placeholder: '항목 1\n항목 2...'
-  };
+  } : {
+    title: `${localizedGame?.title || game.title} Custom Pack`,
+    category: 'Custom',
+    formatHint: 'Enter one item per line.',
+    defaultContent: 'Item 1\nItem 2\nItem 3\nItem 4',
+    placeholder: 'Item 1\nItem 2...'
+  });
 
   // 템플릿 불러오기 버튼 클릭 핸들러
   const handleLoadTemplate = () => {
@@ -432,7 +604,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
     switch (gameId) {
       case 'liar-game': {
         return {
-          category: category.trim() || '커스텀 주제',
+          category: category.trim() || (language === 'ko' ? '커스텀 주제' : 'Custom Topic'),
           words: lines
         };
       }
@@ -456,12 +628,12 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
       case 'balance-debate': {
         return lines.map((line, idx) => {
           let parts = line.split(/\s+vs\s+|\s+VS\s+|\|/i).map(s => s.trim());
-          if (parts.length < 2) parts = [parts[0], '반대 선택지'];
+          if (parts.length < 2) parts = [parts[0], language === 'ko' ? '반대 선택지' : 'Opposite Choice'];
           return {
             id: idx + 1,
             optionA: parts[0],
             optionB: parts[1],
-            category: category.trim() || '커스텀 밸런스'
+            category: category.trim() || (language === 'ko' ? '커스텀 밸런스' : 'Custom Balance')
           };
         });
       }
@@ -469,9 +641,9 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
         return lines.map(line => {
           const parts = line.split('|').map(s => s.trim());
           return {
-            character: parts[0] || '익명 캐릭터',
+            character: parts[0] || (language === 'ko' ? '익명 캐릭터' : 'Anonymous Character'),
             line: parts[1] || parts[0],
-            hint: parts[2] || '개성 넘치게 대사를 읊어보세요!',
+            hint: parts[2] || (language === 'ko' ? '개성 넘치게 대사를 읊어보세요!' : 'Perform with your own unique style!'),
             audioUrl: parts[3] ? parts[3].trim() : undefined,
             pitch: 1.0,
             rate: 1.0
@@ -498,10 +670,10 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
         return lines.map(line => {
           const parts = line.split('|').map(s => s.trim());
           const question = parts[0];
-          const options = parts[1] ? parts[1].split(',').map(s => s.trim()) : ['보기 1', '보기 2', '보기 3', '보기 4'];
+          const options = parts[1] ? parts[1].split(',').map(s => s.trim()) : (language === 'ko' ? ['보기 1', '보기 2', '보기 3', '보기 4'] : ['Option 1', 'Option 2', 'Option 3', 'Option 4']);
           const ansNum = parseInt(parts[2] || '1', 10);
           const answerIndex = isNaN(ansNum) ? 0 : Math.max(0, Math.min(options.length - 1, ansNum - 1));
-          const explanation = parts[3] || `정답은 ${options[answerIndex]}입니다.`;
+          const explanation = parts[3] || (language === 'ko' ? `정답은 ${options[answerIndex]}입니다.` : `The answer is ${options[answerIndex]}.`);
           return {
             question,
             options,
@@ -526,13 +698,13 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
           else penalties.push(line);
         }
         return {
-          topics: topics.length ? topics : ['자유 주제 썰'],
-          penalties: penalties.length ? penalties : ['노래 한 곡 완창하기']
+          topics: topics.length ? topics : (language === 'ko' ? ['자유 주제 썰'] : ['Free Topic Story']),
+          penalties: penalties.length ? penalties : (language === 'ko' ? ['노래 한 곡 완창하기'] : ['Sing a full song'])
         };
       }
       case 'short-trpg': {
-        let title = '커스텀 시나리오';
-        let intro = '미지의 공간에 모인 모험가들...';
+        let title = language === 'ko' ? '커스텀 시나리오' : 'Custom Scenario';
+        let intro = language === 'ko' ? '미지의 공간에 모인 모험가들...' : 'Adventurers gathered in an unknown realm...';
         const secretMissions: string[] = [];
         let currentSection: 'scenario' | 'missions' = 'scenario';
 
@@ -556,7 +728,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
         return {
           title,
           intro,
-          secretMissions: secretMissions.length ? secretMissions : ['비밀 임무를 완수하세요.']
+          secretMissions: secretMissions.length ? secretMissions : (language === 'ko' ? ['비밀 임무를 완수하세요.'] : ['Complete your secret mission.'])
         };
       }
       case 'blind-drawing':
@@ -931,7 +1103,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: '#A5B4FC', fontSize: '0.95rem' }}>
                   <Sparkles size={18} />
-                  <span>{game.title} - {t('tabUploadPack')}</span>
+                  <span>{localizedGame?.title || game.title} - {t('tabUploadPack')}</span>
                 </div>
                 <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
                   💡 {template.formatHint}
@@ -1030,7 +1202,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
               <textarea
                 className="input-field"
                 rows={7}
-                placeholder={inputMode === 'smart' ? t('uploadSmartPlaceholder') : '{\n  "words": ["단어1", "단어2"]\n}'}
+                placeholder={inputMode === 'smart' ? t('uploadSmartPlaceholder') : (language === 'ko' ? '{\n  "words": ["단어1", "단어2"]\n}' : '{\n  "words": ["word1", "word2"]\n}')}
                 value={uploadText}
                 onChange={(e) => setUploadText(e.target.value)}
                 style={{

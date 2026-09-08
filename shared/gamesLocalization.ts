@@ -97,10 +97,232 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
     }
   },
 
+  'chosung-quiz': {
+    en: {
+      title: '⏱️ Initial Consonant Speed Quiz',
+      subtitle: 'Take turns hosting! Guess words before anyone else',
+      description: 'One player hosts and inputs a secret keyword. Guess the word in real-time chat as hints and initials are revealed!',
+      rulesOverview: [
+        'Each round, one player hosts and sets a category with the target word.',
+        'First player to guess the correct word in chat scores points.',
+        'The host scores maximum points when around 50% of players guess correctly.',
+        'If everyone votes to pass, the round is skipped.'
+      ],
+      tags: ['Speed Quiz', 'Word Game', 'Host Battle', 'Party']
+    },
+    ja: {
+      title: '⏱️ スピード頭文字クイズ',
+      subtitle: '順番に出題者！早押し単語当てバトル',
+      description: '出題者がヒントとお題を出題！チャットで誰よりも早く正解を入力してポイントを獲得しよう。',
+      rulesOverview: [
+        '順番に1人が出題者となりカテゴリーと正解ワードを入力します。',
+        'チャット欄に正解を素早く打ち込んでスコアを獲得します。',
+        '参加者の約50%が正解した際に出題者に最高得点が入ります。'
+      ],
+      tags: ['クイズ', '早押し', '対戦', 'パーティー']
+    },
+    'zh-TW': {
+      title: '⏱️ 開頭字母極速猜詞',
+      subtitle: '輪流擔任出題者！搶先一步猜出關鍵詞',
+      description: '出題者給出分類與提示，全場在聊天室中極速競猜！誰能最快搶答奪冠？',
+      rulesOverview: [
+        '每輪輪流由一人擔任出題者並設定答案。',
+        '玩家在聊天框中搶先輸入正確單字得分。',
+        '當約一半的玩家答對時，出題者獲得最高獎勵積分。'
+      ],
+      tags: ['益智猜謎', '極速搶答', '派對聚會', '熱門']
+    }
+  },
+
+  'worldcup': {
+    en: {
+      title: '🏆 Ideal Matchup World Cup',
+      subtitle: 'Tournament battle with live community voting!',
+      description: 'Vote 1v1 with friends through intense knockout tournament brackets from Top 16 down to the grand championship!',
+      rulesOverview: [
+        'Two contenders face off on screen in a limited time showdown.',
+        'Live voting gauges dynamically shift until time expires.',
+        'The candidate with the majority vote advances to the next round.',
+        'A celebratory ceremony crowns the ultimate tournament winner!'
+      ],
+      tags: ['Voting', 'Tournament', 'World Cup', 'Custom Packs']
+    },
+    ja: {
+      title: '🏆 理想の選択！トーナメントワールドカップ',
+      subtitle: 'みんなで投票する1対1勝ち抜きバトルトーナメント！',
+      description: 'ディスコードの仲間と1対1のマッチアップでリアルタイム投票！数々のカスタム画像パックに対応。',
+      rulesOverview: [
+        '2つの候補が画面に登場し、制限時間内にAかBに投票します。',
+        'リアルタイム得票ゲージが変動し、多数決で次のラウンドへ進出します。',
+        '決勝戦の勝者が決まると豪華な優勝セレモニーが行われます。'
+      ],
+      tags: ['投票', 'ワールドカップ', 'トーナメント', 'カスタムパック']
+    },
+    'zh-TW': {
+      title: '🏆 即時二選一 理想盃大賽',
+      subtitle: '全員即時投票的 1v1 錦標賽對決！',
+      description: '與好友一同觀看 1v1 對決並即時投票！支援自訂題庫包與多種圖片包。',
+      rulesOverview: [
+        '畫面出現兩位候選項目，在時限內投票選擇 A 或 B。',
+        '即時得票率動態變化，多數決勝出者晉級下一輪。',
+        '決賽決出總冠軍後將舉行盛大的優勝慶祝！'
+      ],
+      tags: ['即時投票', '理想盃', '錦標賽', '自訂題庫']
+    }
+  },
+
+  'snake-royale': {
+    en: {
+      title: '🐍 Snake Royale Arena',
+      subtitle: 'Classic snake battle! Be the last serpent slithering',
+      description: 'Eat apples to grow longer and force rivals to crash into your body! A shrinking electric storm forces intense survival action.',
+      rulesOverview: [
+        'Use arrow keys or WASD to navigate your snake.',
+        'Eat glowing food to grow longer and speed up.',
+        'Crashing into walls or rival snake bodies will eliminate you.',
+        'Last snake surviving wins the crown!'
+      ],
+      tags: ['Survival', 'Battle Royale', 'Action', 'Skill']
+    },
+    ja: {
+      title: '🐍 スネーク・バトルロイヤル',
+      subtitle: '生き残れ！最後の1匹を目指すヘビサバイバル',
+      description: 'リンゴを食べて体を伸ばし、相手の頭を自分の胴体に激突させろ！電磁嵐が迫る白熱のバトルロイヤル。',
+      rulesOverview: [
+        '十字キーやWASDでヘビを直感操作。',
+        'リンゴを食べて体を大きく成長させます。',
+        '壁や他のヘビの体に頭が当たると即脱落。',
+        '最後まで生き残った最後の1匹が勝者です！'
+      ],
+      tags: ['スネーク', 'アクション', 'サバイバル', '白熱']
+    },
+    'zh-TW': {
+      title: '🐍 貪食蛇大逃殺',
+      subtitle: '經典大逃殺！爭奪最後一條存活的神蛇',
+      description: '吃蘋果讓身軀不斷變長，逼迫對手撞上你的身體！毒圈逐漸縮小的極限生存戰。',
+      rulesOverview: [
+        '使用方向鍵或 WASD 操控貪食蛇移動。',
+        '吃下發光食物以增長體積並加速。',
+        '撞上牆壁或其他蛇的身體將被立即淘汰。',
+        '堅持到最後的唯一倖存者奪得皇冠！'
+      ],
+      tags: ['大逃殺', '極限生存', '動作競技', '技巧']
+    }
+  },
+
+  'balance-debate': {
+    en: {
+      title: '⚖️ Extreme Balance Debate',
+      subtitle: 'Pick the lesser evil in hilarious impossible choices!',
+      description: 'Debate ridiculous life-or-death dilemmas! Vote secretly, defend your choice on voice, and see where the party stands.',
+      rulesOverview: [
+        'Two extreme and absurd scenarios are presented.',
+        'Vote for your choice within the time limit.',
+        'Defend your pick on microphone and view the group breakdown.'
+      ],
+      tags: ['Debate', 'Hilarious', 'Icebreaker', 'Voice Chat']
+    },
+    ja: {
+      title: '⚖️ 究極の2択！バランスディベート',
+      subtitle: 'どっちを選んでも地獄！？究極の選択討論ゲーム',
+      description: '恋愛・友情・日常の極端な2択！制限時間内に選択し、マイクで自分の意見を熱く語り合おう。',
+      rulesOverview: [
+        '極端でユーモラスな2つのシチュエーションが提示されます。',
+        '制限時間内に自分の選ぶ選択肢に投票します。',
+        'なぜそちらを選んだのかボイスチャットで白熱トーク！'
+      ],
+      tags: ['究極の2択', '討論', 'ディベート', '盛り上がる']
+    },
+    'zh-TW': {
+      title: '⚖️ 極限二選一 辯論修羅場',
+      subtitle: '怎麼選都超崩潰！考驗人性的終極靈魂選擇',
+      description: '愛情、友情與人生荒謬二選一！時限內做出選擇，開麥互相辯論誰的理由更合理。',
+      rulesOverview: [
+        '系統呈現兩種極端又荒謬的世紀難題。',
+        '所有人在倒數計時結束前做出投票。',
+        '透過語音發表自己的觀點，展開歡樂辯論！'
+      ],
+      tags: ['二選一', '即時辯論', '靈魂拷問', '破冰必備']
+    }
+  },
+
+  'smart-mafia': {
+    en: {
+      title: '🕵️ Smart Mafia',
+      subtitle: 'Psychological warfare! Mafia vs Citizens',
+      description: 'The ultimate social deduction classic. Deceive during daytime trials and assassinate targets in the shadows of night.',
+      rulesOverview: [
+        'Roles are secretly assigned: Mafia, Police, Doctor, and Citizens.',
+        'Discuss and vote to execute suspects during daytime.',
+        'Special roles perform secret nighttime operations.',
+        'Citizens win by eliminating all Mafia suspects.'
+      ],
+      tags: ['Mafia', 'Social Deduction', 'Strategy', 'Voice Chat']
+    },
+    ja: {
+      title: '🕵️ スマート人狼 (Smart Mafia)',
+      subtitle: '昼の舌戦と夜の暗殺！究極の心理サスペンス',
+      description: '心理戦の金字塔！昼の処刑裁判と夜の特殊役職アクションで市民とマフィアが雌雄を決する。',
+      rulesOverview: [
+        'マフィア、警察、医者、市民の役職が秘密裏に割り振られます。',
+        '昼の議論で怪しいプレイヤーを多数決で処刑。',
+        '夜フェーズでは各役職が秘密裏に行動を起こします。'
+      ],
+      tags: ['人狼', '心理戦', '戦略', 'ボイス推奨']
+    },
+    'zh-TW': {
+      title: '🕵️ 智慧狼人殺 (Smart Mafia)',
+      subtitle: '白天的唇槍舌戰與黑夜暗殺！經典心理博弈',
+      description: '經典陣營對決！透過白天的辯論審判與夜晚的特殊能力行動，村民與黑手黨殊死一戰。',
+      rulesOverview: [
+        '黑手黨、警察、醫生與平民等身分隨機秘密分發。',
+        '白天透過語音展開討論，投票處決可疑嫌疑犯。',
+        '夜晚特殊角色執行秘密搜查、保護或暗殺。'
+      ],
+      tags: ['狼人殺', '心理戰', '陣營對抗', '語音必備']
+    }
+  },
+
+  'story-roulette': {
+    en: {
+      title: '🎡 Story Roulette & Penalties',
+      subtitle: 'Spin the wheel, tell hilarious true stories!',
+      description: 'A roulette spins to select the speaker and topic! Share unforgettable memories while the audience votes FUNNY or BORING with funny penalties!',
+      rulesOverview: [
+        'Spin the roulette wheel to select speaker and topic.',
+        'Share a compelling, funny real-life story on voice mic.',
+        'Audience votes whether it was entertaining (+50 pts) or boring (penalty roulette).'
+      ],
+      tags: ['Storytelling', 'Icebreaker', 'Hilarious', 'Party']
+    },
+    ja: {
+      title: '🎡 ぶっちゃけルーレット＆罰ゲーム',
+      subtitle: 'ルーレットでお題決定！爆笑トークフェスティバル',
+      description: 'ルーレットで語り手とお題を抽選！面白い実話エピソードを語り、観客が「面白い」「つまらない」を判定。',
+      rulesOverview: [
+        'ルーレットで語り手とお題をルーレット抽選。',
+        'マイクをオンにして臨場感たっぷりにエピソードを披露。',
+        '聴衆が「大爆笑」か「イマイチ（罰ゲーム）」をリアルタイム判定！'
+      ],
+      tags: ['トーク', '雑談', '罰ゲーム', '爆笑']
+    },
+    'zh-TW': {
+      title: '🎡 故事大輪盤與大冒險',
+      subtitle: '轉動輪盤抽出主角！爆笑真實故事大公開',
+      description: '轉動大輪盤選出說書人與主題！在麥克風前分享真實趣事，全體聽眾評分，失敗者接受大冒險！',
+      rulesOverview: [
+        '旋轉輪盤隨機抽出說書人與故事主題。',
+        '說書人開啟麥克風，生動分享親身真實故事。',
+        '聽眾即時投票評判是「超好笑」還是「無聊（大冒險處罰）」。'
+      ],
+      tags: ['真實故事', '歡樂破冰', '大冒險', '聚會狂歡']
+    }
+  },
+
   'voice-battle': {
     en: {
       title: '🎙️ Voice Mimic 1v1 Battle',
-      subtitle: 'Listen to famous voice clips & mimic them on mic!',
+      subtitle: 'Listen to iconic voice clips & perform on mic!',
       description: 'Tournament brackets matching! Listen to iconic anime, gaming, and movie voice clips and perform live. Spectators vote in real-time!',
       rulesOverview: [
         'Players enter 1v1 tournament brackets with character lines played.',
@@ -130,450 +352,438 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
         '其他所有觀眾即時投票選出模仿最傳神的選手。'
       ],
       tags: ['聲音模仿', '海選對決', '聲優挑戰', '派對爆笑']
-    },
-    de: {
-      title: '🎙️ Stimm-Imitation 1v1',
-      subtitle: 'Höre ikonische Zitate und imitiere sie live im Mikrofon!',
-      description: '1v1-Turnierbaum! Höre weltberühmte Anime-, Gaming- und Filmstimmen und mache sie nach. Zuschauer stimmen live ab!',
-      rulesOverview: [
-        '1v1-Turnierpaarungen mit originalen Sprachclips.',
-        'Beide Teilnehmer imitieren die Stimme nacheinander im Mikrofon.',
-        'Alle Zuschauer stimmen live über den besten Auftritt ab.'
-      ],
-      tags: ['Stimm-Battle', 'Imitation', 'Gaming & Meme', 'Spaß']
-    },
-    pt: {
-      title: '🎙️ Batalha de Imitação 1v1',
-      subtitle: 'Ouça falas clássicas e imite no microfone!',
-      description: 'Torneio 1 contra 1! Escute áudios icônicos de animes, jogos e memes e imite ao vivo. A plateia vota em tempo real!',
-      rulesOverview: [
-        'Chaveamento de torneio 1v1 com reprodução de áudios icônicos.',
-        'Os dois competidores imitam a voz em seus microfones.',
-        'Todos os espectadores votam ao vivo na melhor imitação.'
-      ],
-      tags: ['Batalha de Voz', 'Imitação', 'Meme', 'Diversão']
-    },
-    es: {
-      title: '🎙️ Batalla de Imitación 1v1',
-      subtitle: '¡Escucha frases legendarias e imítalas al micrófono!',
-      description: '¡Torneo 1 contra 1! Escucha voces originales de anime, videojuegos y películas e imítalas. ¡Los espectadores votan en vivo!',
-      rulesOverview: [
-        'Emparejamientos en torneo 1v1 con frases legendarias.',
-        'Los dos duelistas imitan la voz con su micrófono.',
-        'Todos los espectadores votan en vivo por la mejor actuación.'
-      ],
-      tags: ['Imitación de Voz', 'Doblaje', 'Anime & Juegos', 'Risas']
-    },
-    fr: {
-      title: '🎙️ Tournoi d\'Imitation Vocale 1v1',
-      subtitle: 'Écoutez des répliques cultes et imitez-les au micro !',
-      description: 'Arbre de tournoi 1v1 ! Écoutez des extraits cultes d\'animés, jeux et films et reproduisez-les. Vote en direct des spectateurs !',
-      rulesOverview: [
-        'Tableau de tournoi 1v1 avec répliques cultes diffusées.',
-        'Les deux participants s\'affrontent au micro à tour de rôle.',
-        'Tous les spectateurs votent en direct pour la meilleure imitation.'
-      ],
-      tags: ['Battle Vocale', 'Imitation', 'Animés & Jeux', 'Fou rire']
     }
   },
 
-  'balance-game': {
+  'relay-novel': {
     en: {
-      title: '⚖️ Ultimate Balance Debate Battle',
-      subtitle: 'The hardest Would You Rather dilemnas!',
-      description: 'Split into A vs B and debate passionately! Can you convince the opposite side to change their vote?',
+      title: '📖 Relay Story Crafter',
+      subtitle: 'One sentence at a time! Create crazy collective stories',
+      description: 'Each player writes the next sentence without seeing the full story! Read out the bizarre, unpredictable collective masterpiece together.',
       rulesOverview: [
-        'An extreme dilemna appears with two impossible choices.',
-        'Choose your side and passionately argue your perspective.',
-        'Vote again after hearing all arguments to see the final victor.'
+        'Players take turns adding a sentence to the evolving plot.',
+        'Only the most recent prompt or hint is visible to you.',
+        'Once all rounds end, the full hilarious tale is unveiled.'
       ],
-      tags: ['Debate', 'Would You Rather', 'Social', 'Discussion']
+      tags: ['Creative', 'Writing', 'Comedy', 'Casual']
     },
     ja: {
-      title: '⚖️ 究極の究極選択ディベート',
-      subtitle: '一生どちらかしか選べないならどっち！？',
-      description: 'A派 vs B派に分かれて全力ディベート！相手チームの心を動かして寝返らせることができるか？白熱の討論ゲーム。',
+      title: '📖 リレー小説メーカー',
+      subtitle: '1行ずつ書き足して完成させる爆笑共同小説！',
+      description: '前の人の最後の一言だけを見て次の文を創作！予想の斜め上を行く奇想天外な大作小説が誕生。',
       rulesOverview: [
-        '究極の2択お題が表示されます。',
-        'どちらの選択肢を選ぶか直感で投票し、チームに分かれます。',
-        'お互いに熱いプレゼンと討論を行い、最終投票で決着をつけます。'
+        '順番に文章を1文ずつ書き足していきます。',
+        '前の人が書いた最後のフレーズだけをヒントに執筆。',
+        '全ラウンド終了後、完成した名作小説をみんなで朗読！'
       ],
-      tags: ['ディベート', '究極の選択', '討論', '盛り上がる']
+      tags: ['リレー小説', '創作', '文章', '爆笑']
     },
     'zh-TW': {
-      title: '⚖️ 終極二選一 辯論擂台',
-      subtitle: '無法抉擇的世紀終極兩難對決！',
-      description: '分成 A 隊與 B 隊展開唇槍舌戰！你能否說服對手陣營倒戈轉移陣營？最激烈的派對辯論。',
+      title: '📖 接龍故事創作社',
+      subtitle: '一人一句寫出腦洞大開的驚世奇作！',
+      description: '每個人只能看見前一位玩家的最後一句話，接著往下創作！結尾全篇朗讀，保證全場笑翻。',
       rulesOverview: [
-        '出現極度糾結的二選一難題。',
-        '玩家各自選擇支持的選項並分組。',
-        '進行限時辯論與拉票，最終由全體票數決定獲勝立場。'
+        '玩家依序在時限內為小說接續下一句話。',
+        '你只能看見前一名玩家留下的提示片段。',
+        '全部回合結束後，展示令人捧腹大笑的完整故事！'
       ],
-      tags: ['辯論對決', '終極二選一', '話題爆棚', '唇槍舌戰']
-    },
-    de: {
-      title: '⚖️ Das Ultimative Dilemma-Duell',
-      subtitle: 'Würdest du lieber...? Extreme Entscheidungen!',
-      description: 'Teilt euch in Team A und B auf und diskutiert! Wer überzeugt die Gegenseite?',
-      rulesOverview: [
-        'Ein extremes 2-Optionen-Dilemma wird vorgegeben.',
-        'Jeder wählt seine Seite und begründet seine Entscheidung.',
-        'Nach der Debatte stimmen alle erneut ab.'
-      ],
-      tags: ['Debatte', 'Würdest du eher', 'Social', 'Diskussion']
-    },
-    pt: {
-      title: '⚖️ Batalha do Dilema Supremo',
-      subtitle: 'Você prefere...? O debate mais difícil da sua vida!',
-      description: 'Dividam-se em Time A vs Time B e debatam com paixão! Quem convencerá a equipe adversária?',
-      rulesOverview: [
-        'Um dilema extremo com duas escolhas quase impossíveis.',
-        'Cada jogador escolhe seu lado e defende seu ponto de vista.',
-        'Nova votação final após o debate.'
-      ],
-      tags: ['Você Prefere', 'Debate', 'Social', 'Opinião']
-    },
-    es: {
-      title: '⚖️ Duelo de Dilemas Extremos',
-      subtitle: '¿Qué prefieres...? ¡El debate más difícil de tu vida!',
-      description: '¡Divídanse en Opción A vs B y debatan con pasión! ¿Lograrás que la otra parte cambie de opinión?',
-      rulesOverview: [
-        'Se presenta un dilema extremo entre dos opciones.',
-        'Cada jugador elige un bando y defiende su postura.',
-        'Votación final tras escuchar todos los argumentos.'
-      ],
-      tags: ['¿Qué Prefieres?', 'Debate', 'Social', 'Polémica']
-    },
-    fr: {
-      title: '⚖️ Le Dilemme Ultime',
-      subtitle: 'Tu préfères... ? Le débat le plus corsé de votre vie !',
-      description: 'Divisez-vous en Équipe A contre B et débattez ! Arriverez-vous à faire changer d\'avis l\'autre camp ?',
-      rulesOverview: [
-        'Un dilemme extrême à deux choix impossibles apparaît.',
-        'Choisissez votre camp et défendez votre point de vue.',
-        'Vote final après le débat pour désigner le vainqueur.'
-      ],
-      tags: ['Tu préfères', 'Débat', 'Social', 'Ambiance']
+      tags: ['故事接龍', '創意寫作', '腦洞大開', '休閒']
     }
   },
 
-  'worldcup': {
+  'bomb-party': {
     en: {
-      title: '👑 Real-time Ideal Type World Cup',
-      subtitle: 'Vote together live in tournament brackets!',
-      description: 'Food, Anime, Gaming, Music! Vote live round by round with friends to crown the ultimate champion.',
+      title: '💣 Word Bomb Party',
+      subtitle: 'Pass the ticking bomb with matching words!',
+      description: 'A bomb is ticking down with a random syllable or category! Say a matching word to pass the bomb before it blows up in your hands!',
       rulesOverview: [
-        'Matches from Round of 32, 16, Quarterfinals to Finals.',
-        'All players vote in real-time within the time limit.',
-        'Tie-breakers trigger instant sudden-death coin flips.'
+        'A random syllable or prompt is displayed on screen.',
+        'Type or shout a valid word containing the letters.',
+        'Pass the bomb to the next victim before the fuse runs out.'
       ],
-      tags: ['Tournament', 'Voting', 'Bracket', 'Social']
+      tags: ['Quick Thinking', 'Vocabulary', 'Panic', 'Action']
     },
     ja: {
-      title: '👑 リアルタイム 理想カップ (ワールドカップ)',
-      subtitle: 'トーナメント方式でみんなで投票対決！',
-      description: '料理、アニメキャラ、ゲーム、名作！友達と一緒にリアルタイムで2者択一を投票し、最強の優勝者を決定！',
+      title: '💣 ワード爆弾パニック',
+      subtitle: '爆発する前に条件に合う単語を言ってパス！',
+      description: '画面の中で導火線が燃え盛る爆弾！指定された文字を含む言葉を素早く叫んで隣の人にパスしよう。',
       rulesOverview: [
-        '32強、16強、ベスト8、準決勝、決勝と進行します。',
-        '制限時間内に全員でどちらか一方に投票します。',
-        '同点時はサドンデス自動判定が発動します。'
+        '画面にお題となる文字やカテゴリーが表示されます。',
+        '条件に合う正しい単語を入力または発言。',
+        '爆発する前に次のプレイヤーへ爆弾を押し付けろ！'
       ],
-      tags: ['トーナメント', '投票', '定番', 'みんなで決める']
+      tags: ['爆弾ゲーム', '語彙力', 'パニック', '早押し']
     },
     'zh-TW': {
-      title: '👑 即時理想型世界盃',
-      subtitle: '淘汰賽錦標賽，全場即時投票決選！',
-      description: '美食、動漫、遊戲、名曲！與好友一同在各輪次即時二選一投票，選出全場公認的最終冠軍。',
+      title: '💣 單字炸彈接力',
+      subtitle: '引信燃燒中！輸入指定單字即刻轉移炸彈',
+      description: '炸彈隨時可能引爆！快速輸入包含指定字根的詞語，在炸彈爆炸前將危機轉嫁給下個倒楣鬼。',
       rulesOverview: [
-        '從 32 強、16 強、八強一路推進至冠軍總決賽。',
-        '所有玩家在時限內即時投票表決。',
-        '票數平手時自動觸發驟死賽判定。'
+        '螢幕上隨機顯示指定字母或字根。',
+        '在時限內輸入包含該字根的合法單字。',
+        '成功輸入後立即將炸彈傳遞給下一位玩家！'
       ],
-      tags: ['淘汰錦標賽', '即時投票', '二選一', '多人互動']
-    },
-    de: {
-      title: '👑 Live-Turnier World Cup',
-      subtitle: 'Stimmt gemeinsam live in Turnierrunden ab!',
-      description: 'Essen, Anime, Gaming! Wählt Runde für Runde den ultimativen Champion eurer Discord-Gruppe.',
-      rulesOverview: [
-        'Turnierrunden von Sechzehntelfinale bis zum großen Finale.',
-        'Alle Spieler stimmen gemeinsam in Echtzeit ab.',
-        'Bei Gleichstand entscheidet der Sudden-Death.'
-      ],
-      tags: ['Turnier', 'Voting', 'Multiplayer', 'Spannung']
-    },
-    pt: {
-      title: '👑 Copa do Mundo em Tempo Real',
-      subtitle: 'Votem juntos no chaveamento do torneio!',
-      description: 'Comida, Anime, Jogos! Votem ao vivo rodada por rodada com seus amigos para escolher o campeão supremo.',
-      rulesOverview: [
-        'Chaveamento eliminatório das oitavas até a grande final.',
-        'Todos os jogadores votam em tempo real dentro do prazo.',
-        'Empates ativam morte súbita instantânea.'
-      ],
-      tags: ['Torneio', 'Votação', 'Copa', 'Social']
-    },
-    es: {
-      title: '👑 Copa Mundial en Tiempo Real',
-      subtitle: '¡Voten juntos en vivo en eliminatorias!',
-      description: 'Comida, anime, videojuegos. Vota ronda por ronda con tus amigos para coronar al campeón indiscutible.',
-      rulesOverview: [
-        'Enfrentamientos desde dieciseisavos hasta la gran final.',
-        'Todos los jugadores votan en tiempo real.',
-        'En caso de empate se activa el desempate súbito.'
-      ],
-      tags: ['Torneo', 'Votación', 'Eliminatoria', 'Diversión']
-    },
-    fr: {
-      title: '👑 Coupe du Monde en Direct',
-      subtitle: 'Votez ensemble en tournoi éliminatoire !',
-      description: 'Nourriture, animés, jeux vidéo ! Votez en direct à chaque manche pour couronner le grand champion.',
-      rulesOverview: [
-        'Matchs éliminatoires des huitièmes jusqu\'à la grande finale.',
-        'Tous les joueurs votent en direct dans le temps imparti.',
-        'En cas d\'égalité, une mort subite automatique départage.'
-      ],
-      tags: ['Tournoi', 'Vote en direct', 'Bracket', 'Convivial']
+      tags: ['炸彈接力', '詞彙挑戰', '極速反應', '緊張刺激']
     }
   },
 
-  'telepathy': {
+  'anonymous-exposed': {
     en: {
-      title: '🧠 Telepathy Mind Sync',
-      subtitle: 'Say the exact same word together!',
-      description: 'Read the prompt and type the first thing that comes to your mind. How many teammates share your brainwave?',
+      title: '🎭 Anonymous Confession Booth',
+      subtitle: 'Secret questions answered anonymously by everyone',
+      description: 'Vote anonymously on spicy and scandalous questions about the group! Guess who voted what while hilarious secrets are revealed.',
       rulesOverview: [
-        'A shared topic prompt is revealed to everyone.',
-        'Everyone secretly submits their keyword within the timer.',
-        'Points are awarded according to how many players matched your answer!'
+        'Spicy questions are prompted to all players.',
+        'Everyone answers anonymously and honestly.',
+        'Guess who voted for what and discuss the shocking results.'
       ],
-      tags: ['Mind Sync', 'Telepathy', 'Casual', 'Cooperative']
+      tags: ['Truth', 'Icebreaker', 'Spicy', 'Social']
     },
     ja: {
-      title: '🧠 テレパシー 心のシンクロ',
-      subtitle: 'せーので同じ言葉を連想できるか！？',
-      description: 'お題を見てパッと思い浮かんだワードを入力！友達とどれだけ思考が一致しているかテストする共感ゲーム。',
+      title: '🎭 匿名アンケート暴露室',
+      subtitle: '誰が回答した！？匿名だから言える本音調査',
+      description: 'きわどい質問にみんなが匿名で本音投票！驚きの集計結果を見て誰が投票したかを推理し合おう。',
       rulesOverview: [
-        '全員に共通のお題が表示されます。',
-        '制限時間内に頭に浮かんだワードを秘密裏に入力します。',
-        '同じ答えを出した人数が多いほど高得点を獲得します！'
+        '刺激的なアンケート質問が全員に提示されます。',
+        '誰が押したか分からない完全匿名で正直に回答。',
+        '衝撃の投票結果を肴にみんなで盛り上がろう！'
       ],
-      tags: ['テレパシー', '共感ゲーム', 'シンクロ', '定番']
+      tags: ['本音アンケート', '匿名', '暴露', '親睦']
     },
     'zh-TW': {
-      title: '🧠 心電感應 默契大考驗',
-      subtitle: '同一道題目，你們能否給出完全一樣的答案？',
-      description: '看見題目後輸入第一瞬間閃過的詞彙！測試你們的腦波頻率是否完全同步。',
+      title: '🎭 匿名真心話告白室',
+      subtitle: '完全匿名！揭露朋友們最深處的秘密與真心話',
+      description: '大膽辛辣的匿名問卷調查！看著全場不可思議的投票結果，推測到底是誰投下了關鍵的一票。',
       rulesOverview: [
-        '全體揭曉一道共同聯想題目。',
-        '每人在時限內秘密輸入第一時間想到的詞。',
-        '寫出相同答案的人數越多，獲得的默契積分越高！'
+        '系統隨機發布引人入勝的靈魂拷問題目。',
+        '所有人在百分之百匿名保護下如實作答。',
+        '揭曉全體統計數據，展開爆笑的追問與審判！'
       ],
-      tags: ['心電感應', '默契測試', '同頻共振', '好友考驗']
-    },
-    de: {
-      title: '🧠 Telepathie-Gedankensync',
-      subtitle: 'Schreibt exakt dasselbe Wort auf!',
-      description: 'Lest den Begriff und tippt das Erste, was euch einfällt. Wer denkt genauso wie du?',
-      rulesOverview: [
-        'Ein gemeinsamer Themenbegriff wird aufgedeckt.',
-        'Jeder tippt geheim sein Wort innerhalb der Zeit.',
-        'Je mehr Spieler deine Antwort teilen, desto mehr Punkte gibt es!'
-      ],
-      tags: ['Telepathie', 'Mind Sync', 'Kooperativ', 'Party']
-    },
-    pt: {
-      title: '🧠 Telepatia: Sintonia Mental',
-      subtitle: 'Falem exatamente a mesma palavra juntos!',
-      description: 'Veja o tema e digite a primeira coisa que vier à cabeça! Quem no grupo pensa exatamente como você?',
-      rulesOverview: [
-        'Um tema comum é revelado para todos os jogadores.',
-        'Cada um digita secretamente sua resposta no tempo.',
-        'Ganha mais pontos quem coincidir com mais amigos!'
-      ],
-      tags: ['Telepatia', 'Sintonia', 'Casual', 'Amizade']
-    },
-    es: {
-      title: '🧠 Telepatía: Sincronía Mental',
-      subtitle: '¡Escriban exactamente la misma palabra al mismo tiempo!',
-      description: 'Lee el tema y escribe lo primero que se te venga a la mente. ¿Cuántos amigos piensan igual que tú?',
-      rulesOverview: [
-        'Se revela un tema común para todos los participantes.',
-        'Cada jugador escribe su palabra en secreto antes de que acabe el tiempo.',
-        '¡Más puntos mientras más jugadores coincidan con tu respuesta!'
-      ],
-      tags: ['Telepatía', 'Conexión Mental', 'Casual', 'Amigos']
-    },
-    fr: {
-      title: '🧠 Télépathie Synchronisée',
-      subtitle: 'Écrivez exactement le même mot ensemble !',
-      description: 'Lisez le thème et tapez la première idée qui vous vient. Êtes-vous sur la même longueur d\'onde ?',
-      rulesOverview: [
-        'Un thème commun est dévoilé à tous les participants.',
-        'Chacun saisit secrètement son mot dans le temps imparti.',
-        'Plus vous avez de réponses identiques avec vos amis, plus vous marquez !'
-      ],
-      tags: ['Télépathie', 'Synchronisation', 'Casual', 'Complices']
+      tags: ['真心話', '匿名問卷', '靈魂拷問', '社交破冰']
     }
   },
 
-  'quick-draw': {
+  'high-noon-duel': {
     en: {
-      title: '🎨 Real-time CatchMind (Draw & Guess)',
-      subtitle: 'Draw on canvas & guess the word live!',
-      description: 'One artist draws on the live synced canvas while everyone else races to guess the word in chat!',
+      title: '🤠 High Noon Quick Draw Duel',
+      subtitle: '0.001s reflex duel! Fire the moment the bell chimes',
+      description: 'Stare down your opponent at high noon. Wait for the bell to toll, then draw your weapon with split-second reflexes!',
       rulesOverview: [
-        'The artist receives a secret word and draws on canvas.',
-        'Others type guesses in the chat in real-time.',
-        'The first correct guesser and the artist both earn points.'
+        'Keep your finger steady while the tense clock ticks.',
+        'At 12:00 sharp, click immediately to shoot.',
+        'Firing too early results in a misfire and instant loss!'
       ],
-      tags: ['Drawing', 'Guessing', 'Pictionary', 'Classic']
+      tags: ['Reflex', 'Western', '1v1 Duel', 'Arcade']
     },
     ja: {
-      title: '🎨 リアルタイム お絵かきクイズ (キャッチマインド)',
-      subtitle: 'キャンバスに描いてリアルタイムで当てよう！',
-      description: '出題者がリアルタイムキャンバスに絵を描き、回答者たちがチャットで素早く正解を言い当てる王道ゲーム！',
+      title: '🤠 荒野の早撃ち決闘 (High Noon)',
+      subtitle: '0.001秒の反射神経対決！鐘が鳴った瞬間に撃て！',
+      description: '荒野の真昼、静寂を切り裂く鐘の音！合図が出た瞬間に誰よりも速くクリックして相手を撃ち倒せ。',
       rulesOverview: [
-        '出題者に秘密のお題が与えられ、絵を描きます。',
-        '回答者はチャットで答えを素早く推測して入力します。',
-        '一番早く当てた回答者と絵を描いた出題者に得点が入ります。'
+        '静まり返る緊張感の中、時計の針を凝視。',
+        '合図が出た瞬間に素早くクリックして発砲。',
+        'フライングはお手つきで即敗北！'
       ],
-      tags: ['お絵かき', 'クイズ', '定番', '爆笑']
+      tags: ['早撃ち', '反射神経', '1対1決闘', 'ウエスタン']
     },
     'zh-TW': {
-      title: '🎨 即時塗鴉猜猜畫 (CatchMind)',
-      subtitle: '即時同步畫板，比比誰畫得像、誰猜得快！',
-      description: '出題者在畫板上作畫，其餘玩家在聊天室瘋狂搶答！經典必玩的多人猜謎遊戲。',
+      title: '🤠 正午西部快槍手對決',
+      subtitle: '0.001秒神經反射！鐘聲響起的瞬間精準拔槍',
+      description: '西部正午烈日當空！死盯著時鐘指針，在鐘聲響起的剎那極速拔槍，擊倒對決強敵。',
       rulesOverview: [
-        '出題者獲得秘密題目並在線上畫板作畫。',
-        '其他玩家在即時聊天框輸入答案搶答。',
-        '最快答對的猜題者與畫圖者皆可獲得積分。'
+        '屏氣凝神等待倒數，指針指向正午12點。',
+        '鐘聲與信號出現的瞬間立刻點擊開火。',
+        '搶先開槍視同走火，直接判定失敗！'
       ],
-      tags: ['你畫我猜', '塗鴉猜謎', '益智歡樂', '經典必玩']
+      tags: ['快槍手', '反應速度', '1v1對決', '西部狂野']
+    }
+  },
+
+  'clicker-clash': {
+    en: {
+      title: '⚡ Clicker Tug-of-War Clash',
+      subtitle: 'Pure CPS speed! Rapid tap tug-of-war battle',
+      description: 'Mash your mouse or screen as fast as humanly possible! Pull the rope to your side in 10 intense seconds of pure clicking adrenaline.',
+      rulesOverview: [
+        'Click repeatedly as fast as you can.',
+        'Each tap pulls the tug-of-war bar toward your side.',
+        'Highest clicks per second (CPS) wins the match!'
+      ],
+      tags: ['CPS', 'Tug of War', 'Clicker', 'Competitive']
     },
-    de: {
-      title: '🎨 Montagsmaler (Zeichnen & Raten)',
-      subtitle: 'Zeichne auf der Leinwand und errate das Wort!',
-      description: 'Ein Spieler zeichnet live auf der synchronisierten Leinwand, während alle anderen im Chat raten!',
+    ja: {
+      title: '⚡ 連打スピード綱引き',
+      subtitle: '圧倒的CPS力！指先が燃え尽きる極限の連打対決',
+      description: '10秒間の限界連打！マウスやタップを限界速度で連打し、綱を自分の陣地に引き寄せろ。',
       rulesOverview: [
-        'Der Zeichner erhält ein geheimes Wort und malt es.',
-        'Die anderen Spieler tippen ihre Vermutungen in den Chat.',
-        'Der schnellste Rater und der Zeichner erhalten Punkte.'
+        'スタートの合図とともに全力でクリック連打！',
+        'タップするたびに綱引きのゲージが自分側に移動。',
+        '制限時間終了時に陣地を奪っていた方の勝利！'
       ],
-      tags: ['Zeichnen', 'Raten', 'Klassiker', 'Kreativ']
+      tags: ['連打', '綱引き', 'CPS対決', 'フィジカル']
     },
-    pt: {
-      title: '🎨 Desenhe e Adivinhe (Gartic)',
-      subtitle: 'Desenhe na tela e adivinhe ao vivo!',
-      description: 'Um desenhista desenha na lousa compartilhada enquanto os outros correm para adivinhar no chat!',
+    'zh-TW': {
+      title: '⚡ 極速連點拔河對決',
+      subtitle: '純粹的CPS手速！在10秒內將拔河繩拽向己方',
+      description: '燃燒你的指尖！以最快速度瘋狂連擊滑鼠或螢幕，在純粹的手速與耐力碰撞中奪取勝利。',
       rulesOverview: [
-        'O desenhista recebe uma palavra secreta e desenha.',
-        'Os outros jogadores digitam seus palpites no chat.',
-        'O primeiro a acertar e o desenhista ganham pontos.'
+        '比賽開始後以超越極限的手速連續點擊。',
+        '每次點擊都會將拔河能量條拉向己方陣營。',
+        '時限倒數結束時，能量條偏向的一方獲勝！'
       ],
-      tags: ['Desenho', 'Adivinhação', 'Criatividade', 'Clássico']
+      tags: ['極速連點', '拔河對決', '手速競技', '熱血']
+    }
+  },
+
+  'zoom-quiz': {
+    en: {
+      title: '🔍 Extreme Close-Up Zoom Quiz',
+      subtitle: 'Guess everyday items from extreme 1500% macro view!',
+      description: 'An object starts at 1500% extreme magnification and slowly zooms out! Guess the object before your friends to score highest.',
+      rulesOverview: [
+        'The quiz image begins at extreme microscopic zoom.',
+        'Camera gradually zooms out over 20 seconds.',
+        'Type your answer as early as possible for bonus points.'
+      ],
+      tags: ['Macro Zoom', 'Trivia', 'Observation', 'Competitive']
     },
-    es: {
-      title: '🎨 Dibuja y Adivina (Pinturillo)',
-      subtitle: '¡Dibuja en el lienzo digital y adivina en vivo!',
-      description: '¡Uno dibuja en la pizarra sincronizada mientras todos los demás intentan adivinar en el chat!',
+    ja: {
+      title: '🔍 超拡大ズームクイズ',
+      subtitle: '1500%拡大から徐々に引く！これ一体なーんだ？',
+      description: '超接写された画像がゆっくりズームアウト！一瞬の閃きで正解を当ててライバルに差をつけよう。',
       rulesOverview: [
-        'El dibujante recibe una palabra secreta y la ilustra.',
-        'Los demás participantes escriben sus respuestas en el chat.',
-        'El más rápido en acertar y el dibujante ganan puntos.'
+        '身近な物の超近接写真からスタート。',
+        '徐々にズームアウトして全体像が見えてきます。',
+        '早く正解するほど高得点を獲得できます！'
       ],
-      tags: ['Dibujo', 'Adivinanzas', 'Pinturillo', 'Clásico']
+      tags: ['ズームクイズ', 'ひらめき', '観察力', '早押し']
     },
-    fr: {
-      title: '🎨 Dessinez c\'est Gagné (Esquissé)',
-      subtitle: 'Dessinez sur la toile et devinez en direct !',
-      description: 'Un joueur dessine en direct sur le tableau partagé tandis que tous les autres tentent de deviner dans le chat !',
+    'zh-TW': {
+      title: '🔍 極限微距放大特寫猜謎',
+      subtitle: '從 1500% 極限特寫漸漸拉遠！猜猜這是什麼？',
+      description: '微觀視角下的日常物品！鏡頭緩緩拉遠露出全貌，誰能憑藉觀察力搶先猜出正解？',
       rulesOverview: [
-        'Le dessinateur reçoit un mot secret et le dessine.',
-        'Les autres joueurs tapent leurs propositions dans le chat.',
-        'Le premier joueur qui trouve et le dessinateur marquent des points.'
+        '題目以極限顯微放大特寫呈現。',
+        '隨時間流逝，鏡頭在20秒內緩慢拉遠。',
+        '越早搶答出正確物品名稱，獲得的分數越高！'
       ],
-      tags: ['Dessin', 'Devinettes', 'Pictionary', 'Créatif']
+      tags: ['特寫猜謎', '觀察力', '眼力大考驗', '趣味']
+    }
+  },
+
+  'black-and-white': {
+    en: {
+      title: '🃏 Black & White Mind Duel',
+      subtitle: 'The Genius mind game! Outwit your rival in 5 rounds',
+      description: 'Inspired by The Genius! Secretly bid numbered black and white tiles. First player to score 5 wins takes the match.',
+      rulesOverview: [
+        'Players receive secret numbered tiles (0 to 8).',
+        'Each turn, both secretly play a tile.',
+        'Higher number wins the point; first to 5 wins takes the crown.'
+      ],
+      tags: ['Mind Game', 'Strategy', 'The Genius', '1v1']
+    },
+    ja: {
+      title: '🃏 ブラック＆ホワイト頭脳戦',
+      subtitle: '天才たちの心理戦！数字タイルを読み合え',
+      description: '人気頭脳番組から着想！0〜8の白黒タイルを隠し持ち、相手の手の内を読み切って先に5勝をもぎ取れ。',
+      rulesOverview: [
+        '各プレイヤーに0から8までの数字タイルが配布。',
+        '毎ターン裏向きでタイルを1枚提示。',
+        'より大きい数字を出した方が1勝、先に5勝した方の勝利！'
+      ],
+      tags: ['頭脳戦', '心理戦', 'カードゲーム', '1対1']
+    },
+    'zh-TW': {
+      title: '🃏 黑白心理卡牌博弈',
+      subtitle: '天才大腦的巔峰心理對決！搶先贏得5勝',
+      description: '源自經典智力博弈！手握 0~8 號黑白號碼牌，精確計算對手出牌規律並率先斬獲5勝奪冠。',
+      rulesOverview: [
+        '雙方各自持有 0 到 8 號的黑白卡牌。',
+        '每輪暗出牌，數字較大者贏下該局。',
+        '率先取得 5 場勝利的玩家榮獲大腦王者稱號！'
+      ],
+      tags: ['智力博弈', '心理卡牌', '策略計算', '1v1']
+    }
+  },
+
+  'blind-drawing': {
+    en: {
+      title: '🎨 Blind Sketch & Guess',
+      subtitle: 'Draw without seeing your canvas, guess the sketch!',
+      description: 'You cannot see what you are drawing! Create chaotic masterpieces blindly on canvas while friends race to decipher the prompt.',
+      rulesOverview: [
+        'A secret prompt is given to the artist.',
+        'Canvas strokes are hidden from the artist while drawing.',
+        'Spectators attempt to guess the bizarre artwork in real-time.'
+      ],
+      tags: ['Drawing', 'Art', 'Hilarious', 'Creativity']
+    },
+    ja: {
+      title: '🎨 見ないで描くお絵かきクイズ',
+      subtitle: '画面を見ずに描いたカオスな絵をみんなで推理！',
+      description: '自分の描いた線が見えないブラインド状態でお絵かき！崩壊していく絵から何を描いたかを当てろ！',
+      rulesOverview: [
+        '描き手にお題が配られます。',
+        'キャンバスの線が見えない状態で手探りお絵描き。',
+        '出来上がったカオスな絵を見てみんなでチャット回答！'
+      ],
+      tags: ['お絵かき', 'カオス', '爆笑', '創造力']
+    },
+    'zh-TW': {
+      title: '🎨 盲畫猜圖挑戰',
+      subtitle: '看不見畫布的盲畫體驗！猜測靈魂畫手的畫作',
+      description: '作畫者完全看不見自己繪製的筆觸！在失控的混亂線條中，全體好友競猜真正的題目。',
+      rulesOverview: [
+        '繪畫者獲得指定題目單字。',
+        '在畫筆軌跡完全隱藏的盲畫模式下作畫。',
+        '觀眾與好友即時競猜這幅靈魂傑作到底是什麼！'
+      ],
+      tags: ['靈魂畫手', '繪畫猜謎', '歡樂爆笑', '創意']
+    }
+  },
+
+  'fake-artist': {
+    en: {
+      title: '🎭 A Fake Artist Goes to New York',
+      subtitle: 'One stroke each! Unmask the faker without giving away the word',
+      description: 'Everyone contributes one single stroke to a communal drawing. The Fake Artist has no idea what the word is—can you catch them?',
+      rulesOverview: [
+        'All artists know the secret topic except the Fake Artist.',
+        'Everyone adds exactly one continuous stroke in turn.',
+        'Vote to unmask the Fake Artist at the end of round 2.'
+      ],
+      tags: ['Drawing', 'Social Deduction', 'Bluffing', 'Party']
+    },
+    ja: {
+      title: '🎭 エセ芸術家ニューヨークへ行く',
+      subtitle: '1筆ずつ描き足せ！偽物のエセ画伯を暴き出せ',
+      description: '1人1筆ずつリレー描画！お題を知らないエセ芸術家が紛れ込んでいる。お題を悟られずにエセを検挙できるか？',
+      rulesOverview: [
+        'エセ芸術家以外の全員にお題が配られます。',
+        '順番に1人1筆ずつ同じキャンバスに線を加えます。',
+        '描き終わったら投票でエセ芸術家を指名検挙！'
+      ],
+      tags: ['エセ芸術家', 'お絵かき', '人狼', '心理戦']
+    },
+    'zh-TW': {
+      title: '🎭 偽藝術家遊紐約',
+      subtitle: '每人畫下一筆！在不洩漏謎底的情況下揪出冒牌畫家',
+      description: '所有人輪流在一張畫布上添上一筆！偽畫家根本不知道題目是什麼，市民能否成功識破偽畫家？',
+      rulesOverview: [
+        '除了偽畫家之外，所有人都知道真正的繪畫主題。',
+        '每位玩家輪流在共同畫布上畫下連續的一筆。',
+        '繪製兩輪後全員投票，抓出混在其中的偽藝術家！'
+      ],
+      tags: ['偽藝術家', '繪圖推理', '社交陣營', '派對爆笑']
+    }
+  },
+
+  'taboo-talk': {
+    en: {
+      title: '🤐 Forbidden Taboo Word Survival',
+      subtitle: 'Your taboo word is floating over your head—never say it!',
+      description: 'A taboo word is assigned to your forehead for everyone else to see! Bait your opponents into saying theirs while protecting your own.',
+      rulesOverview: [
+        'Everyone sees all players\' taboo words except their own.',
+        'Engage in natural conversation and bait rivals into saying forbidden words.',
+        'Click [EXPOSE 🚨] the instant someone utters their taboo word to eliminate them!'
+      ],
+      tags: ['Taboo', 'Survival', 'Conversation', 'Mind Game']
+    },
+    ja: {
+      title: '🤐 絶対NGワードサバイバル',
+      subtitle: '頭上に掲げられたNGワード！喋ったら即脱落！',
+      description: '自分だけが見えないNGワードが頭上に！巧みなトーク誘導で相手にNGワードを言わせ、即座に指摘して脱落させろ。',
+      rulesOverview: [
+        '自分のNGワードは見えず、他人のNGワードは見えます。',
+        '自然な会話の中で相手にNGワードを言わせるよう誘導。',
+        '相手が言った瞬間に [指摘 🚨] ボタンを押して撃沈！'
+      ],
+      tags: ['NGワード', 'サバイバル', '雑談トーク', '心理戦']
+    },
+    'zh-TW': {
+      title: '🤐 絕對禁忌詞生還戰',
+      subtitle: '懸浮在頭頂的禁忌單字！一說出口立刻淘汰！',
+      description: '唯獨自己看不見自己頭上的禁忌詞！巧妙透過對話誘使對方說出關鍵詞，抓包對手並成為最後生存者。',
+      rulesOverview: [
+        '每個人都可以看見所有其他人的禁忌詞，唯獨看不見自己的。',
+        '自然聊天並設計圈套，誘使對手說出頭頂的禁忌詞。',
+        '對方說出的瞬間立刻點擊 [抓包 🚨] 處決對手！'
+      ],
+      tags: ['禁忌詞', '極限生存', '語音聊天', '心理博弈']
     }
   },
 
   'five-sec-rule': {
     en: {
-      title: '⏱️ 3-Second Brain Freeze Speed',
-      subtitle: 'Name 3 things in 3 seconds!',
-      description: '"Name 3 pizza toppings!", "Name 3 excuses to be late!" Shout 3 answers before the buzzer sounds!',
+      title: '⏱️ 3-Second Rule Speed Challenge',
+      subtitle: 'Name 3 things in 3 seconds flat!',
+      description: '"Name 3 pizza toppings!", "3 excuses for being late!" Shout them out before the 3-second hourglass runs dry!',
       rulesOverview: [
-        'A rapid question requires naming 3 specific things.',
-        'You only have 3 seconds on the live countdown timer!',
-        'The room judges whether your answers were valid.'
+        'A fast prompt requiring 3 specific answers.',
+        'You only have 3 seconds on the timer!',
+        'The audience judges whether your responses are valid.'
       ],
-      tags: ['Speed', 'Brain Freeze', 'Trivia', 'Quick Reaction']
+      tags: ['Speed', 'Reflexes', 'Panic', 'Hilarious']
     },
     ja: {
-      title: '⏱️ 3秒ルール 脳停止スピード',
-      subtitle: '3秒以内に3つの回答を叫べ！',
-      description: '「ピザのトッピング3つ！」「遅刻の言い訳3つ！」タイマーが鳴る前にテンパりながら叫ぶ爆笑瞬発力ゲーム。',
+      title: '⏱️ 3秒ルール・脳停止スピード',
+      subtitle: '3秒以内に指定された単語を3つ連続で言え！',
+      description: '「ピザのトッピング3つ！」「遅刻の言い訳3つ！」砂時計が落ちる前にマイクで叫べ！究極のスピードパニック。',
       rulesOverview: [
-        '3つの答えを要求するお題が表示されます。',
-        '制限時間はたったの3秒間！',
-        '回答が正当かどうかを部屋の全員で判定します。'
+        'お題に対して3秒以内に3つのワードを回答。',
+        'マイクに向かって詰まらずに答えられるか？',
+        '観客が「認定」か「不認定」をリアルタイム判定！'
       ],
-      tags: ['瞬発力', '3秒ルール', 'スピード', 'パニック']
+      tags: ['3秒ルール', '早口', 'パニック', '爆笑']
     },
     'zh-TW': {
-      title: '⏱️ 3秒爆腦急速挑戰',
-      subtitle: '在 3 秒內講出 3 個指定答案！',
-      description: '「講出 3 種披薩配料！」「講出 3 個遲到的藉口！」在倒數計時結束前語無倫次秒答的爆笑遊戲。',
+      title: '⏱️ 3秒極限腦力風暴',
+      subtitle: '3秒之內連續說出 3 個指定答案！',
+      description: '「說出3種披薩配料！」「3個遲到的藉口！」在沙漏漏完前立刻開麥大聲喊出來，挑戰極限手速與大腦反應！',
       rulesOverview: [
-        '每道題目要求說出 3 個符合條件的答案。',
-        '即時倒數計時僅有極短的 3 秒鐘！',
-        '由房間全體玩家即時判定回答是否合格。'
+        '題目要求在3秒內給出3個符合條件的單字。',
+        '倒數計時極速流逝，考驗大腦與嘴速極限。',
+        '全體聽眾即時投票認證是否答對！'
       ],
-      tags: ['反應速度', '急速限時', '極限腦力', '爆笑慌亂']
+      tags: ['3秒快問快答', '反應力', '緊張刺激', '派對爆笑']
+    }
+  },
+
+  'trivia-quiz': {
+    en: {
+      title: '🎓 Survival Trivia Quiz Show',
+      subtitle: '1v1, Solo Battle Royale & Red vs Blue Team Battles!',
+      description: 'History, science, pop culture, movies, and fun facts! Compete in 1v1 brackets, all-player battle royale, or red vs blue team showdowns.',
+      rulesOverview: [
+        'Choose Individual Survival, 1v1 Tournament, or Red vs Blue Team mode.',
+        'Answer 4-choice questions within 15 seconds.',
+        'Fast answers award speed bonuses with comprehensive fact explanations.'
+      ],
+      tags: ['Trivia', 'Knowledge', 'Tournament', 'Massive Players']
     },
-    de: {
-      title: '⏱️ 3-Sekunden-Blackout',
-      subtitle: 'Nenne 3 Dinge in 3 Sekunden!',
-      description: '"Nenne 3 Pizza-Beläge!", "Nenne 3 Ausreden fürs Zuspätkommen!" Antworte bevor der Timer abläuft!',
+    ja: {
+      title: '🎓 サバイバル雑学クイズショー',
+      subtitle: '1対1トーナメント、個人戦、赤vs青チーム戦！',
+      description: '歴史、科学、時事、映画、雑学クイズが集結！個人サバイバルやチーム対抗戦も楽しめる本格クイズショー。',
       rulesOverview: [
-        'Nenne 3 Dinge zu einer bestimmten Kategorie.',
-        'Du hast genau 3 Sekunden auf der Uhr!',
-        'Die Gruppe entscheidet, ob deine Antwort zählt.'
+        '個人戦、1対1トーナメント、チーム対抗戦からモードを選択。',
+        '4択問題に15秒以内に回答。',
+        '正解スピードに応じたボーナススコアと丁寧な解説付き！'
       ],
-      tags: ['Tempo', 'Reaktion', 'Schnelligkeit', 'Panik']
+      tags: ['雑学クイズ', '早押し', '対決', '大規模対応']
     },
-    pt: {
-      title: '⏱️ Regra dos 3 Segundos',
-      subtitle: 'Fale 3 coisas em 3 segundos!',
-      description: '"Cite 3 sabores de pizza!", "Cite 3 desculpas para atrasos!" Fale antes que o alarme toque!',
+    'zh-TW': {
+      title: '🎓 終極生存百科問答秀',
+      subtitle: '1v1 淘汰賽、個人大逃殺與紅藍組隊知識大對決！',
+      description: '涵蓋歷史、科學、流行文化、電影與冷知識！支援 1v1 單挑、全員大逃殺生存模式及紅藍隊伍陣營戰。',
       rulesOverview: [
-        'Uma pergunta rápida exigindo 3 respostas específicas.',
-        'Você tem apenas 3 segundos no cronômetro!',
-        'Os outros jogadores julgam se a resposta foi válida.'
+        '可自由選擇個人生存戰、1v1 淘汰錦標賽或紅藍陣營戰。',
+        '在15秒時限內選出四選一題目的正解。',
+        '依據答題手速獲得速度加分，並即時查看百科趣味詳解！'
       ],
-      tags: ['Rapidez', 'Reflexo', 'Agilidade', 'Desafio']
-    },
-    es: {
-      title: '⏱️ Regla de los 3 Segundos',
-      subtitle: '¡Nombra 3 cosas en 3 segundos!',
-      description: '"¡Nombra 3 ingredientes de pizza!", "¡3 excusas para llegar tarde!" ¡Responde antes de que suene la alarma!',
-      rulesOverview: [
-        'Responde nombrando 3 cosas de la categoría indicada.',
-        '¡Tienes solo 3 segundos en el cronómetro!',
-        'La sala vota si tus respuestas fueron válidas.'
-      ],
-      tags: ['Velocidad', 'Reflejos', 'Pánico', 'Risas']
-    },
-    fr: {
-      title: '⏱️ La Règle des 3 Secondes',
-      subtitle: 'Citez 3 choses en 3 secondes chrono !',
-      description: '« Citez 3 garnitures de pizza ! », « 3 excuses de retard ! » Répondez avant la sonnerie fatidique !',
-      rulesOverview: [
-        'Une question exigeant 3 éléments précis.',
-        'Vous n\'avez que 3 petites secondes au compteur !',
-        'Les autres joueurs valident si vos réponses sont acceptées.'
-      ],
-      tags: ['Réflexe', 'Vitesse', 'Panique', 'Délire']
+      tags: ['百科問答', '知識對決', '錦標賽', '多人聚會']
     }
   }
 };
@@ -581,7 +791,7 @@ export const GAME_TRANSLATIONS: Record<string, Partial<Record<SupportedLanguage,
 export function getLocalizedGame(game: GameInfo, lang: SupportedLanguage = 'ko'): GameInfo {
   if (lang === 'ko') return game;
 
-  const trans = GAME_TRANSLATIONS[game.id]?.[lang];
+  const trans = GAME_TRANSLATIONS[game.id]?.[lang] || GAME_TRANSLATIONS[game.id]?.['en'];
   if (!trans) return game;
 
   return {

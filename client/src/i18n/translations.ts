@@ -20,6 +20,8 @@ export const SUPPORTED_LANGUAGES: LanguageOption[] = [
 
 export const translations: Record<SupportedLanguage, Record<string, string>> = {
   ko: {
+    timeLeftLabel: "남은 시간",
+    secondsUnit: "초",
     roomPackSettingsTitle: "📦 '{game}' 팩 설정",
     roomPackSettingsDesc: "대기실에서 플레이할 문제/테마 팩을 선택하거나 직접 커스텀 팩을 업로드하세요.",
     changeGameBtn: "🎮 게임 변경",
@@ -209,6 +211,8 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   },
 
   en: {
+    timeLeftLabel: "Time Left",
+    secondsUnit: "s",
     roomPackSettingsTitle: "📦 '{game}' Pack Settings",
     roomPackSettingsDesc: "Select a theme or question pack to play in the room, or upload your own custom pack.",
     changeGameBtn: "🎮 Change Game",
@@ -398,6 +402,8 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   },
 
   ja: {
+    timeLeftLabel: "残り時間",
+    secondsUnit: "秒",
     roomPackSettingsTitle: "📦 「{game}」パック設定",
     roomPackSettingsDesc: "ルームでプレイするテーマや問題パックを選択するか、独自のカスタムパックをアップロードしてください。",
     changeGameBtn: "🎮 ゲーム変更",
@@ -587,6 +593,8 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   },
 
   'zh-TW': {
+    timeLeftLabel: "剩餘時間",
+    secondsUnit: "秒",
     roomPackSettingsTitle: "📦 '{game}' 題庫設定",
     roomPackSettingsDesc: "選擇要在房間遊玩的題目或主題包，或上傳你自己的自訂題庫。",
     changeGameBtn: "🎮 更換遊戲",
@@ -776,6 +784,8 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   },
 
   de: {
+    timeLeftLabel: "Verbleibende Zeit",
+    secondsUnit: "s",
     roomPackSettingsTitle: "📦 '{game}' Paket-Einstellungen",
     roomPackSettingsDesc: "Wähle ein Themen- oder Fragenpaket für den Raum oder lade dein eigenes benutzerdefiniertes Paket hoch.",
     changeGameBtn: "🎮 Spiel wechseln",
@@ -965,6 +975,8 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   },
 
   pt: {
+    timeLeftLabel: "Tempo restante",
+    secondsUnit: "s",
     roomPackSettingsTitle: "📦 Configurações de Pacotes de '{game}'",
     roomPackSettingsDesc: "Selecione um pacote de perguntas ou tema para jogar na sala, ou envie seu próprio pacote personalizado.",
     changeGameBtn: "🎮 Mudar Jogo",
@@ -1154,6 +1166,8 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   },
 
   es: {
+    timeLeftLabel: "Tiempo restante",
+    secondsUnit: "s",
     roomPackSettingsTitle: "📦 Configuración de Paquetes de '{game}'",
     roomPackSettingsDesc: "Selecciona un paquete de preguntas o tema para jugar en la sala, o sube tu propio paquete personalizado.",
     changeGameBtn: "🎮 Cambiar Juego",
@@ -1343,6 +1357,8 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
   },
 
   fr: {
+    timeLeftLabel: "Temps restant",
+    secondsUnit: "s",
     roomPackSettingsTitle: "📦 Paramètres des Packs de '{game}'",
     roomPackSettingsDesc: "Sélectionnez un pack de questions ou de thèmes pour jouer, ou téléchargez votre propre pack personnalisé.",
     changeGameBtn: "🎮 Changer de Jeu",

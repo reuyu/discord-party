@@ -12,7 +12,8 @@ interface Props {
 }
 
 export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isKo = language === 'ko';
   const state = room.gameState;
   const [liarGuessText, setLiarGuessText] = useState('');
 
@@ -38,25 +39,26 @@ export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
     if (state.phase !== 'voting' || myVote) return;
     sounds.playClick();
     socket.emit('game:action', {
-      type: 'submit_vote',
+      type: 'vote_player',
       payload: { targetPlayerId }
     });
   };
 
-  // 3. 라이어 정답 제출
+  // 3. 라이어 역전 정답 제출
   const handleLiarGuess = (e: React.FormEvent) => {
     e.preventDefault();
     if (!liarGuessText.trim()) return;
     sounds.playClick();
     socket.emit('game:action', {
       type: 'liar_guess',
-      payload: { guess: liarGuessText }
+      payload: { guess: liarGuessText.trim() }
     });
+    setLiarGuessText('');
   };
 
   return (
-    <div className="game-container" style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
-      {/* 상단 라운드 정보 & 질문 진행도 게이지 */}
+    <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
+      {/* 라운드 정보 및 질문 릴레이 진행 바 */}
       <div className="glass-panel" style={{ padding: '18px 24px', marginBottom: '20px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <div>
@@ -68,9 +70,13 @@ export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
 
           {/* 질문 진행 횟수 */}
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>질문 릴레이 진행도</div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              {isKo ? '질문 릴레이 진행도' : 'Question Relay Progress'}
+            </div>
             <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#FBBF24' }}>
-              {state.questionTurnCount} / {state.maxQuestionTurns}회 (완료 시 자동 투표)
+              {isKo
+                ? `${state.questionTurnCount} / ${state.maxQuestionTurns}회 (완료 시 자동 투표)`
+                : `${state.questionTurnCount} / ${state.maxQuestionTurns} (Auto-vote upon finish)`}
             </div>
           </div>
         </div>
@@ -90,12 +96,18 @@ export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
 
       {/* 내 역할 및 제시어 확인 카드 (제시어 즉시 표시) */}
       <div className="glass-panel" style={{ padding: '24px', marginBottom: '20px', textAlign: 'center', background: isLiar ? 'linear-gradient(135deg, rgba(239,68,68,0.2), rgba(29,26,56,0.9))' : 'linear-gradient(135deg, rgba(99,102,241,0.2), rgba(29,26,56,0.9))' }}>
-        <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>내 비밀 정보</div>
+        <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>
+          {isKo ? '내 비밀 정보' : 'Secret Identity'}
+        </div>
         <div style={{ fontSize: '1.8rem', fontWeight: 900, color: isLiar ? '#EF4444' : '#6EE7B7' }}>
-          {isLiar ? '🎭 당신은 라이어입니다! (제시어를 모릅니다)' : `🔑 제시어: ${state.secretWord}`}
+          {isKo
+            ? (isLiar ? '🎭 당신은 라이어입니다! (제시어를 모릅니다)' : `🔑 제시어: ${state.secretWord}`)
+            : (isLiar ? '🎭 You are the Liar! (Secret word unknown)' : `🔑 Secret Word: ${state.secretWord}`)}
         </div>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '6px' }}>
-          {isLiar ? '정체를 숨기고 시민들의 질문과 답변을 통해 제시어를 유추하세요.' : '라이어가 눈치채지 못하도록 알쏭달쏭한 힌트로 대화하세요.'}
+          {isKo
+            ? (isLiar ? '정체를 숨기고 시민들의 질문과 답변을 통해 제시어를 유추하세요.' : '라이어가 눈치채지 못하도록 알쏭달쏭한 힌트로 대화하세요.')
+            : (isLiar ? 'Conceal your identity and deduce the secret word from other players.' : 'Give subtle hints so the Liar cannot deduce the secret word.')}
         </p>
       </div>
 
@@ -106,8 +118,8 @@ export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
           <div style={{ background: isMyTurnToSpeak ? 'rgba(236,72,153,0.3)' : 'rgba(255,255,255,0.06)', border: isMyTurnToSpeak ? '1px solid #EC4899' : '1px solid var(--border-glass)', padding: '14px', borderRadius: '12px', marginBottom: '24px' }}>
             <div style={{ fontSize: '1.15rem', fontWeight: 800, color: isMyTurnToSpeak ? '#F472B6' : '#FFF' }}>
               {isMyTurnToSpeak
-                ? '🎙️ 당신이 현재 질문자입니다! 질문할 상대를 아래에서 클릭하고 질문하세요!'
-                : `⏳ ${currentSpeaker?.name} 님이 질문할 대상을 선택하고 있습니다...`}
+                ? (isKo ? '🎙️ 당신이 현재 질문자입니다! 질문할 상대를 아래에서 클릭하고 질문하세요!' : '🎙️ It is your turn to ask! Click a player below to ask your question!')
+                : (isKo ? `⏳ ${currentSpeaker?.name} 님이 질문할 대상을 선택하고 있습니다...` : `⏳ ${currentSpeaker?.name} is selecting someone to ask...`)}
             </div>
           </div>
 

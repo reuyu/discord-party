@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Timer } from 'lucide-react';
 import { sounds } from '../../utils/audio';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface CountdownTimerProps {
   startedAt: number;
@@ -16,6 +17,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({
   onTimeout,
   playTick = true
 }) => {
+  const { t } = useLanguage();
   const [timeLeft, setTimeLeft] = useState<number>(() => {
     const elapsed = Math.floor((Date.now() - startedAt) / 1000);
     return Math.max(0, durationSec - elapsed);
@@ -68,10 +70,10 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px', fontSize: '0.85rem', fontWeight: 800 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: barColor }}>
           <Timer size={16} />
-          <span>남은 시간</span>
+          <span>{t('timeLeftLabel')}</span>
         </div>
         <span style={{ color: barColor, fontSize: '1.05rem', fontFamily: 'monospace' }}>
-          {timeLeft}초
+          {timeLeft}{t('secondsUnit')}
         </span>
       </div>
       <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
