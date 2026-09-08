@@ -5,6 +5,7 @@ import { socket } from '../../socket';
 import { CountdownTimer } from '../common/CountdownTimer';
 import { sounds } from '../../utils/audio';
 import { CheckCircle2, XCircle, Award, BookOpen, ArrowRight, Lock, Users } from 'lucide-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Props {
   room: Room;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
+  const { t } = useLanguage();
   const state = room.gameState;
   const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
 
@@ -70,15 +72,15 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
       <div className="glass-panel" style={{ padding: '16px 24px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <span className="badge-pill" style={{ background: 'var(--primary)', color: '#FFF' }}>
-            문제 {state.questionIndex + 1} / {state.totalQuestions}
+            {t('inGameQuestion', { current: state.questionIndex + 1, total: state.totalQuestions })}
           </span>
-          <h3 style={{ marginTop: '6px', fontSize: '1.15rem', fontWeight: 800 }}>🎓 서바이벌 상식 퀴즈 쇼</h3>
+          <h3 style={{ marginTop: '6px', fontSize: '1.15rem', fontWeight: 800 }}>🎓 {t('triviaQuiz') || 'Trivia Quiz'}</h3>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#FBBF24', fontWeight: 700 }}>
             <Award size={18} />
-            <span>내 점수: {state.scores?.[myPlayerId] || 0}점</span>
+            <span>{t('inGameScore', { score: state.scores?.[myPlayerId] || 0 })}</span>
           </div>
 
           {state.phase === 'question' && (
@@ -237,7 +239,7 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
           {isHost && (
             <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'flex-end' }}>
               <button className="btn btn-primary" onClick={handleNextQuestion}>
-                <span>다음 문제로 이동</span>
+                <span>{t('inGameNext')}</span>
                 <ArrowRight size={16} />
               </button>
             </div>

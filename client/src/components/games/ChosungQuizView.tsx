@@ -4,7 +4,8 @@ import { Room } from '../../../../shared/types';
 import { socket } from '../../socket';
 import { CountdownTimer } from '../common/CountdownTimer';
 import { sounds } from '../../utils/audio';
-import { Send, CheckCircle2, Ban, Award, AlertCircle } from 'lucide-react';
+import { Award, AlertCircle, Send, CheckCircle2, Ban } from 'lucide-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Props {
   room: Room;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export const ChosungQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
+  const { t } = useLanguage();
   const state = room.gameState;
   const [presentCategory, setPresentCategory] = useState('');
   const [presentAnswer, setPresentAnswer] = useState('');
@@ -107,15 +109,15 @@ export const ChosungQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
       <div className="glass-panel" style={{ padding: '16px 24px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <span className="badge-pill" style={{ background: 'var(--primary)', color: '#FFF' }}>
-            라운드 {state.currentRound} / {state.totalRounds}
+            {t('inGameRound', { current: state.currentRound, total: state.totalRounds })}
           </span>
-          <h3 style={{ marginTop: '6px', fontSize: '1.15rem', fontWeight: 800 }}>⏱️ 초성 퀴즈 배틀</h3>
+          <h3 style={{ marginTop: '6px', fontSize: '1.15rem', fontWeight: 800 }}>⏱️ {t('chosungQuiz') || 'Chosung Quiz'}</h3>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#FBBF24', fontWeight: 700 }}>
             <Award size={18} />
-            <span>내 점수: {state.scores?.[myPlayerId] || 0}점</span>
+            <span>{t('inGameScore', { score: state.scores?.[myPlayerId] || 0 })}</span>
           </div>
 
           {state.phase === 'guessing' && (

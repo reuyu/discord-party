@@ -77,9 +77,10 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
     }));
   }, [playCountOverrides]);
 
-  // 플레이 횟수 기준 실시간 상위 5개 게임 ID 추출 (상위 5개만 동적으로 '인기' 태그 획득)
+  // 플레이 횟수 100회 이상 게임 중 실시간 상위 5개 게임 ID 추출 (100회 미만 시 HOT 태그 미노출)
   const top5PopularGameIds = useMemo(() => {
     return [...gamesWithStats]
+      .filter(g => (g.playCount || 0) >= 100)
       .sort((a, b) => (b.playCount || 0) - (a.playCount || 0))
       .slice(0, 5)
       .map(g => g.id);

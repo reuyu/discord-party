@@ -5,6 +5,7 @@ import { socket } from '../../socket';
 import { CountdownTimer } from '../common/CountdownTimer';
 import { sounds } from '../../utils/audio';
 import { Send, CheckCircle2, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Props {
   room: Room;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export const ZoomQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
+  const { t } = useLanguage();
   const state = room.gameState;
   const [guess, setGuess] = useState('');
   const [zoomScale, setZoomScale] = useState(15); // 1500% -> 100%
@@ -73,14 +75,14 @@ export const ZoomQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
       <div className="glass-panel" style={{ padding: '16px 24px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <span className="badge-pill" style={{ background: '#06B6D4', color: '#FFF' }}>
-            문제 {state.roundIndex + 1} / {state.totalRounds}
+            {t('inGameQuestion', { current: state.roundIndex + 1, total: state.totalRounds })}
           </span>
-          <h3 style={{ marginTop: '6px', fontSize: '1.15rem', fontWeight: 800 }}>🔍 줌아웃 이미지 퀴즈</h3>
+          <h3 style={{ marginTop: '6px', fontSize: '1.15rem', fontWeight: 800 }}>🔍 {t('zoomQuiz') || 'Zoom Quiz'}</h3>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ color: '#FBBF24', fontWeight: 700 }}>
-            내 점수: {state.scores?.[myPlayerId] || 0}점
+            {t('inGameScore', { score: state.scores?.[myPlayerId] || 0 })}
           </div>
 
           {state.phase === 'zooming' && (
@@ -155,14 +157,14 @@ export const ZoomQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
           {hasMyCorrect ? (
             <div style={{ background: 'rgba(16, 185, 129, 0.2)', border: '1px solid #10B981', padding: '16px', borderRadius: '16px', color: '#6EE7B7', fontWeight: 800, fontSize: '1.1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
               <CheckCircle2 size={24} />
-              <span>정답을 맞혔습니다! 다른 참가자가 맞힐 때까지 잠시 대기하세요!</span>
+              <span>{t('inGameCorrect')} {t('inGameWaiting')}</span>
             </div>
           ) : (
             <form onSubmit={handleGuessSubmit} style={{ maxWidth: '640px', margin: '0 auto', display: 'flex', gap: '10px' }}>
               <input
                 type="text"
                 className="input-field"
-                placeholder="이 이미지는 무엇일까요? 정답 입력..."
+                placeholder="..."
                 value={guess}
                 onChange={(e) => setGuess(e.target.value)}
                 autoFocus
@@ -171,7 +173,7 @@ export const ZoomQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
               />
               <button type="submit" className="btn btn-primary" style={{ padding: '0 28px', background: '#06B6D4', borderColor: '#06B6D4', fontSize: '1rem', fontWeight: 700 }}>
                 <Send size={18} />
-                <span>제출</span>
+                <span>{t('inGameSubmit')}</span>
               </button>
             </form>
           )}
@@ -181,7 +183,7 @@ export const ZoomQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
             <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
               {state.correctPlayers.map((p: any, idx: number) => (
                 <span key={p.id} className="badge-pill" style={{ background: 'rgba(16, 185, 129, 0.3)', color: '#A7F3D0', border: '1px solid #10B981' }}>
-                  {idx + 1}등: {p.name} (+{p.score}점)
+                  #{idx + 1}: {p.name} (+{p.score})
                 </span>
               ))}
             </div>
@@ -190,14 +192,13 @@ export const ZoomQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
       ) : (
         /* 정답 공개 화면 */
         <div className="glass-panel" style={{ padding: '24px', background: 'rgba(6, 182, 212, 0.15)', borderColor: '#06B6D4' }}>
-          <div style={{ fontSize: '0.9rem', color: '#A5F3FC', marginBottom: '4px' }}>정답 공개</div>
           <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#FFF', marginBottom: '14px' }}>
-            🎉 정답은 <span style={{ color: '#FDE047' }}>[{currentItem?.answer}]</span> 입니다!
+            🎉 <span style={{ color: '#FDE047' }}>[{currentItem?.answer}]</span>
           </h2>
 
           {isHost && (
             <button className="btn btn-primary" onClick={handleNextItem} style={{ padding: '12px 32px', background: '#06B6D4', borderColor: '#06B6D4' }}>
-              <span>다음 문제로 이동 ➔</span>
+              <span>{t('inGameNext')}</span>
               <ArrowRight size={18} />
             </button>
           )}

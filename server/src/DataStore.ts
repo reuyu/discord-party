@@ -56,36 +56,9 @@ export class DataStore {
   }
 
   private getInitialData(): PersistedStoreData {
-    // 22종 게임 초기 플레이 횟수 시드 (상위 5개 HOT 게임: worldcup, liar-game, zoom-quiz, chosung-quiz, voice-battle)
-    const counts: Record<string, number> = {
-      'worldcup': 1580,
-      'liar-game': 1420,
-      'zoom-quiz': 1260,
-      'chosung-quiz': 1130,
-      'voice-battle': 1050,
-      'smart-mafia': 890,
-      'trivia-quiz': 820,
-      'balance-debate': 780,
-      'relay-novel': 740,
-      'high-noon-duel': 690,
-      'five-sec-rule': 640,
-      'bomb-party': 590,
-      'snake-royale': 550,
-      'clicker-clash': 510,
-      'taboo-talk': 480,
-      'fake-artist': 450,
-      'blind-drawing': 420,
-      'story-roulette': 390,
-      'black-and-white': 370,
-      'anonymous-exposed': 350,
-      'short-trpg': 330,
-      'ox-survival': 310
-    };
-
+    const counts: Record<string, number> = {};
     INITIAL_GAMES.forEach(g => {
-      if (counts[g.id] === undefined) {
-        counts[g.id] = g.playCount || 300;
-      }
+      counts[g.id] = 0;
     });
 
     return {
@@ -187,6 +160,10 @@ export class DataStore {
   // ===== Pack Likes =====
   public getLikes(packId: string): number {
     return this.data.packLikes[packId] || 0;
+  }
+
+  public getLikesMap(): Record<string, number> {
+    return { ...this.data.packLikes };
   }
 
   public toggleLike(packId: string, increment: boolean = true): number {

@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { Room } from '../../../shared/types';
 import { INITIAL_GAMES, getLocalizedGame } from '../../../shared/gamesData';
-import { REAL_DEFAULT_PACKS } from '../../../shared/defaultPacks';
+import { getDefaultPacksForGame } from '../../../shared/multilingualPacks';
 import { socket } from '../socket';
 import { sounds } from '../utils/audio';
 import { AdBanner } from './AdBanner';
@@ -73,8 +73,9 @@ export const RoomView: React.FC<RoomViewProps> = ({
     if (!selectedGame) return;
 
     sounds.playClick();
-    const defaultPackData = REAL_DEFAULT_PACKS[gameId]?.[0]?.data || null;
-    const defaultPackTitle = REAL_DEFAULT_PACKS[gameId]?.[0]?.title || undefined;
+    const defaultPacks = getDefaultPacksForGame(gameId, language);
+    const defaultPackData = defaultPacks[0]?.data || null;
+    const defaultPackTitle = defaultPacks[0]?.title || undefined;
 
     socket.emit('room:change-game', {
       gameId,
@@ -106,8 +107,9 @@ export const RoomView: React.FC<RoomViewProps> = ({
       setIsRollingRandom(false);
       sounds.playVictory();
 
-      const defaultPackData = REAL_DEFAULT_PACKS[picked.id]?.[0]?.data || null;
-      const defaultPackTitle = REAL_DEFAULT_PACKS[picked.id]?.[0]?.title || undefined;
+      const defaultPacks = getDefaultPacksForGame(picked.id, language);
+      const defaultPackData = defaultPacks[0]?.data || null;
+      const defaultPackTitle = defaultPacks[0]?.title || undefined;
 
       socket.emit('room:change-game', {
         gameId: picked.id,
@@ -372,11 +374,15 @@ export const RoomView: React.FC<RoomViewProps> = ({
                 let packItemsCount = 20;
                 if (room.settings.extraOptions?.customPackData && Array.isArray(room.settings.extraOptions.customPackData)) {
                   packItemsCount = room.settings.extraOptions.customPackData.length;
-                } else if (room.settings.customPackId && REAL_DEFAULT_PACKS[room.gameId]) {
-                  const found = REAL_DEFAULT_PACKS[room.gameId].find(p => p.id === room.settings.customPackId);
+                } else if (room.settings.customPackId) {
+                  const defaultPacks = getDefaultPacksForGame(room.gameId, language);
+                  const found = defaultPacks.find(p => p.id === room.settings.customPackId);
                   if (found && Array.isArray(found.data)) packItemsCount = found.data.length;
-                } else if (REAL_DEFAULT_PACKS[room.gameId]?.[0]?.data?.length) {
-                  packItemsCount = REAL_DEFAULT_PACKS[room.gameId][0].data.length;
+                } else {
+                  const defaultPacks = getDefaultPacksForGame(room.gameId, language);
+                  if (defaultPacks[0]?.data?.length) {
+                    packItemsCount = defaultPacks[0].data.length;
+                  }
                 }
 
                 const maxLimit = room.gameId === 'relay-novel' ? 5 : Math.max(1, Math.min(20, packItemsCount));

@@ -715,7 +715,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
     {
       id: 'voice_real_meme_korean',
       gameId: 'voice-battle',
-      title: '🔥 [🇰🇷 한국 문화 전용] 한국 레전드 밈 & 인터넷 방송 시그니처 팩',
+      title: '🔥 한국 레전드 밈 & 인터넷 방송 시그니처 팩',
       description: '사딸라, 랄로, 괴물쥐, 오징어게임, 이병헌, 강남스타일 등 원본 오디오가 100% 재생되는 레전드 팩',
       author: 'PartyHub 공식',
       tags: ['한국문화전용', '실제음성', '레전드밈', '김두한', '랄로', '괴물쥐', '오징어게임'],
@@ -821,7 +821,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
     {
       id: 'voice_kr_streamer_memes',
       gameId: 'voice-battle',
-      title: '🇰🇷 [한국 문화 전용] 한국 스트리머 레전드 유행어 & 찰진 명대사 팩 (12선)',
+      title: '🎙️ 한국 스트리머 레전드 유행어 & 찰진 명대사 팩 (12선)',
       description: '감스트 "개새끼 열매", "이래도 지랄", 랄로 "꼬추때라", 거제 야호, 나문희 "호박고구마", 심영 등 한국 인터넷 역사에 남은 레전드 밈 모음!',
       author: 'PartyHub 공식',
       tags: ['한국문화전용', '한국밈', '감스트', '랄로', '나문희', '스트리머', '실제음성'],

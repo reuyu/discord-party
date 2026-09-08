@@ -3,6 +3,7 @@ import { Room } from '../../../../shared/types';
 import { socket } from '../../socket';
 import { sounds } from '../../utils/audio';
 import { Mic, ArrowRight, ThumbsUp, Volume2, VolumeX } from 'lucide-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Props {
   room: Room;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
+  const { t } = useLanguage();
   const state = room.gameState;
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -127,13 +129,13 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
       <div className="glass-panel" style={{ padding: '16px 24px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <span className="badge-pill" style={{ background: '#6366F1', color: '#FFF' }}>
-            매치 {state.roundIndex + 1} / {state.totalRounds}
+            {t('inGameMatch', { current: state.roundIndex + 1, total: state.totalRounds })}
           </span>
-          <h3 style={{ marginTop: '6px', fontSize: '1.2rem', fontWeight: 800 }}>🎙️ 성대모사 1:1 토너먼트</h3>
+          <h3 style={{ marginTop: '6px', fontSize: '1.2rem', fontWeight: 800 }}>🎙️ {t('voiceBattle') || 'Voice Battle'}</h3>
         </div>
 
         <div style={{ color: '#FBBF24', fontWeight: 800 }}>
-          내 점수: {state.scores?.[myPlayerId] || 0}점
+          {t('inGameScore', { score: state.scores?.[myPlayerId] || 0 })}
         </div>
       </div>
 
@@ -147,16 +149,18 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
       {/* 미션 대사 카드 */}
       <div className="glass-panel" style={{ padding: '36px 20px', marginBottom: '24px', background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(18,16,38,0.95) 80%)' }}>
         <span className="badge-pill" style={{ background: 'rgba(99, 102, 241, 0.3)', color: '#A5B4FC', fontSize: '0.9rem', padding: '6px 14px' }}>
-          🎯 미션 캐릭터: {state.currentMission?.character}
+          🎯 {state.currentMission?.character}
         </span>
 
         <h1 style={{ fontSize: '2.2rem', fontWeight: 900, color: '#FFF', margin: '20px 0' }}>
           "{state.currentMission?.line}"
         </h1>
 
-        <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '16px' }}>
-          💡 힌트: {state.currentMission?.hint}
-        </div>
+        {state.currentMission?.hint && (
+          <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '16px' }}>
+            {t('hintLabel', { hint: state.currentMission.hint })}
+          </div>
+        )}
 
         {/* 🔊 실제 대사 음성 재생 버튼 */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
@@ -181,7 +185,7 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
             }}
           >
             {isPlayingAudio ? <VolumeX size={18} color="#EF4444" /> : <Volume2 size={18} color="#6EE7B7" />}
-            <span>{isPlayingAudio ? '⏹️ 음성 재생 멈추기' : '🔊 실제 대사 음성 듣기 (발음/톤 가이드)'}</span>
+            <span>{isPlayingAudio ? '⏹️ Stop Voice' : '🔊 Play Original Voice'}</span>
           </button>
         </div>
       </div>
@@ -190,12 +194,12 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
       {state.phase === 'voting' && (
         <div className="glass-panel" style={{ padding: '16px 20px', marginBottom: '20px', background: 'rgba(245, 158, 11, 0.15)', borderColor: '#F59E0B' }}>
           <h4 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#FDE68A', marginBottom: '4px' }}>
-            🗳️ 실시간 성대모사 심사 투표 중!
+            🗳️ {t('inGameVote')}
           </h4>
           <p style={{ color: '#FFF', fontSize: '0.95rem' }}>
             {(isPlayerA || isPlayerB)
-              ? '⚖️ 관전자들이 두 선수의 성대모사 싱크로율을 심사/투표하고 있습니다. 잠시 대기해주세요!'
-              : '더 싱크로율이 높거나 찰지게 묘사한 도전자에게 투표하세요!'}
+              ? t('inGameWaiting')
+              : t('inGameVote')}
           </p>
         </div>
       )}
@@ -213,10 +217,10 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
           }}
         >
           <div style={{ fontSize: '3rem', marginBottom: '8px' }}>{playerA?.avatar}</div>
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{playerA?.name} {isPlayerA && '(나)'}</h3>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{playerA?.name} {isPlayerA && t('inGameMe')}</h3>
           {state.currentTurn === 'A' && state.phase === 'battle' && (
             <span className="badge-pill" style={{ background: '#6366F1', color: '#FFF', marginTop: '8px' }}>
-              🎙️ 발언 중...
+              {t('inGameSpeaking')}
             </span>
           )}
 
@@ -227,12 +231,12 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
               style={{ width: '100%', marginTop: '16px', background: myVote === 'A' ? '#10B981' : '#6366F1' }}
             >
               <ThumbsUp size={16} />
-              <span>{playerA?.name}에게 투표</span>
+              <span>{playerA?.name} ({t('inGameVote')})</span>
             </button>
           )}
           {state.phase === 'voting' && isPlayerA && (
             <div style={{ marginTop: '16px', padding: '8px', borderRadius: '10px', background: 'rgba(255,255,255,0.06)', color: '#A5B4FC', fontSize: '0.85rem', fontWeight: 700 }}>
-              심사 대상 (선수)
+              {t('inGameSpectating')}
             </div>
           )}
         </div>
@@ -248,10 +252,10 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
           }}
         >
           <div style={{ fontSize: '3rem', marginBottom: '8px' }}>{playerB?.avatar}</div>
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{playerB?.name} {isPlayerB && '(나)'}</h3>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{playerB?.name} {isPlayerB && t('inGameMe')}</h3>
           {state.currentTurn === 'B' && state.phase === 'battle' && (
             <span className="badge-pill" style={{ background: '#EC4899', color: '#FFF', marginTop: '8px' }}>
-              🎙️ 발언 중...
+              {t('inGameSpeaking')}
             </span>
           )}
 
@@ -262,8 +266,13 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
               style={{ width: '100%', marginTop: '16px', background: myVote === 'B' ? '#10B981' : '#EC4899' }}
             >
               <ThumbsUp size={16} />
-              <span>{playerB?.name}에게 투표</span>
+              <span>{playerB?.name} ({t('inGameVote')})</span>
             </button>
+          )}
+          {state.phase === 'voting' && isPlayerB && (
+            <div style={{ marginTop: '16px', padding: '8px', borderRadius: '10px', background: 'rgba(255,255,255,0.06)', color: '#A5B4FC', fontSize: '0.85rem', fontWeight: 700 }}>
+              {t('inGameSpectating')}
+            </div>
           )}
         </div>
       </div>
@@ -272,7 +281,7 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
       {state.phase === 'battle' && isMyTurn && (
         <button className="btn btn-primary" onClick={handleFinishVoice} style={{ padding: '14px 36px', fontSize: '1.05rem', background: '#6366F1' }}>
           <Mic size={18} />
-          <span>🎙️ 내 성대모사 발언 완료 (턴 넘기기)</span>
+          <span>{t('inGameSubmit')}</span>
         </button>
       )}
 
@@ -280,11 +289,11 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
       {state.phase === 'result' && (
         <div className="glass-panel" style={{ padding: '24px', background: 'rgba(16, 185, 129, 0.2)', borderColor: '#10B981' }}>
           <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#6EE7B7', marginBottom: '16px' }}>
-            🎉 승자: {room.players.find(p => p.id === state.winnerId)?.name} 님! (+100점 획득)
+            {t('winnerPraise', { name: room.players.find(p => p.id === state.winnerId)?.name || '' })} (+100)
           </h2>
           {isHost && (
             <button className="btn btn-primary" onClick={handleNextMatch} style={{ padding: '12px 28px' }}>
-              <span>다음 매치업 진행</span>
+              <span>{t('inGameNext')}</span>
               <ArrowRight size={16} />
             </button>
           )}

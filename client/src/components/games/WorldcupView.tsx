@@ -4,6 +4,7 @@ import { Room } from '../../../../shared/types';
 import { socket } from '../../socket';
 import { sounds } from '../../utils/audio';
 import { RefreshCw, Crown } from 'lucide-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Props {
   room: Room;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export const WorldcupView: React.FC<Props> = ({ room, myPlayerId }) => {
+  const { t } = useLanguage();
   const state = room.gameState;
   if (!state) return null;
 
@@ -49,13 +51,13 @@ export const WorldcupView: React.FC<Props> = ({ room, myPlayerId }) => {
       <div className="glass-panel" style={{ padding: '16px 24px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <span className="badge-pill" style={{ background: '#EC4899', color: '#FFF' }}>
-            {state.totalRoundName} ({state.matchIndex + 1} / {state.totalMatchesInRound}매치)
+            {state.totalRoundName} ({state.matchIndex + 1} / {state.totalMatchesInRound})
           </span>
-          <h3 style={{ marginTop: '6px', fontSize: '1.2rem', fontWeight: 800 }}>🏆 실시간 이상형 월드컵</h3>
+          <h3 style={{ marginTop: '6px', fontSize: '1.2rem', fontWeight: 800 }}>🏆 {t('worldcup') || 'World Cup'}</h3>
         </div>
 
         <div style={{ color: '#FBBF24', fontWeight: 800, fontSize: '0.95rem' }}>
-          총 투표 참여: {Object.keys(state.votes || {}).length} / {room.players.length}명
+          {t('inGameVote')}: {Object.keys(state.votes || {}).length} / {room.players.length}
         </div>
       </div>
 
@@ -91,7 +93,7 @@ export const WorldcupView: React.FC<Props> = ({ room, myPlayerId }) => {
             }}
           >
             <RefreshCw size={16} />
-            <span>{myVote === 'A' ? '✓ 내 선택 중 (언제든 변경 가능)' : 'A 선택하기'}</span>
+            <span>{myVote === 'A' ? `✓ (${t('inGameVoted')})` : `A (${t('inGameVote')})`}</span>
           </button>
 
           {isHost && (
@@ -101,7 +103,7 @@ export const WorldcupView: React.FC<Props> = ({ room, myPlayerId }) => {
               style={{ width: '100%', marginTop: '10px', padding: '12px', background: '#6366F1' }}
             >
               <Crown size={16} />
-              <span>방장 확정: A 승리 진출</span>
+              <span>👑 A ({t('inGameWinner')})</span>
             </button>
           )}
         </div>
@@ -136,7 +138,7 @@ export const WorldcupView: React.FC<Props> = ({ room, myPlayerId }) => {
             }}
           >
             <RefreshCw size={16} />
-            <span>{myVote === 'B' ? '✓ 내 선택 중 (언제든 변경 가능)' : 'B 선택하기'}</span>
+            <span>{myVote === 'B' ? `✓ (${t('inGameVoted')})` : `B (${t('inGameVote')})`}</span>
           </button>
 
           {isHost && (
@@ -146,7 +148,7 @@ export const WorldcupView: React.FC<Props> = ({ room, myPlayerId }) => {
               style={{ width: '100%', marginTop: '10px', padding: '12px', background: '#EC4899' }}
             >
               <Crown size={16} />
-              <span>방장 확정: B 승리 진출</span>
+              <span>👑 B ({t('inGameWinner')})</span>
             </button>
           )}
         </div>

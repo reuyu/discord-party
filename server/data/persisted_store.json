@@ -1,55 +1,28 @@
 {
   "gamePlayCounts": {
-    "worldcup": 1581,
-    "liar-game": 1420,
-    "zoom-quiz": 1260,
-    "chosung-quiz": 1130,
-    "voice-battle": 1050,
-    "smart-mafia": 890,
-    "trivia-quiz": 820,
-    "balance-debate": 780,
-    "relay-novel": 740,
-    "high-noon-duel": 690,
-    "five-sec-rule": 640,
-    "bomb-party": 590,
-    "snake-royale": 550,
-    "clicker-clash": 510,
-    "taboo-talk": 480,
-    "fake-artist": 450,
-    "blind-drawing": 420,
-    "story-roulette": 390,
-    "black-and-white": 370,
-    "anonymous-exposed": 350,
-    "short-trpg": 330,
-    "ox-survival": 310
+    "liar-game": 0,
+    "chosung-quiz": 0,
+    "worldcup": 0,
+    "snake-royale": 0,
+    "balance-debate": 0,
+    "smart-mafia": 0,
+    "story-roulette": 0,
+    "voice-battle": 0,
+    "relay-novel": 0,
+    "bomb-party": 0,
+    "anonymous-exposed": 0,
+    "high-noon-duel": 0,
+    "clicker-clash": 0,
+    "zoom-quiz": 0,
+    "black-and-white": 0,
+    "blind-drawing": 0,
+    "fake-artist": 0,
+    "taboo-talk": 0,
+    "five-sec-rule": 0,
+    "trivia-quiz": 0,
+    "short-trpg": 0,
+    "ox-survival": 0
   },
-  "customPacks": [
-    {
-      "id": "test_pack_1788834980027",
-      "gameId": "liar-game",
-      "title": "글로벌 테스트 음식 팩",
-      "description": "테스트용 커스텀 팩",
-      "author": "테스터",
-      "tags": [
-        "테스트",
-        "음식"
-      ],
-      "itemCount": 5,
-      "isPublic": true,
-      "likes": 11,
-      "createdAt": 1788834980027,
-      "language": "en",
-      "data": {
-        "words": [
-          {
-            "word": "Pizza",
-            "category": "Food"
-          }
-        ]
-      }
-    }
-  ],
-  "packLikes": {
-    "test_pack_1788834980027": 11
-  }
+  "customPacks": [],
+  "packLikes": {}
 }

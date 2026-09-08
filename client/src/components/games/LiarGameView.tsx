@@ -4,6 +4,7 @@ import { Room } from '../../../../shared/types';
 import { socket } from '../../socket';
 import { sounds } from '../../utils/audio';
 import { Send } from 'lucide-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Props {
   room: Room;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
+  const { t } = useLanguage();
   const state = room.gameState;
   const [liarGuessText, setLiarGuessText] = useState('');
 
@@ -59,9 +61,9 @@ export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <div>
             <span className="badge-pill" style={{ background: '#8B5CF6', color: '#FFF' }}>
-              카테고리: {state.category}
+              {t('categoryLabel', { category: state.category })}
             </span>
-            <h3 style={{ marginTop: '6px', fontSize: '1.2rem', fontWeight: 800 }}>🕵️ 라이어 게임</h3>
+            <h3 style={{ marginTop: '6px', fontSize: '1.2rem', fontWeight: 800 }}>🕵️ {t('liarGame') || 'Liar Game'}</h3>
           </div>
 
           {/* 질문 진행 횟수 */}
@@ -134,11 +136,11 @@ export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
                 >
                   <div style={{ fontSize: '2.5rem', marginBottom: '6px' }}>{p.avatar}</div>
                   <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#FFF' }}>
-                    {p.name} {isMe && '(나)'}
+                    {p.name} {isMe && t('inGameMe')}
                   </div>
                   {isSpeaker && (
                     <span className="badge-pill" style={{ background: '#EC4899', color: '#FFF', marginTop: '6px', fontSize: '0.72rem' }}>
-                      🎙️ 발언 중
+                      {t('inGameSpeaking')}
                     </span>
                   )}
                 </button>
@@ -152,10 +154,10 @@ export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
       {state.phase === 'voting' && (
         <div className="glass-panel" style={{ padding: '30px 20px', marginBottom: '20px', textAlign: 'center' }}>
           <h2 style={{ fontSize: '1.35rem', fontWeight: 900, marginBottom: '8px', color: '#FBBF24' }}>
-            🗳️ 라이어로 의심되는 플레이어를 지목하세요!
+            🗳️ {t('inGameVote')}
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '24px' }}>
-            투표 현황: {Object.keys(state.votes || {}).length} / {room.players.length}명 완료
+            {t('inGameVote')}: {Object.keys(state.votes || {}).length} / {room.players.length}
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '14px' }}>
@@ -180,11 +182,11 @@ export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
                 >
                   <div style={{ fontSize: '2.5rem', marginBottom: '6px' }}>{p.avatar}</div>
                   <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#FFF' }}>
-                    {p.name} {isMe && '(나)'}
+                    {p.name} {isMe && t('inGameMe')}
                   </div>
                   {isSelected && (
                     <span className="badge-pill" style={{ background: '#F59E0B', color: '#000', marginTop: '6px', fontSize: '0.72rem' }}>
-                      ✓ 내가 지목함
+                      ✓ {t('inGameVoted')}
                     </span>
                   )}
                 </button>
@@ -198,18 +200,15 @@ export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
       {state.phase === 'liarGuess' && (
         <div className="glass-panel" style={{ padding: '36px 20px', marginBottom: '20px', textAlign: 'center', background: 'rgba(239,68,68,0.15)', borderColor: '#EF4444' }}>
           <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#F87171', marginBottom: '8px' }}>
-            🚨 라이어가 지목되었습니다!
+            🚨 {state.liarId ? room.players.find(p => p.id === state.liarId)?.name : 'Liar'}
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '20px' }}>
-            라이어가 제시어를 정확히 맞히면 대역전승을 거두게 됩니다!
-          </p>
 
           {isLiar ? (
             <form onSubmit={handleLiarGuess} style={{ maxWidth: '460px', margin: '0 auto', display: 'flex', gap: '8px' }}>
               <input
                 type="text"
                 className="input-field"
-                placeholder="추리한 제시어 정답을 입력하세요..."
+                placeholder="..."
                 value={liarGuessText}
                 onChange={(e) => setLiarGuessText(e.target.value)}
                 autoFocus
@@ -217,12 +216,12 @@ export const LiarGameView: React.FC<Props> = ({ room, myPlayerId }) => {
               />
               <button type="submit" className="btn btn-primary" style={{ padding: '0 24px', background: '#EF4444', borderColor: '#EF4444' }}>
                 <Send size={18} />
-                <span>역전 시도!</span>
+                <span>{t('inGameSubmit')}</span>
               </button>
             </form>
           ) : (
             <div style={{ color: '#A5B4FC', fontWeight: 700 }}>
-              라이어가 마지막 역전 정답을 고민하고 있습니다...
+              {t('inGameWaiting')}
             </div>
           )}
         </div>

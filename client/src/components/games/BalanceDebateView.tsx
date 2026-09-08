@@ -4,7 +4,8 @@ import { Room } from '../../../../shared/types';
 import { socket } from '../../socket';
 import { CountdownTimer } from '../common/CountdownTimer';
 import { sounds } from '../../utils/audio';
-import { ArrowRight, RefreshCw, Trophy } from 'lucide-react';
+import { RefreshCw, Trophy, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Props {
   room: Room;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
+  const { t } = useLanguage();
   const state = room.gameState;
   if (!state) return null;
 
@@ -74,9 +76,9 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
       <div className="glass-panel" style={{ padding: '16px 24px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <span className="badge-pill" style={{ background: '#8B5CF6', color: '#FFF' }}>
-            라운드 {state.roundIndex + 1} / {state.totalRounds} ({currentQ?.category})
+            {t('inGameRound', { current: state.roundIndex + 1, total: state.totalRounds })}
           </span>
-          <h3 style={{ marginTop: '6px', fontSize: '1.2rem', fontWeight: 800 }}>⚖️ 극한의 밸런스 토론 배틀</h3>
+          <h3 style={{ marginTop: '6px', fontSize: '1.2rem', fontWeight: 800 }}>⚖️ {t('balanceDebate') || 'Balance Debate'}</h3>
         </div>
 
         {state.phase === 'debate' && (
@@ -280,7 +282,7 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
           )}
           {state.phase === 'roundEnd' && (
             <button className="btn btn-primary" onClick={handleNextRound}>
-              <span>다음 밸런스 라운드로 이동</span>
+              <span>{t('inGameNext')}</span>
               <ArrowRight size={16} />
             </button>
           )}

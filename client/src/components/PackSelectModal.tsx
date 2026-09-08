@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { X, Search, ArrowRight, Package, UploadCloud, CheckCircle2, User, Sparkles, FileText, Code2, ThumbsUp, Globe } from 'lucide-react';
 import { GameInfo, CustomPack, SupportedLanguage } from '../../../shared/types';
 import { DEFAULT_AVATARS } from '../../../shared/gamesData';
-import { REAL_DEFAULT_PACKS } from '../../../shared/defaultPacks';
+import { getDefaultPacksForGame } from '../../../shared/multilingualPacks';
 import { useLanguage } from '../i18n/LanguageContext';
 import { socket } from '../socket';
 
@@ -262,24 +262,25 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
   // 팩 언어 필터 상태 (기본: 전체)
   const [selectedPackLang, setSelectedPackLang] = useState<SupportedLanguage | 'all'>('all');
 
+  // 서버에서 영구 저장된 실제 추천수 맵
+  const [serverPackLikes, setServerPackLikes] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    if (!isOpen) return;
+    fetch('/api/packs/likes')
+      .then(res => res.json())
+      .then(data => {
+        if (data && typeof data === 'object') {
+          setServerPackLikes(data);
+        }
+      })
+      .catch(() => {});
+  }, [isOpen]);
+
   // 실제 등록된 팩 목록 가져오기 (서버 커스텀 팩 + 로컬 사용자 팩 + 기본 공식 팩)
   const availablePacks: CustomPack[] = useMemo(() => {
     if (!game) return [];
-    const defaults = REAL_DEFAULT_PACKS[game.id] || [
-      {
-        id: `${game.id}_default`,
-        gameId: game.id,
-        title: `🎮 [공식 기본 팩] ${game.title} 기본 세트`,
-        description: t('defaultPackDesc'),
-        author: 'PartyHub 공식',
-        tags: ['공식', '기본'],
-        itemCount: 30,
-        isPublic: true,
-        likes: 5400,
-        createdAt: Date.now(),
-        data: []
-      }
-    ];
+    const defaults = getDefaultPacksForGame(game.id, language);
 
     const currentUsers = userCustomPacks.filter(p => p.gameId === game.id);
     const existingIds = new Set(defaults.map(p => p.id));
@@ -289,8 +290,12 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
     const allKnownIds = new Set([...defaults.map(p => p.id), ...uniqueServer.map(p => p.id)]);
     const uniqueLocal = currentUsers.filter(p => !allKnownIds.has(p.id));
 
-    return [...uniqueLocal, ...uniqueServer, ...defaults];
-  }, [game?.id, userCustomPacks, serverCustomPacks, t]);
+    const combined = [...uniqueLocal, ...uniqueServer, ...defaults];
+    return combined.map(p => ({
+      ...p,
+      likes: serverPackLikes[p.id] !== undefined ? serverPackLikes[p.id] : 0
+    }));
+  }, [game?.id, language, userCustomPacks, serverCustomPacks, serverPackLikes, t]);
 
   // 초기 팩 매칭
   useEffect(() => {
@@ -329,18 +334,19 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
     e.stopPropagation();
     const isAlreadyLiked = likedPackIds.includes(packId);
     let nextLiked: string[];
-    const targetPack = availablePacks.find(p => p.id === packId);
 
     if (isAlreadyLiked) {
       nextLiked = likedPackIds.filter(id => id !== packId);
-      if (targetPack && (targetPack.likes || 0) > 0) {
-        targetPack.likes -= 1;
-      }
+      setServerPackLikes(prev => ({
+        ...prev,
+        [packId]: Math.max(0, (prev[packId] ?? 0) - 1)
+      }));
     } else {
       nextLiked = [...likedPackIds, packId];
-      if (targetPack) {
-        targetPack.likes = (targetPack.likes || 0) + 1;
-      }
+      setServerPackLikes(prev => ({
+        ...prev,
+        [packId]: (prev[packId] ?? 0) + 1
+      }));
     }
 
     setLikedPackIds(nextLiked);
@@ -348,9 +354,12 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
     setPackLikesUpdate(prev => prev + 1);
 
     if (game) {
-      socket.emit('pack:like', { packId, gameId: game.id }, (res) => {
-        if (res && res.success && targetPack) {
-          targetPack.likes = res.likes;
+      socket.emit('pack:like', { packId, gameId: game.id }, (res: any) => {
+        if (res && res.success && typeof res.likes === 'number') {
+          setServerPackLikes(prev => ({
+            ...prev,
+            [packId]: res.likes
+          }));
           setPackLikesUpdate(prev => prev + 1);
         }
       });
@@ -838,12 +847,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
                       <div style={{ flex: 1 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
                           <strong style={{ fontSize: '1.05rem', color: '#FFF' }}>{pack.title}</strong>
-                          {pack.isKoreanCultureOnly && (
-                            <span style={{ background: 'rgba(239, 68, 68, 0.25)', color: '#FCA5A5', border: '1px solid rgba(239, 68, 68, 0.5)', borderRadius: '6px', padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800 }}>
-                              {t('krCultureOnlyBadge')}
-                            </span>
-                          )}
-                          {pack.language && pack.language !== 'all' && !pack.isKoreanCultureOnly && (
+                          {pack.language && pack.language !== 'all' && (
                             <span style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#93C5FD', border: '1px solid rgba(59, 130, 246, 0.4)', borderRadius: '6px', padding: '2px 6px', fontSize: '0.75rem', fontWeight: 700 }}>
                               {pack.language.toUpperCase()}
                             </span>
@@ -889,7 +893,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
                             cursor: 'pointer',
                             transition: 'all 0.2s ease'
                           }}
-                          title={isLiked ? '추천 취소' : '이 팩 추천하기'}
+                          title={isLiked ? t('cancelLike') : t('likeThisPack')}
                         >
                           <ThumbsUp size={14} fill={isLiked ? '#EC4899' : 'none'} color={isLiked ? '#EC4899' : '#CBD5E1'} />
                           <span style={{ fontWeight: 700 }}>{(pack.likes || 0).toLocaleString()}</span>
@@ -898,10 +902,10 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
                         {isSelected ? (
                           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10B981', fontWeight: 800, fontSize: '0.88rem' }}>
                             <CheckCircle2 size={22} />
-                            <span>선택됨</span>
+                            <span>{t('selected')}</span>
                           </div>
                         ) : (
-                          <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>선택</span>
+                          <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>{t('select')}</span>
                         )}
                       </div>
                     </div>

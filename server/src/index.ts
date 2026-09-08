@@ -55,6 +55,13 @@ app.get('/api/packs', (req, res) => {
   });
 });
 
+// 3-1. 모든 팩 추천(좋아요) 수 맵 조회
+app.get('/api/packs/likes', (req, res) => {
+  res.json({
+    likes: dataStore.getLikesMap()
+  });
+});
+
 // 4. 커스텀 팩 등록
 app.post('/api/packs', (req, res) => {
   const pack = req.body;

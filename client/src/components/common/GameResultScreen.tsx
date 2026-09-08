@@ -300,7 +300,7 @@ export const GameResultScreen: React.FC<GameResultScreenProps> = ({
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#FBBF24', fontWeight: 800, marginBottom: '3px' }}>
                     <Info size={14} />
-                    <span>MVP 선정 이유</span>
+                    <span>{t('mvpReason')}</span>
                   </div>
                   <div>{award.reason}</div>
                 </div>
@@ -314,10 +314,10 @@ export const GameResultScreen: React.FC<GameResultScreenProps> = ({
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#A5B4FC', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Trophy size={20} color="#FBBF24" />
-              <span>전체 참가자 최종 순위표</span>
+              <span>{t('finalLeaderboard')}</span>
             </h4>
             <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-              총 {leaderboard.length}명 참여
+              {t('totalParticipants', { count: leaderboard.length })}
             </span>
           </div>
 
