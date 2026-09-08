@@ -135,7 +135,7 @@ export const Footer: React.FC = () => {
                     <p><strong>3. 제3자 광고 사업자(Google AdSense 등) 안내</strong></p>
                     <p>본 사이트는 서비스 운영 및 유지를 위해 제3자 광고 사업자(Google LLC 등)의 광고를 게재할 수 있습니다. Google은 이용자의 본 웹사이트 및 다른 웹사이트 방문 기록을 바탕으로 맞춤형 광고를 제공하기 위해 쿠키(DART 쿠키 등)를 사용할 수 있습니다. 이용자는 Google 광고 및 콘텐츠 네트워크 개인정보 보호정책 페이지를 방문하여 맞춤형 광고용 쿠키 사용을 선택 해제할 수 있습니다.</p>
                     <p><strong>4. 개인정보 보호책임자</strong></p>
-                    <p>문의: partyhub.service@gmail.com</p>
+                    <p>문의: chanchan6310@gmail.com</p>
                   </>
                 ) : (
                   <>
@@ -146,7 +146,7 @@ export const Footer: React.FC = () => {
                     <p><strong>3. Third-Party Advertising (Google AdSense)</strong></p>
                     <p>PartyHub may display third-party advertisements (such as Google LLC) to support platform maintenance. Google may utilize cookies (such as the DART cookie) to deliver personalized ads based on visits across websites. Users may opt out of personalized advertising by visiting Google Ad Settings.</p>
                     <p><strong>4. Privacy Contact</strong></p>
-                    <p>Contact: partyhub.service@gmail.com</p>
+                    <p>Contact: chanchan6310@gmail.com</p>
                   </>
                 )
               )}
@@ -214,7 +214,7 @@ export const Footer: React.FC = () => {
                   <>
                     <p>PartyHub를 플레이해주셔서 감사합니다! 서비스 개선 아이디어, 새로운 게임 규칙 제안, 버그 제보, 또는 스트리머/기업 제휴 문의는 언제든지 환영합니다.</p>
                     <div style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '16px', borderRadius: '10px', marginTop: '10px' }}>
-                      <p>📧 <strong>공식 문의 이메일:</strong> partyhub.service@gmail.com</p>
+                      <p>📧 <strong>공식 문의 이메일:</strong> chanchan6310@gmail.com</p>
                       <p>💬 <strong>피드백 접수:</strong> 게임 내 버그나 불편 사항 제보 시 사용 중이신 브라우저 종류(크롬/엣지/웨일 등)를 함께 적어주시면 빠른 조치가 가능합니다.</p>
                     </div>
                   </>
@@ -222,7 +222,7 @@ export const Footer: React.FC = () => {
                   <>
                     <p>Thank you for playing PartyHub! Suggestions, gameplay ideas, bug reports, and streamer inquiries are always welcome.</p>
                     <div style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '16px', borderRadius: '10px', marginTop: '10px' }}>
-                      <p>📧 <strong>Official Email:</strong> partyhub.service@gmail.com</p>
+                      <p>📧 <strong>Official Email:</strong> chanchan6310@gmail.com</p>
                       <p>💬 <strong>Feedback:</strong> When reporting bugs, please include your browser details (Chrome/Edge/Firefox) for quick diagnostics.</p>
                     </div>
                   </>
