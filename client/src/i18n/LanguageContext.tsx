@@ -31,7 +31,8 @@ function detectInitialLanguage(): SupportedLanguage {
   if (browserLang.startsWith('fr')) return 'fr';
   if (browserLang.startsWith('en')) return 'en';
 
-  return 'ko'; // Default language
+  // 지원하지 않는 언어의 첫 방문자는 영어(국제 공용어)로 표시
+  return 'en';
 }
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

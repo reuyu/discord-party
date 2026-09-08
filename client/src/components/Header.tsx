@@ -55,7 +55,7 @@ export const Header: React.FC<HeaderProps> = ({ onGoHome }) => {
         >
           <Globe size={15} color="#A5B4FC" />
           <span style={{ fontSize: '1.1rem' }}>{currentLangOption.flag}</span>
-          <span className="lang-name">{currentLangOption.name}</span>
+          <span className="lang-name" style={{ fontSize: '0.78rem', letterSpacing: '0.06em', color: '#A5B4FC', fontWeight: 700 }}>LANGUAGE</span>
           <ChevronDown size={16} style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
         </button>
 
