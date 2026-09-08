@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { X, ArrowRight, User } from 'lucide-react';
 import { GameInfo } from '../../../shared/types';
-import { DEFAULT_AVATARS } from '../../../shared/gamesData';
+import { DEFAULT_AVATARS, getLocalizedGame } from '../../../shared/gamesData';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface JoinModalProps {
   isOpen: boolean;
@@ -23,15 +24,27 @@ export const JoinModal: React.FC<JoinModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const [playerName, setPlayerName] = useState('');
+  const { language, t } = useLanguage();
+  const [playerName, setPlayerName] = useState(() => {
+    try {
+      return localStorage.getItem('partyhub_player_name') || '';
+    } catch {
+      return '';
+    }
+  });
   const [selectedAvatar, setSelectedAvatar] = useState(() => DEFAULT_AVATARS[0]);
+
+  const locGame = game ? getLocalizedGame(game, language) : null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!playerName.trim()) {
-      alert('참가할 닉네임을 입력해주세요!');
       return;
     }
+
+    try {
+      localStorage.setItem('partyhub_player_name', playerName.trim());
+    } catch {}
 
     onSubmit({
       playerName: playerName.trim(),
@@ -46,7 +59,9 @@ export const JoinModal: React.FC<JoinModalProps> = ({
       <div className="modal-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '460px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 900 }}>
-            {isCreating ? `🚀 ${game?.title} 방 만들기` : `🎮 방 참가하기 (${roomCode})`}
+            {isCreating 
+              ? `🚀 ${locGame?.title || ''} ${t('createRoomBtn')}` 
+              : `🎮 ${t('joinModalTitle')} (${roomCode || ''})`}
           </h2>
           <button className="btn btn-secondary" style={{ padding: '6px', borderRadius: '50%' }} onClick={onClose}>
             <X size={18} />
@@ -57,7 +72,7 @@ export const JoinModal: React.FC<JoinModalProps> = ({
           {/* 아바타 선택 */}
           <div>
             <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '8px' }}>
-              프로필 이모지 선택
+              {t('selectAvatar')}
             </label>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
               {DEFAULT_AVATARS.map((av, idx) => (
@@ -85,14 +100,14 @@ export const JoinModal: React.FC<JoinModalProps> = ({
           {/* 닉네임 수동 입력 */}
           <div>
             <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-              닉네임 입력 (직접 입력)
+              {t('hostPlayerName')}
             </label>
             <div style={{ position: 'relative' }}>
               <User size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
               <input
                 type="text"
                 className="input-field"
-                placeholder="사용할 닉네임을 입력하세요..."
+                placeholder={t('namePlaceholder')}
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
                 style={{ paddingLeft: '40px' }}
@@ -107,7 +122,7 @@ export const JoinModal: React.FC<JoinModalProps> = ({
             className="btn btn-primary"
             style={{ width: '100%', padding: '14px', fontSize: '1rem', fontWeight: 800, borderRadius: '12px', marginTop: '10px' }}
           >
-            <span>{isCreating ? '방 생성하기' : '대기실 입장하기'}</span>
+            <span>{isCreating ? t('createRoomBtn') : t('joinSubmitBtn')}</span>
             <ArrowRight size={18} />
           </button>
         </form>

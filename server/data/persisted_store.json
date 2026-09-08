@@ -1,0 +1,55 @@
+{
+  "gamePlayCounts": {
+    "worldcup": 1581,
+    "liar-game": 1420,
+    "zoom-quiz": 1260,
+    "chosung-quiz": 1130,
+    "voice-battle": 1050,
+    "smart-mafia": 890,
+    "trivia-quiz": 820,
+    "balance-debate": 780,
+    "relay-novel": 740,
+    "high-noon-duel": 690,
+    "five-sec-rule": 640,
+    "bomb-party": 590,
+    "snake-royale": 550,
+    "clicker-clash": 510,
+    "taboo-talk": 480,
+    "fake-artist": 450,
+    "blind-drawing": 420,
+    "story-roulette": 390,
+    "black-and-white": 370,
+    "anonymous-exposed": 350,
+    "short-trpg": 330,
+    "ox-survival": 310
+  },
+  "customPacks": [
+    {
+      "id": "test_pack_1788834980027",
+      "gameId": "liar-game",
+      "title": "글로벌 테스트 음식 팩",
+      "description": "테스트용 커스텀 팩",
+      "author": "테스터",
+      "tags": [
+        "테스트",
+        "음식"
+      ],
+      "itemCount": 5,
+      "isPublic": true,
+      "likes": 11,
+      "createdAt": 1788834980027,
+      "language": "en",
+      "data": {
+        "words": [
+          {
+            "word": "Pizza",
+            "category": "Food"
+          }
+        ]
+      }
+    }
+  ],
+  "packLikes": {
+    "test_pack_1788834980027": 11
+  }
+}

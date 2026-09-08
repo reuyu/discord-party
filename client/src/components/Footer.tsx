@@ -1,9 +1,11 @@
 // client/src/components/Footer.tsx
 import React, { useState } from 'react';
 import { ShieldCheck, FileText, HelpCircle, Mail, X } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const Footer: React.FC = () => {
   const [activeModal, setActiveModal] = useState<'privacy' | 'terms' | 'about' | 'contact' | null>(null);
+  const { t } = useLanguage();
 
   return (
     <footer style={{
@@ -43,25 +45,25 @@ export const Footer: React.FC = () => {
               onClick={() => setActiveModal('about')}
               style={{ background: 'none', border: 'none', color: '#CBD5E1', cursor: 'pointer', padding: 0, fontSize: '0.85rem' }}
             >
-              서비스 소개
+              PartyHub
             </button>
             <button
               onClick={() => setActiveModal('privacy')}
               style={{ background: 'none', border: 'none', color: '#CBD5E1', cursor: 'pointer', padding: 0, fontSize: '0.85rem' }}
             >
-              개인정보처리방침
+              {t('privacyPolicy')}
             </button>
             <button
               onClick={() => setActiveModal('terms')}
               style={{ background: 'none', border: 'none', color: '#CBD5E1', cursor: 'pointer', padding: 0, fontSize: '0.85rem' }}
             >
-              이용약관
+              {t('termsOfService')}
             </button>
             <button
               onClick={() => setActiveModal('contact')}
               style={{ background: 'none', border: 'none', color: '#CBD5E1', cursor: 'pointer', padding: 0, fontSize: '0.85rem' }}
             >
-              문의 및 제휴
+              {t('contact')}
             </button>
           </div>
         </div>
@@ -79,11 +81,11 @@ export const Footer: React.FC = () => {
           color: '#64748B'
         }}>
           <div>
-            PartyHub는 디스코드 음성 채널 및 친구들과 브라우저에서 설치 없이 즐기는 실시간 멀티플레이 파티게임 플랫폼입니다.
+            {t('footerDesc')}
             <br />
             Disclaimer: PartyHub is not affiliated with, endorsed, or sponsored by Discord Inc.
           </div>
-          <div>© 2026 PartyHub Team. All rights reserved.</div>
+          <div>{t('copyright')}</div>
         </div>
       </div>
 

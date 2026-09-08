@@ -9,6 +9,8 @@ import { INITIAL_GAMES, GENRE_FILTERS, PLAYER_COUNT_FILTERS } from '../../shared
 import { ClientToServerEvents, ServerToClientEvents } from '../../shared/types';
 import { getGameEngine } from './games/GameEngineRegistry';
 
+import { DataStore } from './DataStore';
+
 const app = express();
 const server = http.createServer(app);
 
@@ -23,6 +25,7 @@ app.use(cors());
 app.use(express.json());
 
 const roomManager = new RoomManager();
+const dataStore = DataStore.getInstance();
 
 // ================= REST API =================
 
@@ -44,7 +47,34 @@ app.get('/api/games/:id', (req, res) => {
   res.json(game);
 });
 
-// 3. 방 유효성 검사 (초대 링크 접속 시 사전 체크)
+// 3. 커스텀 팩 목록 조회
+app.get('/api/packs', (req, res) => {
+  const gameId = req.query.gameId as string | undefined;
+  res.json({
+    packs: dataStore.getCustomPacks(gameId)
+  });
+});
+
+// 4. 커스텀 팩 등록
+app.post('/api/packs', (req, res) => {
+  const pack = req.body;
+  if (!pack || !pack.id || !pack.gameId || !pack.title) {
+    return res.status(400).json({ error: '유효하지 않은 팩 데이터입니다.' });
+  }
+  dataStore.addCustomPack(pack);
+  io.emit('packs:updated', { gameId: pack.gameId, pack, packs: dataStore.getCustomPacks(pack.gameId) });
+  res.json({ success: true, pack });
+});
+
+// 5. 팩 좋아요
+app.post('/api/packs/:id/like', (req, res) => {
+  const packId = req.params.id;
+  const increment = req.body?.increment !== false;
+  const likes = dataStore.toggleLike(packId, increment);
+  res.json({ success: true, packId, likes });
+});
+
+// 6. 방 유효성 검사 (초대 링크 접속 시 사전 체크)
 app.get('/api/rooms/:code', (req, res) => {
   const room = roomManager.getRoom(req.params.code);
   if (!room) {
@@ -73,6 +103,39 @@ app.get('/api/active-rooms', (req, res) => {
 // ================= SOCKET.IO 실시간 이벤트 =================
 
 io.on('connection', (socket) => {
+  // 팩 목록 조회 (소켓)
+  socket.on('packs:get', ({ gameId }: any, callback: any) => {
+    try {
+      const packs = dataStore.getCustomPacks(gameId);
+      if (callback) callback({ success: true, packs });
+    } catch (err: any) {
+      if (callback) callback({ success: false, error: err.message });
+    }
+  });
+
+  // 팩 업로드 (소켓)
+  socket.on('pack:upload', (pack: any, callback: any) => {
+    try {
+      if (pack && pack.id && pack.gameId && pack.title) {
+        dataStore.addCustomPack(pack);
+        io.emit('packs:updated', { gameId: pack.gameId, pack, packs: dataStore.getCustomPacks(pack.gameId) });
+        if (callback) callback({ success: true, pack });
+      }
+    } catch (err: any) {
+      if (callback) callback({ success: false, error: err.message });
+    }
+  });
+
+  // 팩 좋아요 (소켓)
+  socket.on('pack:like', ({ packId }: any, callback: any) => {
+    try {
+      const likes = dataStore.toggleLike(packId, true);
+      if (callback) callback({ success: true, packId, likes });
+    } catch (err: any) {
+      if (callback) callback({ success: false, error: err.message });
+    }
+  });
+
   // 1. 방 생성 (방장 - 팩 선택 후)
   socket.on('room:create', ({ gameId, packId, packTitle, customPackData, playerName, avatar }: any, callback) => {
     try {
@@ -84,6 +147,14 @@ io.on('connection', (socket) => {
 
       socket.join(room.code);
       socket.emit('room:joined', { room, myPlayerId: hostId });
+
+      // 플레이 횟수 갱신 브로드캐스트
+      const currentCount = dataStore.getPlayCount(gameId);
+      io.emit('game:play-count-updated', {
+        gameId,
+        playCount: currentCount,
+        topGames: roomManager.getGamesWithPlayCounts()
+      });
 
       if (callback) {
         callback({ success: true, room });
@@ -172,6 +243,14 @@ io.on('connection', (socket) => {
       io.to(result.room.code).emit('game:started', {
         room: result.room,
         gameState: initialGameState
+      });
+
+      // 플레이 횟수 갱신 브로드캐스트
+      const currentCount = dataStore.getPlayCount(result.room.gameId);
+      io.emit('game:play-count-updated', {
+        gameId: result.room.gameId,
+        playCount: currentCount,
+        topGames: roomManager.getGamesWithPlayCounts()
       });
 
       if (result.room.gameId === 'snake-royale' && typeof (engine as any).startCountdown === 'function') {

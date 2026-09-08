@@ -5,6 +5,7 @@ import { RotateCcw, Crown, Trophy, Info } from 'lucide-react';
 import { sounds } from '../../utils/audio';
 import confetti from 'canvas-confetti';
 import { socket } from '../../socket';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface GameResultScreenProps {
   room: Room;
@@ -19,10 +20,10 @@ export const GameResultScreen: React.FC<GameResultScreenProps> = ({
   onLeaveRoom,
   onReturnToWaiting
 }) => {
+  const { t } = useLanguage();
   const state = room.gameState;
   const gameId = room.gameId;
   const isHost = room.hostId === myPlayerId;
-  const hostPlayer = room.players.find(p => p.id === room.hostId);
 
   const handleReturnToLobby = () => {
     sounds.playClick();
@@ -355,12 +356,12 @@ export const GameResultScreen: React.FC<GameResultScreenProps> = ({
                       {idx + 1}
                     </span>
                     <span style={{ fontSize: '1rem', fontWeight: 700, color: '#FFF' }}>
-                      {p.avatar} {p.name} {p.id === myPlayerId && <span style={{ color: '#FBBF24', fontSize: '0.8rem' }}>(나)</span>}
+                      {p.avatar} {p.name} {p.id === myPlayerId && <span style={{ color: '#FBBF24', fontSize: '0.8rem' }}>({t('meBadge')})</span>}
                     </span>
                   </div>
 
                   <div style={{ fontWeight: 800, color: isWinner ? '#FBBF24' : '#6EE7B7', fontSize: '0.95rem' }}>
-                    {hasScore ? `${scoreVal}점` : (isWinner ? '우승 👑' : '완주 🎖️')}
+                    {hasScore ? `${scoreVal}` : (isWinner ? '👑' : '🎖️')}
                   </div>
                 </div>
               );
@@ -387,7 +388,7 @@ export const GameResultScreen: React.FC<GameResultScreenProps> = ({
               }}
             >
               <RotateCcw size={22} />
-              <span>🔄 파티 대기실로 돌아가기 (다 함께 다음 게임)</span>
+              <span>🔄 {t('inGameRestartBtn')}</span>
             </button>
           ) : (
             <div style={{
@@ -403,7 +404,7 @@ export const GameResultScreen: React.FC<GameResultScreenProps> = ({
               gap: '12px'
             }}>
               <span className="spinner" style={{ width: '18px', height: '18px', borderWidth: '2px', borderColor: '#C4B5FD', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', display: 'inline-block' }} />
-              <span>👑 방장({hostPlayer?.name || '호스트'})님이 대기실로 복귀할 때까지 대기 중입니다...</span>
+              <span>👑 {t('waitingForHost')}</span>
             </div>
           )}
 
@@ -418,7 +419,7 @@ export const GameResultScreen: React.FC<GameResultScreenProps> = ({
               background: 'transparent'
             }}
           >
-            <span>🚪 파티 룸 완전히 나가기 (혼자 퇴장)</span>
+            <span>🚪 {t('inGameExitBtn')}</span>
           </button>
         </div>
       </div>

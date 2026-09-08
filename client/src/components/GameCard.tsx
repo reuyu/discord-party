@@ -2,6 +2,8 @@
 import React from 'react';
 import { Users, Clock, Play, Package, Zap } from 'lucide-react';
 import { GameInfo } from '../../../shared/types';
+import { getLocalizedGame } from '../../../shared/gamesData';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface GameCardProps {
   game: GameInfo;
@@ -9,16 +11,19 @@ interface GameCardProps {
 }
 
 export const GameCard: React.FC<GameCardProps> = ({ game, onSelectGame }) => {
+  const { language, t } = useLanguage();
+  const localized = getLocalizedGame(game, language);
+
   return (
     <div 
       className="game-card" 
-      onClick={() => onSelectGame(game)}
+      onClick={() => onSelectGame(localized)}
       style={{ cursor: 'pointer' }}
     >
       <div className="card-thumbnail-wrap">
         <img
-          src={game.thumbnail}
-          alt={game.title}
+          src={localized.thumbnail}
+          alt={localized.title}
           className="card-thumbnail"
           loading="lazy"
           onError={(e) => {
@@ -26,42 +31,42 @@ export const GameCard: React.FC<GameCardProps> = ({ game, onSelectGame }) => {
           }}
         />
         <div className="card-badges-top">
-          {game.isPopular && <span className="badge-pill badge-popular">🔥 인기</span>}
-          {game.hasCustomPack ? (
+          {localized.isPopular && <span className="badge-pill badge-popular">{t('hotBadge')}</span>}
+          {localized.hasCustomPack ? (
             <span className="badge-pill" style={{ background: 'rgba(99, 102, 241, 0.85)', color: '#FFF' }}>
               <Package size={11} style={{ display: 'inline', marginRight: '3px' }} />
-              팩 지원
+              {t('packBadge')}
             </span>
           ) : (
             <span className="badge-pill" style={{ background: 'rgba(16, 185, 129, 0.85)', color: '#FFF' }}>
               <Zap size={11} style={{ display: 'inline', marginRight: '3px' }} />
-              시스템 룰
+              {t('ruleBadge')}
             </span>
           )}
         </div>
       </div>
 
       <div className="card-body">
-        <h3 className="card-title">{game.title}</h3>
+        <h3 className="card-title">{localized.title}</h3>
 
         <div className="card-meta-row">
           <div className="meta-item">
             <Users size={14} color="#A5B4FC" />
-            <span>{game.minPlayers}~{game.maxPlayers}명</span>
+            <span>{t('minMaxPlayers', { min: localized.minPlayers, max: localized.maxPlayers })}</span>
           </div>
           <div className="meta-item">
             <Clock size={14} color="#FBBF24" />
-            <span>약 {game.estimatedMinutes}분</span>
+            <span>{t('estimatedMinutes', { min: localized.estimatedMinutes })}</span>
           </div>
           <div className="meta-item" style={{ marginLeft: 'auto', color: '#94A3B8', fontSize: '0.8rem', fontWeight: 600 }}>
-            <span>🎮 {(game.playCount || 0).toLocaleString()}회</span>
+            <span>{t('playCount', { count: (localized.playCount || 0).toLocaleString() })}</span>
           </div>
         </div>
 
-        <p className="card-description">{game.description}</p>
+        <p className="card-description">{localized.description}</p>
 
         <div className="card-tags">
-          {game.tags.map((tag, idx) => (
+          {localized.tags.map((tag, idx) => (
             <span key={idx} className="tag-badge">#{tag}</span>
           ))}
         </div>
@@ -72,18 +77,18 @@ export const GameCard: React.FC<GameCardProps> = ({ game, onSelectGame }) => {
             style={{ width: '100%' }}
             onClick={(e) => {
               e.stopPropagation();
-              onSelectGame(game);
+              onSelectGame(localized);
             }}
           >
-            {game.hasCustomPack ? (
+            {localized.hasCustomPack ? (
               <>
                 <Package size={16} />
-                <span>팩 선택 & 방 만들기</span>
+                <span>{t('createRoomBtn')}</span>
               </>
             ) : (
               <>
                 <Play size={16} />
-                <span>바로 방 만들기</span>
+                <span>{t('createRoomBtn')}</span>
               </>
             )}
           </button>

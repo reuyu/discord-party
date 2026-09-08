@@ -9,6 +9,8 @@ import { PackSelectModal } from './PackSelectModal';
 import { GameInfo, GameCategory, PlayerCountFilter, SortOption } from '../../../shared/types';
 import { INITIAL_GAMES } from '../../../shared/gamesData';
 import { Sparkles } from 'lucide-react';
+import { socket } from '../socket';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface LobbyViewProps {
   onCreateRoom: (data: { gameId: string; packId?: string; packTitle?: string; customPackData?: any; playerName: string; avatar: string }) => void;
@@ -52,6 +54,19 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
         }
       })
       .catch(() => {});
+
+    const handlePlayCountUpdated = ({ gameId, playCount }: { gameId: string; playCount: number }) => {
+      setPlayCountOverrides(prev => {
+        const next = { ...prev, [gameId]: playCount };
+        localStorage.setItem('partyhub_game_play_counts', JSON.stringify(next));
+        return next;
+      });
+    };
+
+    socket.on('game:play-count-updated', handlePlayCountUpdated);
+    return () => {
+      socket.off('game:play-count-updated', handlePlayCountUpdated);
+    };
   }, []);
 
   // 모든 게임에 최신 playCount 병합
@@ -130,6 +145,8 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
     onCreateRoom(data);
   };
 
+  const { t } = useLanguage();
+
   return (
     <div className="app-container">
       <Header onGoHome={() => {}} />
@@ -153,18 +170,18 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
               <Sparkles size={20} color="#F59E0B" />
               <h1 style={{ fontSize: '1.4rem', fontWeight: 800 }}>
-                디스코드 친구들과 함께하는 파티 타임! 🎙️🎮
+                {t('heroTitle1')} {t('heroTitle2')} 🎙️🎮
               </h1>
             </div>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem' }}>
-              설치 없이 웹 초대 링크로 전원 즉시 참가! 원하는 게임을 누르고 팩을 선택하여 방을 만드세요.
+              {t('heroSubtitle')}
             </p>
           </div>
           <button
             className="btn btn-primary"
             onClick={() => setSelectedGameForPack(INITIAL_GAMES[0])}
           >
-            🔥 인기 게임 바로 시작
+            🔥 {t('catPopular')}
           </button>
         </div>
 
@@ -199,7 +216,7 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
             className="glass-panel"
             style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--text-secondary)' }}
           >
-            <p style={{ fontSize: '1.1rem', marginBottom: '12px' }}>🔍 조건에 맞는 게임이 없습니다.</p>
+            <p style={{ fontSize: '1.1rem', marginBottom: '12px' }}>🔍 {t('noPacksFound')}</p>
             <button
               className="btn btn-secondary"
               onClick={() => {
@@ -208,7 +225,7 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
                 setSearchQuery('');
               }}
             >
-              필터 초기화
+              {t('allGames')}
             </button>
           </div>
         )}

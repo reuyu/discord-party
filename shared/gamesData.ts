@@ -537,3 +537,5 @@ export const RANDOM_NICKNAMES = [
   '용감한사자', '빛나는별', '천재추리러', '스피드러너', '파티피플',
   '피자매니아', '새벽감성', '귀여운오리', '장난꾸러기', '행복한쿼카'
 ];
+
+export { getLocalizedGame } from './gamesLocalization';

@@ -1,29 +1,23 @@
-// server/src/RoomManager.ts
 import { Room, Player, RoomSettings } from '../../shared/types';
 import { INITIAL_GAMES } from '../../shared/gamesData';
+import { DataStore } from './DataStore';
 
 export class RoomManager {
   private rooms: Map<string, Room> = new Map();
   private socketToPlayerMap: Map<string, { roomCode: string; playerId: string }> = new Map();
-  private gamePlayCounts: Map<string, number> = new Map();
+  private dataStore: DataStore = DataStore.getInstance();
 
-  constructor() {
-    INITIAL_GAMES.forEach(g => {
-      this.gamePlayCounts.set(g.id, g.playCount || 0);
-    });
-  }
+  constructor() {}
 
   public incrementPlayCount(gameId: string): number {
-    const current = this.gamePlayCounts.get(gameId) || 0;
-    const next = current + 1;
-    this.gamePlayCounts.set(gameId, next);
-    return next;
+    return this.dataStore.incrementPlayCount(gameId);
   }
 
   public getGamesWithPlayCounts() {
+    const counts = this.dataStore.getPlayCounts();
     return INITIAL_GAMES.map(g => ({
       ...g,
-      playCount: this.gamePlayCounts.get(g.id) || g.playCount || 0
+      playCount: counts[g.id] ?? g.playCount ?? 0
     }));
   }
 

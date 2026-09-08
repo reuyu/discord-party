@@ -17,12 +17,13 @@ import {
   FolderOpen
 } from 'lucide-react';
 import { Room } from '../../../shared/types';
-import { INITIAL_GAMES } from '../../../shared/gamesData';
+import { INITIAL_GAMES, getLocalizedGame } from '../../../shared/gamesData';
 import { REAL_DEFAULT_PACKS } from '../../../shared/defaultPacks';
 import { socket } from '../socket';
 import { sounds } from '../utils/audio';
 import { AdBanner } from './AdBanner';
 import { PackSelectModal } from './PackSelectModal';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface RoomViewProps {
   room: Room;
@@ -48,6 +49,9 @@ export const RoomView: React.FC<RoomViewProps> = ({
   const [isPackSelectModalOpen, setIsPackSelectModalOpen] = useState(false);
   const [isRollingRandom, setIsRollingRandom] = useState(false);
 
+  const { language, t } = useLanguage();
+  const localizedGame = getLocalizedGame(room.gameInfo, language);
+
   const me = room.players.find((p) => p.id === myPlayerId);
   const isHost = me?.isHost ?? false;
 
@@ -60,7 +64,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
   const handleCopyLink = () => {
     const inviteUrl = `${window.location.origin}/room/${room.code}`;
     navigator.clipboard.writeText(inviteUrl);
-    showToast('🔗 파티 룸 초대 링크가 클립보드에 복사되었습니다!');
+    showToast(`🔗 ${t('linkCopied')}`);
   };
 
   // 1. 게임 직접 변경 (방장 전용)
@@ -79,7 +83,8 @@ export const RoomView: React.FC<RoomViewProps> = ({
     });
 
     setIsGameSelectModalOpen(false);
-    showToast(`🎮 게임이 '${selectedGame.title}'(으)로 변경되었습니다!`);
+    const locGame = getLocalizedGame(selectedGame, language);
+    showToast(`🎮 ${locGame.title}`);
   };
 
   // 2. 🎲 인원 수 맞춤 랜덤 게임 추첨 (방장 전용)
@@ -89,16 +94,13 @@ export const RoomView: React.FC<RoomViewProps> = ({
     sounds.playClick();
 
     const currentCount = room.players.length;
-    // 현재 인원 수를 수용할 수 있는 게임들 필터링
     let candidates = INITIAL_GAMES.filter(g => g.minPlayers <= currentCount && currentCount <= g.maxPlayers);
     if (candidates.length === 0) {
       candidates = INITIAL_GAMES;
     }
-    // 현재 게임 제외 우선
     const otherCandidates = candidates.filter(g => g.id !== room.gameId);
     const pool = otherCandidates.length > 0 ? otherCandidates : candidates;
 
-    // 1초간 신나는 주사위 롤링 연출 후 최종 당첨 게임 결정
     setTimeout(() => {
       const picked = pool[Math.floor(Math.random() * pool.length)];
       setIsRollingRandom(false);
@@ -113,7 +115,8 @@ export const RoomView: React.FC<RoomViewProps> = ({
         customPackData: defaultPackData
       });
 
-      showToast(`🎲 랜덤 추첨 완료! 이번 게임은 '${picked.title}'입니다!`);
+      const locPicked = getLocalizedGame(picked, language);
+      showToast(`🎲 ${locPicked.title}`);
     }, 900);
   };
 
@@ -128,11 +131,11 @@ export const RoomView: React.FC<RoomViewProps> = ({
       }
     });
     setIsPackSelectModalOpen(false);
-    showToast(`📦 '${data.packTitle || '기본 팩'}'이(가) 적용되었습니다!`);
+    showToast(`📦 ${data.packTitle || 'Default Pack'}`);
   };
 
   const allGuestsReady = room.players.filter((p) => !p.isHost).every((p) => p.isReady);
-  const canStart = isHost && room.players.length >= room.gameInfo.minPlayers && allGuestsReady;
+  const canStart = isHost && room.players.length >= localizedGame.minPlayers && allGuestsReady;
 
   return (
     <div className="app-container" style={{ padding: '20px' }}>
@@ -141,8 +144,8 @@ export const RoomView: React.FC<RoomViewProps> = ({
         <div className="glass-panel room-header-panel">
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <img
-              src={room.gameInfo.thumbnail}
-              alt={room.gameInfo.title}
+              src={localizedGame.thumbnail}
+              alt={localizedGame.title}
               onError={(e) => {
                 (e.currentTarget as HTMLImageElement).src = '/images/worldcup_thumb.jpg';
               }}
@@ -150,16 +153,16 @@ export const RoomView: React.FC<RoomViewProps> = ({
             />
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                <h2 style={{ fontSize: '1.35rem', fontWeight: 800 }}>{room.gameInfo.title}</h2>
+                <h2 style={{ fontSize: '1.35rem', fontWeight: 800 }}>{localizedGame.title}</h2>
                 <span className="badge-pill" style={{ background: 'rgba(99, 102, 241, 0.2)', color: '#A5B4FC' }}>
-                  {room.players.length} / {room.settings.maxPlayers}명 파티 중
+                  {room.players.length} / {room.settings.maxPlayers}
                 </span>
                 <span className="badge-pill" style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#6EE7B7' }}>
-                  방 코드: <strong>{room.code}</strong>
+                  {t('roomCode')}: <strong>{room.code}</strong>
                 </span>
               </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-                {room.settings.customPackTitle ? `📦 적용 팩: ${room.settings.customPackTitle}` : room.gameInfo.subtitle}
+                {room.settings.customPackTitle ? `📦 ${room.settings.customPackTitle}` : localizedGame.subtitle}
               </p>
             </div>
           </div>
@@ -172,10 +175,10 @@ export const RoomView: React.FC<RoomViewProps> = ({
                   className="btn btn-secondary"
                   style={{ background: 'rgba(99, 102, 241, 0.25)', border: '1px solid #6366F1', color: '#FFF' }}
                   onClick={() => setIsGameSelectModalOpen(true)}
-                  title="다른 게임 선택하기"
+                  title="Change Game"
                 >
                   <Gamepad2 size={16} />
-                  <span>게임 변경</span>
+                  <span>{t('changePackBtn') ? t('changePackBtn').replace(/^[^\s]+\s*/, '') : '게임 변경'}</span>
                 </button>
 
                 <button
@@ -188,22 +191,22 @@ export const RoomView: React.FC<RoomViewProps> = ({
                   }}
                   onClick={handleRollRandomGame}
                   disabled={isRollingRandom}
-                  title="인원 수에 맞는 게임 랜덤 추첨"
+                  title="Random Game Roll"
                 >
                   <Dices size={16} />
-                  <span>{isRollingRandom ? '추첨 굴리는 중...' : '랜덤 게임'}</span>
+                  <span>{isRollingRandom ? '...' : '🎲 Random'}</span>
                 </button>
               </>
             )}
 
             <button className="btn btn-primary" style={{ padding: '10px 18px', fontSize: '0.95rem' }} onClick={handleCopyLink}>
               <Copy size={16} />
-              <span>초대 링크</span>
+              <span>{t('copyLinkBtn')}</span>
             </button>
 
-            <button className="btn btn-secondary" onClick={onLeaveRoom} title="파티 나가기">
+            <button className="btn btn-secondary" onClick={onLeaveRoom} title={t('leaveRoomBtn')}>
               <LogOut size={16} />
-              <span>나가기</span>
+              <span>{t('leaveRoomBtn')}</span>
             </button>
           </div>
         </div>
@@ -218,10 +221,10 @@ export const RoomView: React.FC<RoomViewProps> = ({
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Users size={18} color="#6366F1" />
-                <span>파티 멤버 ({room.players.length}명)</span>
+                <span>{t('playersCount', { count: room.players.length })}</span>
               </h3>
               <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                * 이 게임은 최소 {room.gameInfo.minPlayers}명 필요
+                * {t('minMaxPlayers', { min: localizedGame.minPlayers, max: localizedGame.maxPlayers })}
               </span>
             </div>
 
@@ -235,7 +238,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
                   >
                     {isHost && !p.isHost && (
                       <button
-                        title="내보내기"
+                        title="Kick"
                         style={{
                           position: 'absolute',
                           top: '8px',
@@ -257,24 +260,24 @@ export const RoomView: React.FC<RoomViewProps> = ({
 
                     <div className="player-name">
                       {p.name}
-                      {isThisPlayerMe && <span style={{ fontSize: '0.75rem', color: '#A5B4FC' }}>(나)</span>}
+                      {isThisPlayerMe && <span style={{ fontSize: '0.75rem', color: '#A5B4FC' }}> ({t('meBadge')})</span>}
                     </div>
 
                     <div>
                       {p.isHost ? (
                         <span className="ready-badge ready" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                           <Crown size={13} color="#FBBF24" />
-                          <span>방장</span>
+                          <span>{t('hostBadge')}</span>
                         </span>
                       ) : p.isReady ? (
                         <span className="ready-badge ready" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                           <CheckCircle2 size={13} />
-                          <span>준비 완료</span>
+                          <span>{t('readyBadge')}</span>
                         </span>
                       ) : (
                         <span className="ready-badge waiting" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                           <Clock size={13} />
-                          <span>대기 중</span>
+                          <span>{t('waitingBadge')}</span>
                         </span>
                       )}
                     </div>
@@ -287,20 +290,20 @@ export const RoomView: React.FC<RoomViewProps> = ({
           {/* 2. 우측: 게임 설정 및 시작 버튼 패널 */}
           <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ display: 'center', alignItems: 'center', gap: '8px' }}>
                 <Settings size={18} color="#A5B4FC" />
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 700 }}>게임 룰 & 설정</h3>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 700 }}>{t('rulesTitle')}</h3>
               </div>
 
               {/* 팩 변경 버튼 (팩 지원 게임만) */}
-              {room.gameInfo.hasCustomPack && isHost && (
+              {localizedGame.hasCustomPack && isHost && (
                 <button
                   className="btn btn-secondary"
                   style={{ padding: '6px 12px', fontSize: '0.8rem', background: 'rgba(255,255,255,0.06)' }}
                   onClick={() => setIsPackSelectModalOpen(true)}
                 >
                   <FolderOpen size={14} />
-                  <span>팩 변경</span>
+                  <span>{t('changePackBtn')}</span>
                 </button>
               )}
             </div>
@@ -309,19 +312,19 @@ export const RoomView: React.FC<RoomViewProps> = ({
             <div style={{ background: 'var(--bg-surface-elevated)', padding: '14px', borderRadius: '10px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, marginBottom: '4px', color: '#A5B4FC' }}>
                 <Layers size={15} />
-                <span>선택된 질문/테마 팩</span>
+                <span>{localizedGame.hasCustomPack ? t('packSupportedGame') : t('systemRuleGame')}</span>
               </div>
               <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-                {room.settings.customPackTitle || '기본 공식 팩'}
+                {room.settings.customPackTitle || 'Default Pack'}
               </div>
             </div>
 
             {/* 게임 룰 요약 */}
-            {room.gameInfo.rulesOverview && (
+            {localizedGame.rulesOverview && (
               <div style={{ background: 'var(--bg-surface-elevated)', padding: '14px', borderRadius: '10px', fontSize: '0.85rem' }}>
-                <div style={{ fontWeight: 700, marginBottom: '6px', color: '#A5B4FC' }}>📋 게임 진행 방법</div>
+                <div style={{ fontWeight: 700, marginBottom: '6px', color: '#A5B4FC' }}>📖 {t('rulesTitle')}</div>
                 <ul style={{ paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '4px', color: 'var(--text-secondary)' }}>
-                  {room.gameInfo.rulesOverview.map((rule, idx) => (
+                  {localizedGame.rulesOverview.map((rule, idx) => (
                     <li key={idx}>{rule}</li>
                   ))}
                 </ul>
@@ -334,7 +337,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
               {room.gameId === 'worldcup' && (
                 <div className="form-group">
                   <label className="form-label" style={{ marginBottom: '8px' }}>
-                    🏆 토너먼트 규모 선택 (몇 강)
+                    🏆 Tournament Size
                   </label>
                   {isHost ? (
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
@@ -352,13 +355,13 @@ export const RoomView: React.FC<RoomViewProps> = ({
                             fontSize: '0.9rem'
                           }}
                         >
-                          {size}강
+                          Round of {size}
                         </button>
                       ))}
                     </div>
                   ) : (
                     <div style={{ fontSize: '0.9rem', color: '#F472B6', fontWeight: 700 }}>
-                      {room.settings.rounds || 8}강 토너먼트
+                      Round of {room.settings.rounds || 8}
                     </div>
                   )}
                 </div>
@@ -366,7 +369,6 @@ export const RoomView: React.FC<RoomViewProps> = ({
 
               {/* 라운드 수가 유의미한 게임만 라운드 설정 슬라이더 노출 */}
               {['relay-novel', 'trivia-quiz', 'zoom-quiz', 'chosung-quiz', 'blind-drawing', 'voice-battle', 'anonymous-exposed', 'five-sec-rule'].includes(room.gameId) && (() => {
-                // 현재 팩의 실제 문항/아이템 수 계산
                 let packItemsCount = 20;
                 if (room.settings.extraOptions?.customPackData && Array.isArray(room.settings.extraOptions.customPackData)) {
                   packItemsCount = room.settings.extraOptions.customPackData.length;
@@ -384,11 +386,11 @@ export const RoomView: React.FC<RoomViewProps> = ({
                   <div className="form-group">
                     <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span>
-                        {room.gameId === 'relay-novel' ? `소설 회전 바퀴 수: ${currentVal}바퀴` : `진행 라운드: ${currentVal}회`}
+                        {t('inGameRound', { current: currentVal, total: maxLimit })}
                       </span>
                       {room.gameId !== 'relay-novel' && (
                         <span style={{ fontSize: '0.75rem', color: '#94A3B8' }}>
-                          (팩 전체: {packItemsCount}개 보유)
+                          ({t('itemCountText', { count: packItemsCount })})
                         </span>
                       )}
                     </label>
@@ -402,7 +404,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
                       />
                     ) : (
                       <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                        {currentVal} 라운드
+                        {currentVal} Rounds
                       </div>
                     )}
                   </div>
@@ -428,10 +430,10 @@ export const RoomView: React.FC<RoomViewProps> = ({
                   <Play size={20} />
                   <span>
                     {!allGuestsReady
-                      ? '참가자 준비 대기 중...'
-                      : room.players.length < room.gameInfo.minPlayers
-                      ? `최소 ${room.gameInfo.minPlayers}명 필요`
-                      : '🚀 게임 시작하기!'}
+                      ? t('waitingForReady')
+                      : room.players.length < localizedGame.minPlayers
+                      ? `Min ${localizedGame.minPlayers} players required`
+                      : t('startGameBtn')}
                   </span>
                 </button>
               ) : (
@@ -441,7 +443,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
                   onClick={onToggleReady}
                 >
                   <CheckCircle2 size={20} />
-                  <span>{me?.isReady ? '준비 취소' : '준비 완료 (READY)'}</span>
+                  <span>{me?.isReady ? t('cancelReadyBtn') : t('toggleReadyBtn')}</span>
                 </button>
               )}
             </div>
@@ -449,14 +451,14 @@ export const RoomView: React.FC<RoomViewProps> = ({
         </div>
       </div>
 
-      {/* 1. 게임 변경 모달 (21개 전 게임 브라우저) */}
+      {/* 1. 게임 변경 모달 (22개 전 게임 브라우저) */}
       {isGameSelectModalOpen && (
         <div className="modal-overlay" onClick={() => setIsGameSelectModalOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '820px', maxHeight: '85vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Gamepad2 size={22} color="#6366F1" />
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>플레이할 게임 선택</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>{t('heroBrowseGames')}</h3>
               </div>
               <button className="btn-close" onClick={() => setIsGameSelectModalOpen(false)}>
                 <X size={20} />
@@ -464,11 +466,12 @@ export const RoomView: React.FC<RoomViewProps> = ({
             </div>
 
             <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '16px' }}>
-              게임을 변경하면 파티 멤버들이 튕기지 않고 같은 대기실에서 바로 새 게임으로 교체됩니다!
+              {t('brandSubtitle')}
             </p>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '12px' }}>
               {INITIAL_GAMES.map((game) => {
+                const locG = getLocalizedGame(game, language);
                 const isSelected = game.id === room.gameId;
                 const isPlayersFit = game.minPlayers <= room.players.length && room.players.length <= game.maxPlayers;
                 return (
@@ -489,31 +492,31 @@ export const RoomView: React.FC<RoomViewProps> = ({
                   >
                     <div style={{ height: '100px', borderRadius: '10px', overflow: 'hidden', position: 'relative' }}>
                       <img
-                        src={game.thumbnail}
-                        alt={game.title}
+                        src={locG.thumbnail}
+                        alt={locG.title}
                         onError={(e) => {
                           (e.currentTarget as HTMLImageElement).src = '/images/worldcup_thumb.jpg';
                         }}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                       <span className="badge-pill" style={{ position: 'absolute', top: '6px', left: '6px', background: 'rgba(0,0,0,0.7)', fontSize: '0.72rem', color: '#FFF' }}>
-                        {game.minPlayers}~{game.maxPlayers}인
+                        {t('minMaxPlayers', { min: locG.minPlayers, max: locG.maxPlayers })}
                       </span>
                       {isSelected && (
                         <span className="badge-pill" style={{ position: 'absolute', top: '6px', right: '6px', background: '#6366F1', color: '#FFF', fontSize: '0.72rem' }}>
-                          선택됨
+                          ✓
                         </span>
                       )}
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#FFF' }}>{game.title}</div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '2px', lineHeight: 1.3 }}>{game.subtitle}</div>
+                      <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#FFF' }}>{locG.title}</div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '2px', lineHeight: 1.3 }}>{locG.subtitle}</div>
                     </div>
                     <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem' }}>
                       <span style={{ color: isPlayersFit ? '#10B981' : '#EF4444', fontWeight: 700 }}>
-                        {isPlayersFit ? '✓ 인원 충족' : `⚠️ ${game.minPlayers}명 필요`}
+                        {isPlayersFit ? '✓ OK' : `⚠️ Min ${locG.minPlayers}`}
                       </span>
-                      <span style={{ color: '#A5B4FC' }}>약 {game.estimatedMinutes}분</span>
+                      <span style={{ color: '#A5B4FC' }}>{t('estimatedMinutes', { min: locG.estimatedMinutes })}</span>
                     </div>
                   </div>
                 );
@@ -528,7 +531,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
         <PackSelectModal
           isOpen={isPackSelectModalOpen}
           onClose={() => setIsPackSelectModalOpen(false)}
-          game={room.gameInfo}
+          game={localizedGame}
           initialPackTitle={room.settings.customPackTitle}
           onConfirmSelectPack={handlePackSelected}
         />

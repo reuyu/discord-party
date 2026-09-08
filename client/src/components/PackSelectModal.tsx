@@ -1,9 +1,11 @@
 // client/src/components/PackSelectModal.tsx
 import React, { useState, useEffect, useMemo } from 'react';
-import { X, Search, ArrowRight, Package, UploadCloud, CheckCircle2, User, Sparkles, FileText, Code2, ThumbsUp } from 'lucide-react';
-import { GameInfo, CustomPack } from '../../../shared/types';
+import { X, Search, ArrowRight, Package, UploadCloud, CheckCircle2, User, Sparkles, FileText, Code2, ThumbsUp, Globe } from 'lucide-react';
+import { GameInfo, CustomPack, SupportedLanguage } from '../../../shared/types';
 import { DEFAULT_AVATARS } from '../../../shared/gamesData';
 import { REAL_DEFAULT_PACKS } from '../../../shared/defaultPacks';
+import { useLanguage } from '../i18n/LanguageContext';
+import { socket } from '../socket';
 
 interface PackSelectModalProps {
   isOpen: boolean;
@@ -204,28 +206,91 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
   });
   const [avatar, setAvatar] = useState(() => DEFAULT_AVATARS[0]);
 
+  const { language, t, languages } = useLanguage();
+
   // 커스텀 팩 업로드 폼 상태
   const [uploadTitle, setUploadTitle] = useState('');
   const [uploadCategory, setUploadCategory] = useState('');
   const [uploadText, setUploadText] = useState('');
+  const [uploadLanguage, setUploadLanguage] = useState<SupportedLanguage>(language);
   const [inputMode, setInputMode] = useState<'smart' | 'json'>('smart');
 
-  // 실제 등록된 팩 목록 가져오기
-  const availablePacks: CustomPack[] = (game && REAL_DEFAULT_PACKS[game.id]) ? REAL_DEFAULT_PACKS[game.id] : [
-    {
-      id: `${game?.id || 'game'}_default`,
-      gameId: game?.id || 'game',
-      title: `🎮 [공식 기본 팩] ${game?.title || '게임'} 기본 세트`,
-      description: 'PartyHub에서 검증된 정규 플레이 팩입니다.',
-      author: 'PartyHub 공식',
-      tags: ['공식', '기본'],
-      itemCount: 30,
-      isPublic: true,
-      likes: 5400,
-      createdAt: Date.now(),
-      data: []
+  // 사용자 업로드 커스텀 팩 (localStorage 영구 저장소에서 불러오기)
+  const [userCustomPacks, setUserCustomPacks] = useState<CustomPack[]>(() => {
+    try {
+      const raw = localStorage.getItem('partyhub_user_custom_packs');
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
     }
-  ];
+  });
+
+  // 서버에서 불러온 커스텀 팩 목록
+  const [serverCustomPacks, setServerCustomPacks] = useState<CustomPack[]>([]);
+
+  // 서버 커스텀 팩 불러오기 & 실시간 소켓 동기화
+  useEffect(() => {
+    if (!isOpen || !game) return;
+
+    // 1. 서버 API에서 팩 목록 가져오기
+    fetch(`/api/packs?gameId=${game.id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data?.packs && Array.isArray(data.packs)) {
+          setServerCustomPacks(data.packs);
+        }
+      })
+      .catch(() => {});
+
+    // 2. 실시간 새 팩 등록 수신
+    const handlePackAdded = (data: { gameId: string; pack?: CustomPack; packs?: CustomPack[] }) => {
+      if (data.gameId === game.id) {
+        if (data.packs && Array.isArray(data.packs)) {
+          setServerCustomPacks(data.packs);
+        } else if (data.pack) {
+          setServerCustomPacks(prev => [data.pack!, ...prev.filter(p => p.id !== data.pack!.id)]);
+        }
+      }
+    };
+
+    socket.on('packs:updated', handlePackAdded);
+    return () => {
+      socket.off('packs:updated', handlePackAdded);
+    };
+  }, [isOpen, game?.id]);
+
+  // 팩 언어 필터 상태 (기본: 전체)
+  const [selectedPackLang, setSelectedPackLang] = useState<SupportedLanguage | 'all'>('all');
+
+  // 실제 등록된 팩 목록 가져오기 (서버 커스텀 팩 + 로컬 사용자 팩 + 기본 공식 팩)
+  const availablePacks: CustomPack[] = useMemo(() => {
+    if (!game) return [];
+    const defaults = REAL_DEFAULT_PACKS[game.id] || [
+      {
+        id: `${game.id}_default`,
+        gameId: game.id,
+        title: `🎮 [공식 기본 팩] ${game.title} 기본 세트`,
+        description: t('defaultPackDesc'),
+        author: 'PartyHub 공식',
+        tags: ['공식', '기본'],
+        itemCount: 30,
+        isPublic: true,
+        likes: 5400,
+        createdAt: Date.now(),
+        data: []
+      }
+    ];
+
+    const currentUsers = userCustomPacks.filter(p => p.gameId === game.id);
+    const existingIds = new Set(defaults.map(p => p.id));
+    
+    // 서버 팩 중 중복 제외
+    const uniqueServer = serverCustomPacks.filter(p => !existingIds.has(p.id));
+    const allKnownIds = new Set([...defaults.map(p => p.id), ...uniqueServer.map(p => p.id)]);
+    const uniqueLocal = currentUsers.filter(p => !allKnownIds.has(p.id));
+
+    return [...uniqueLocal, ...uniqueServer, ...defaults];
+  }, [game?.id, userCustomPacks, serverCustomPacks, t]);
 
   // 초기 팩 매칭
   useEffect(() => {
@@ -244,7 +309,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
       setSelectedPackTitle(availablePacks[0].title);
       setSelectedCustomData(availablePacks[0].data);
     }
-  }, [isOpen, game?.id, initialPackTitle]);
+  }, [isOpen, game?.id, initialPackTitle, availablePacks]);
 
   // 추천(좋아요) 상태 관리 (localStorage 영구 저장)
   const [likedPackIds, setLikedPackIds] = useState<string[]>(() => {
@@ -259,7 +324,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
   const [packSortOption, setPackSortOption] = useState<'recommend' | 'newest' | 'name' | 'count'>('recommend');
   const [packLikesUpdate, setPackLikesUpdate] = useState(0);
 
-  // 팩 추천(👍) 토글 핸들러
+  // 팩 추천(👍) 토글 핸들러 (서버 동기화 포함)
   const handleLikePack = (e: React.MouseEvent, packId: string) => {
     e.stopPropagation();
     const isAlreadyLiked = likedPackIds.includes(packId);
@@ -281,14 +346,32 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
     setLikedPackIds(nextLiked);
     localStorage.setItem('partyhub_liked_packs', JSON.stringify(nextLiked));
     setPackLikesUpdate(prev => prev + 1);
+
+    if (game) {
+      socket.emit('pack:like', { packId, gameId: game.id }, (res) => {
+        if (res && res.success && targetPack) {
+          targetPack.likes = res.likes;
+          setPackLikesUpdate(prev => prev + 1);
+        }
+      });
+    }
   };
 
-  // 검색 및 정렬 필터 적용
+  // 검색, 언어 및 정렬 필터 적용
   const sortedAndFilteredPacks = useMemo(() => {
-    const list = availablePacks.filter(p =>
-      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (p.tags && p.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())))
-    );
+    const list = availablePacks.filter(p => {
+      const matchesSearch =
+        p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (p.tags && p.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())));
+
+      const matchesLang =
+        selectedPackLang === 'all' ||
+        p.language === 'all' ||
+        p.language === selectedPackLang ||
+        (!p.language && selectedPackLang === 'ko');
+
+      return matchesSearch && matchesLang;
+    });
 
     return [...list].sort((a, b) => {
       if (packSortOption === 'recommend') {
@@ -305,7 +388,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
       }
       return 0;
     });
-  }, [availablePacks, searchQuery, packSortOption, packLikesUpdate]);
+  }, [availablePacks, searchQuery, packSortOption, packLikesUpdate, selectedPackLang]);
 
   if (!isOpen || !game) return null;
 
@@ -503,21 +586,27 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
       const newPack: CustomPack = {
         id: `user_pack_${Date.now()}`,
         gameId: game.id,
-        title: `📦 [커스텀] ${uploadTitle.trim()}`,
+        title: `📦 [${uploadLanguage.toUpperCase()}] ${uploadTitle.trim()}`,
         description: `유저 등록 팩 (${itemCount}개 항목)`,
         author: playerName || '플레이어',
-        tags: ['유저제작', '커스텀', uploadCategory.trim() || '일반'],
+        tags: ['유저제작', '커스텀', uploadCategory.trim() || '일반', uploadLanguage],
         itemCount,
-        isPublic: false,
+        isPublic: true,
         likes: 1,
         createdAt: Date.now(),
+        language: uploadLanguage,
         data: parsedData
       };
 
-      if (!REAL_DEFAULT_PACKS[game.id]) {
-        REAL_DEFAULT_PACKS[game.id] = [];
-      }
-      REAL_DEFAULT_PACKS[game.id].unshift(newPack);
+      // localStorage 영구 저장
+      const updatedUserPacks = [newPack, ...userCustomPacks.filter(p => p.id !== newPack.id)];
+      setUserCustomPacks(updatedUserPacks);
+      try {
+        localStorage.setItem('partyhub_user_custom_packs', JSON.stringify(updatedUserPacks));
+      } catch {}
+
+      // 서버로 커스텀 팩 전송
+      socket.emit('pack:upload', newPack, () => {});
 
       setSelectedPackId(newPack.id);
       setSelectedPackTitle(newPack.title);
@@ -619,7 +708,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
               style={{ fontSize: '0.9rem', padding: '10px 18px' }}
             >
               <Package size={16} />
-              <span>📦 공식 & 추천 팩 목록 ({availablePacks.length})</span>
+              <span>{t('tabOfficialPacks', { count: availablePacks.length })}</span>
             </button>
             <button
               className={`btn ${activeTab === 'upload' ? 'btn-primary' : 'btn-secondary'}`}
@@ -627,7 +716,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
               style={{ fontSize: '0.9rem', padding: '10px 18px' }}
             >
               <UploadCloud size={16} />
-              <span>➕ 커스텀 팩 직접 업로드</span>
+              <span>{t('tabUploadPack')}</span>
             </button>
           </div>
         )}
@@ -635,6 +724,57 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
         {/* 1. 공식 & 등록된 팩 선택 탭 */}
         {game.hasCustomPack && activeTab === 'packs' && (
           <div>
+            {/* 언어 필터 탭 바 */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
+              <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <Globe size={14} />
+                {t('filterLanguage')}
+              </span>
+              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={() => setSelectedPackLang('all')}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
+                    fontWeight: selectedPackLang === 'all' ? 800 : 500,
+                    background: selectedPackLang === 'all' ? 'var(--primary)' : 'rgba(255,255,255,0.06)',
+                    color: selectedPackLang === 'all' ? '#FFF' : 'var(--text-secondary)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  {t('langAll')}
+                </button>
+                {languages.map(l => (
+                  <button
+                    key={l.code}
+                    type="button"
+                    onClick={() => setSelectedPackLang(l.code)}
+                    style={{
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      fontSize: '0.8rem',
+                      fontWeight: selectedPackLang === l.code ? 800 : 500,
+                      background: selectedPackLang === l.code ? 'var(--primary)' : 'rgba(255,255,255,0.06)',
+                      color: selectedPackLang === l.code ? '#FFF' : 'var(--text-secondary)',
+                      border: 'none',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    <span>{l.flag}</span>
+                    <span>{l.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* 검색 & 정렬 컨트롤 바 */}
             <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ position: 'relative', flex: 1, minWidth: '260px' }}>
@@ -642,7 +782,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
                 <input
                   type="text"
                   className="input-field"
-                  placeholder="팩 이름 또는 태그 검색 (예: 밈, 롤, 애니, 음식)..."
+                  placeholder={t('searchPackPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   style={{ paddingLeft: '42px', width: '100%' }}
@@ -650,103 +790,124 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 700 }}>정렬:</span>
+                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 700 }}>{t('sortLabel')}</span>
                 <select
                   className="sort-select"
                   value={packSortOption}
                   onChange={(e) => setPackSortOption(e.target.value as any)}
                   style={{ padding: '8px 14px', fontSize: '0.88rem', background: 'var(--bg-surface-elevated)', borderRadius: '10px' }}
                 >
-                  <option value="recommend">🔥 추천순 (인기)</option>
-                  <option value="newest">✨ 최신 등록순</option>
-                  <option value="name">🔤 팩 이름순</option>
-                  <option value="count">🔢 항목수 순</option>
+                  <option value="recommend">{t('sortRecommend')}</option>
+                  <option value="newest">{t('sortNewest')}</option>
+                  <option value="name">{t('sortName')}</option>
+                  <option value="count">{t('sortCount')}</option>
                 </select>
               </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '380px', overflowY: 'auto', marginBottom: '24px' }}>
-              {sortedAndFilteredPacks.map(pack => {
-                const isSelected = selectedPackId === pack.id || (!selectedPackId && pack.id === availablePacks[0]?.id);
-                const isLiked = likedPackIds.includes(pack.id);
-                return (
-                  <div
-                    key={pack.id}
-                    onClick={() => {
-                      setSelectedPackId(pack.id);
-                      setSelectedPackTitle(pack.title);
-                      setSelectedCustomData(pack.data);
-                    }}
-                    style={{
-                      padding: '16px 20px',
-                      borderRadius: '14px',
-                      background: isSelected ? 'rgba(99, 102, 241, 0.25)' : 'var(--bg-surface-elevated)',
-                      border: isSelected ? '2px solid var(--primary)' : '1px solid var(--border-glass)',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      gap: '16px',
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
-                        <strong style={{ fontSize: '1.05rem', color: '#FFF' }}>{pack.title}</strong>
-                        <span className="badge-pill" style={{ background: 'rgba(255,255,255,0.08)', fontSize: '0.75rem', fontWeight: 700 }}>
-                          {pack.itemCount}개 항목
-                        </span>
-                        {pack.author && (
-                          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>by {pack.author}</span>
+              {sortedAndFilteredPacks.length === 0 ? (
+                <div style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+                  {t('noPacksFound')}
+                </div>
+              ) : (
+                sortedAndFilteredPacks.map(pack => {
+                  const isSelected = selectedPackId === pack.id || (!selectedPackId && pack.id === availablePacks[0]?.id);
+                  const isLiked = likedPackIds.includes(pack.id);
+                  return (
+                    <div
+                      key={pack.id}
+                      onClick={() => {
+                        setSelectedPackId(pack.id);
+                        setSelectedPackTitle(pack.title);
+                        setSelectedCustomData(pack.data);
+                      }}
+                      style={{
+                        padding: '16px 20px',
+                        borderRadius: '14px',
+                        background: isSelected ? 'rgba(99, 102, 241, 0.25)' : 'var(--bg-surface-elevated)',
+                        border: isSelected ? '2px solid var(--primary)' : '1px solid var(--border-glass)',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        gap: '16px',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
+                          <strong style={{ fontSize: '1.05rem', color: '#FFF' }}>{pack.title}</strong>
+                          {pack.isKoreanCultureOnly && (
+                            <span style={{ background: 'rgba(239, 68, 68, 0.25)', color: '#FCA5A5', border: '1px solid rgba(239, 68, 68, 0.5)', borderRadius: '6px', padding: '2px 8px', fontSize: '0.75rem', fontWeight: 800 }}>
+                              {t('krCultureOnlyBadge')}
+                            </span>
+                          )}
+                          {pack.language && pack.language !== 'all' && !pack.isKoreanCultureOnly && (
+                            <span style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#93C5FD', border: '1px solid rgba(59, 130, 246, 0.4)', borderRadius: '6px', padding: '2px 6px', fontSize: '0.75rem', fontWeight: 700 }}>
+                              {pack.language.toUpperCase()}
+                            </span>
+                          )}
+                          {pack.language === 'all' && (
+                            <span style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#6EE7B7', border: '1px solid rgba(16, 185, 129, 0.4)', borderRadius: '6px', padding: '2px 6px', fontSize: '0.75rem', fontWeight: 700 }}>
+                              {t('globalBadge')}
+                            </span>
+                          )}
+                          <span className="badge-pill" style={{ background: 'rgba(255,255,255,0.08)', fontSize: '0.75rem', fontWeight: 700 }}>
+                            {t('itemCountText', { count: pack.itemCount })}
+                          </span>
+                          {pack.author && (
+                            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t('authorText', { author: pack.author })}</span>
+                          )}
+                        </div>
+                        <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                          {pack.description}
+                        </p>
+                        <div style={{ display: 'flex', gap: '6px', marginTop: '8px', flexWrap: 'wrap' }}>
+                          {pack.tags?.map((tTag, idx) => (
+                            <span key={idx} style={{ fontSize: '0.75rem', color: '#A5B4FC', background: 'rgba(99, 102, 241, 0.1)', padding: '2px 8px', borderRadius: '4px' }}>#{tTag}</span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        {/* 👍 팩 추천 버튼 */}
+                        <button
+                          type="button"
+                          onClick={(e) => handleLikePack(e, pack.id)}
+                          className="btn"
+                          style={{
+                            padding: '6px 14px',
+                            fontSize: '0.82rem',
+                            borderRadius: '20px',
+                            background: isLiked ? 'rgba(236, 72, 153, 0.25)' : 'rgba(255, 255, 255, 0.08)',
+                            border: isLiked ? '1px solid #EC4899' : '1px solid var(--border-glass)',
+                            color: isLiked ? '#F472B6' : '#E2E8F0',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease'
+                          }}
+                          title={isLiked ? '추천 취소' : '이 팩 추천하기'}
+                        >
+                          <ThumbsUp size={14} fill={isLiked ? '#EC4899' : 'none'} color={isLiked ? '#EC4899' : '#CBD5E1'} />
+                          <span style={{ fontWeight: 700 }}>{(pack.likes || 0).toLocaleString()}</span>
+                        </button>
+
+                        {isSelected ? (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10B981', fontWeight: 800, fontSize: '0.88rem' }}>
+                            <CheckCircle2 size={22} />
+                            <span>선택됨</span>
+                          </div>
+                        ) : (
+                          <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>선택</span>
                         )}
                       </div>
-                      <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
-                        {pack.description}
-                      </p>
-                      <div style={{ display: 'flex', gap: '6px', marginTop: '8px', flexWrap: 'wrap' }}>
-                        {pack.tags?.map((t, idx) => (
-                          <span key={idx} style={{ fontSize: '0.75rem', color: '#A5B4FC', background: 'rgba(99, 102, 241, 0.1)', padding: '2px 8px', borderRadius: '4px' }}>#{t}</span>
-                        ))}
-                      </div>
                     </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      {/* 👍 팩 추천 버튼 */}
-                      <button
-                        type="button"
-                        onClick={(e) => handleLikePack(e, pack.id)}
-                        className="btn"
-                        style={{
-                          padding: '6px 14px',
-                          fontSize: '0.82rem',
-                          borderRadius: '20px',
-                          background: isLiked ? 'rgba(236, 72, 153, 0.25)' : 'rgba(255, 255, 255, 0.08)',
-                          border: isLiked ? '1px solid #EC4899' : '1px solid var(--border-glass)',
-                          color: isLiked ? '#F472B6' : '#E2E8F0',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease'
-                        }}
-                        title={isLiked ? '추천 취소' : '이 팩 추천하기'}
-                      >
-                        <ThumbsUp size={14} fill={isLiked ? '#EC4899' : 'none'} color={isLiked ? '#EC4899' : '#CBD5E1'} />
-                        <span style={{ fontWeight: 700 }}>{(pack.likes || 0).toLocaleString()}</span>
-                      </button>
-
-                      {isSelected ? (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10B981', fontWeight: 800, fontSize: '0.88rem' }}>
-                          <CheckCircle2 size={22} />
-                          <span>선택됨</span>
-                        </div>
-                      ) : (
-                        <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>선택</span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })
+              )}
             </div>
           </div>
         )}
@@ -769,7 +930,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: '#A5B4FC', fontSize: '0.95rem' }}>
                   <Sparkles size={18} />
-                  <span>'{game.title}' 맞춤형 간편 팩 등록</span>
+                  <span>{game.title} - {t('tabUploadPack')}</span>
                 </div>
                 <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
                   💡 {template.formatHint}
@@ -783,20 +944,20 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
                 style={{ background: 'rgba(255, 255, 255, 0.12)', border: '1px solid rgba(255,255,255,0.2)', fontSize: '0.85rem', fontWeight: 700 }}
               >
                 <Sparkles size={16} color="#F59E0B" />
-                <span>💡 예시 템플릿 불러오기</span>
+                <span>💡 {template.title}</span>
               </button>
             </div>
 
             {/* 기본 메타데이터 입력 */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px' }}>
               <div>
                 <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '6px' }}>
-                  팩 제목 <span style={{ color: '#EF4444' }}>*</span>
+                  {t('uploadPackTitle')} <span style={{ color: '#EF4444' }}>*</span>
                 </label>
                 <input
                   type="text"
                   className="input-field"
-                  placeholder="예: 2026 우리 동아리 제시어 팩"
+                  placeholder={t('uploadTitlePlaceholder')}
                   value={uploadTitle}
                   onChange={(e) => setUploadTitle(e.target.value)}
                   required
@@ -805,22 +966,40 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
 
               <div>
                 <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '6px' }}>
-                  카테고리 / 태그
+                  {t('uploadCategory')}
                 </label>
                 <input
                   type="text"
                   className="input-field"
-                  placeholder="예: 음식, 영화, 일상, 친목"
+                  placeholder={t('uploadCategoryPlaceholder')}
                   value={uploadCategory}
                   onChange={(e) => setUploadCategory(e.target.value)}
                 />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '6px' }}>
+                  {t('uploadLanguage')}
+                </label>
+                <select
+                  className="sort-select"
+                  value={uploadLanguage}
+                  onChange={(e) => setUploadLanguage(e.target.value as any)}
+                  style={{ width: '100%', padding: '10px 14px', background: 'var(--bg-surface-elevated)', borderRadius: '10px' }}
+                >
+                  {languages.map(l => (
+                    <option key={l.code} value={l.code}>
+                      {l.flag} {l.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
             {/* 입력 모드 토글 */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                데이터 입력 ({inputMode === 'smart' ? '줄바꿈 간편 모드' : 'JSON 고급 모드'}) <span style={{ color: '#EF4444' }}>*</span>
+                {t('uploadContent')} ({inputMode === 'smart' ? t('uploadSmartTab') : t('uploadJsonTab')}) <span style={{ color: '#EF4444' }}>*</span>
               </label>
 
               <div style={{ display: 'flex', gap: '6px' }}>
@@ -831,7 +1010,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
                   style={{ padding: '4px 10px', fontSize: '0.75rem', borderRadius: '6px' }}
                 >
                   <FileText size={13} />
-                  <span>간편 텍스트</span>
+                  <span>{t('uploadSmartTab')}</span>
                 </button>
                 <button
                   type="button"
@@ -840,31 +1019,30 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
                   style={{ padding: '4px 10px', fontSize: '0.75rem', borderRadius: '6px' }}
                 >
                   <Code2 size={13} />
-                  <span>JSON 모드</span>
+                  <span>{t('uploadJsonTab')}</span>
                 </button>
               </div>
             </div>
 
-            {/* 텍스트 입력창 (와이드 뷰) */}
-            <div>
+            {/* 본문 텍스트 에어리어 */}
+            <div style={{ position: 'relative' }}>
               <textarea
                 className="input-field"
-                rows={11}
-                placeholder={inputMode === 'smart' ? template.placeholder : '[\n  {\n    "id": 1, ...\n  }\n]'}
+                rows={7}
+                placeholder={inputMode === 'smart' ? t('uploadSmartPlaceholder') : '{\n  "words": ["단어1", "단어2"]\n}'}
                 value={uploadText}
                 onChange={(e) => setUploadText(e.target.value)}
-                required
                 style={{
                   width: '100%',
-                  minHeight: '260px',
+                  fontFamily: inputMode === 'json' ? 'monospace' : 'inherit',
+                  fontSize: '0.88rem',
+                  lineHeight: '1.6',
                   resize: 'vertical',
-                  fontFamily: 'Consolas, Monaco, "Courier New", monospace',
-                  fontSize: '0.92rem',
-                  lineHeight: 1.6,
                   padding: '16px 18px',
                   borderRadius: '14px',
                   border: '1px solid var(--border-glass)'
                 }}
+                required
               />
 
               {/* 하단 실시간 파싱 상태 카운터 */}
@@ -885,7 +1063,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
               style={{ padding: '14px', fontSize: '1rem', fontWeight: 800, borderRadius: '12px' }}
             >
               <UploadCloud size={18} />
-              <span>🚀 팩 업로드 및 즉시 적용하기 ({parsedCount}개 항목)</span>
+              <span>{t('uploadSubmitBtn')} ({parsedCount})</span>
             </button>
           </form>
         )}
@@ -894,10 +1072,10 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
         {!game.hasCustomPack && (
           <div className="glass-panel" style={{ padding: '20px', marginBottom: '24px', background: 'rgba(16, 185, 129, 0.1)', borderColor: '#10B981' }}>
             <h4 style={{ fontWeight: 800, fontSize: '1.05rem', color: '#6EE7B7', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span>⚡</span> 시스템 자체 룰 기반 게임 (팩 불필요)
+              <span>⚡</span> {t('systemRuleGame')}
             </h4>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', lineHeight: 1.5 }}>
-              이 게임은 별도의 단어 팩 없이 실시간 피지컬 조작, 시스템 역할 배정, 또는 인게임 직접 출제로 즉시 진행됩니다!
+              {game.description}
             </p>
           </div>
         )}
@@ -906,7 +1084,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
         {!isRoomMode && (
           <div style={{ borderTop: '1px solid var(--border-glass)', paddingTop: '20px', marginBottom: '24px' }}>
             <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#A5B4FC', marginBottom: '10px' }}>
-              👑 방장 프로필 설정 (직접 입력)
+              👑 {t('hostPlayerName')}
             </h4>
 
             <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '12px', alignItems: 'center' }}>
@@ -939,7 +1117,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
                 <input
                   type="text"
                   className="input-field"
-                  placeholder="방장 닉네임을 입력하세요 (예: 멋쟁이토끼)"
+                  placeholder={t('namePlaceholder')}
                   value={playerName}
                   onChange={(e) => setPlayerName(e.target.value)}
                   style={{ paddingLeft: '38px' }}
@@ -960,11 +1138,11 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
           {isRoomMode ? (
             <>
               <CheckCircle2 size={20} />
-              <span>선택한 팩 '{selectedPackTitle || '기본 팩'}' 적용하기</span>
+              <span>{t('confirmPackBtn')}</span>
             </>
           ) : (
             <>
-              <span>🚀 '{game.title}' 대기실 개설하기</span>
+              <span>{t('enterRoomBtn')}</span>
               <ArrowRight size={20} />
             </>
           )}

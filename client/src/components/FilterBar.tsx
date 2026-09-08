@@ -2,7 +2,7 @@
 import React from 'react';
 import { Users, Tag, ArrowDownWideNarrow, Search } from 'lucide-react';
 import { GameCategory, PlayerCountFilter, SortOption } from '../../../shared/types';
-import { GENRE_FILTERS, PLAYER_COUNT_FILTERS } from '../../../shared/gamesData';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface FilterBarProps {
   selectedCategory: GameCategory;
@@ -25,20 +25,36 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   searchQuery,
   onSearchChange,
 }) => {
+  const { t } = useLanguage();
+
+  const categoryOptions: { category: GameCategory; label: string }[] = [
+    { category: 'all', label: t('allGames') },
+    { category: 'deduction', label: t('catPsychological') },
+    { category: 'casual', label: t('catCasual') },
+    { category: 'quiz', label: t('catSpeed') },
+  ];
+
+  const playerCountOptions: { id: PlayerCountFilter; label: string }[] = [
+    { id: 'all', label: t('langAll') },
+    { id: '2-4', label: '2~4' },
+    { id: '5-8', label: '5~8' },
+    { id: '9+', label: '9+' },
+  ];
+
   return (
     <div className="glass-panel filter-bar-container">
       {/* 1. 인원수 필터 */}
       <div className="filter-row">
         <div className="filter-label">
           <Users size={16} color="#A5B4FC" />
-          <span>인원수:</span>
+          <span>{t('minMaxPlayers', { min: '', max: '' }).replace('~', '').replace('-', '')}:</span>
         </div>
         <div className="pill-group">
-          {PLAYER_COUNT_FILTERS.map((item) => (
+          {playerCountOptions.map((item) => (
             <button
               key={item.id}
               className={`filter-pill ${selectedPlayerCount === item.id ? 'active' : ''}`}
-              onClick={() => onSelectPlayerCount(item.id as PlayerCountFilter)}
+              onClick={() => onSelectPlayerCount(item.id)}
             >
               {item.label}
             </button>
@@ -50,12 +66,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       <div className="filter-row">
         <div className="filter-label">
           <Tag size={16} color="#EC4899" />
-          <span>장르:</span>
+          <span>{t('uploadCategory')}:</span>
         </div>
         <div className="pill-group">
-          {GENRE_FILTERS.map((item) => (
+          {categoryOptions.map((item) => (
             <button
-              key={item.id}
+              key={item.category}
               className={`filter-pill ${selectedCategory === item.category ? 'active' : ''}`}
               onClick={() => onSelectCategory(item.category)}
             >
@@ -73,7 +89,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             type="text"
             className="input-field"
             style={{ paddingLeft: '36px', width: '100%', fontSize: '0.88rem' }}
-            placeholder="게임 이름 또는 키워드 검색..."
+            placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
           />
@@ -86,9 +102,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             value={selectedSort}
             onChange={(e) => onSelectSort(e.target.value as SortOption)}
           >
-            <option value="popular">🔥 인기순</option>
-            <option value="newest">✨ 최신순</option>
-            <option value="quickest">⏱️ 소요시간 짧은순</option>
+            <option value="popular">{t('catPopular')}</option>
+            <option value="newest">{t('catNew')}</option>
           </select>
         </div>
       </div>

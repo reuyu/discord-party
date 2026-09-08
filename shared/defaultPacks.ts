@@ -15,6 +15,7 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
       isPublic: true,
       likes: 8420,
       createdAt: 1700000000000,
+      language: 'ko',
       data: {
         category: '음식 / 야식',
         words: [
@@ -23,6 +24,50 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
           '비빔밥', '된장찌개', '김치찌개', '부대찌개', '갈비찜', '냉면', '칼국수', '우동', '핫도그', '호떡',
           '와플', '마카롱', '빙수', '츄러스', '소떡소떡', '감자튀김', '치즈볼', '닭발', '곱창', '육회',
           '샌드위치', '토스트', '만두', '월남쌈', '쌀국수', '훠궈', '팟타이', '카레', '오므라이스', '계란말이'
+        ]
+      }
+    },
+    {
+      id: 'liar_food_en',
+      gameId: 'liar-game',
+      title: '🍔 [Official] Delicious Food & Snacks Pack (English)',
+      description: 'Pizza, Burger, Sushi, Taco, Steak, Ramen, Pasta, Donut, Hotdog - 40 Popular Foods',
+      author: 'PartyHub Official',
+      tags: ['Food', 'Snacks', 'Beginner', 'Global'],
+      itemCount: 40,
+      isPublic: true,
+      likes: 5310,
+      createdAt: 1700000000000,
+      language: 'en',
+      data: {
+        category: 'Food & Snacks',
+        words: [
+          'Pizza', 'Hamburger', 'Sushi', 'Taco', 'Steak', 'Ramen', 'Pasta', 'Hotdog', 'Sandwich', 'French Fries',
+          'Fried Chicken', 'Burrito', 'Pancakes', 'Waffles', 'Donut', 'Croissant', 'Bagel', 'Dumpling', 'Curry', 'Salad',
+          'Ice Cream', 'Chocolate Cake', 'Apple Pie', 'Brownie', 'Cheesecake', 'Nachos', 'Popcorn', 'Milkshake', 'Bacon', 'Omelette',
+          'Lobster', 'Barbecue Ribs', 'Lasagna', 'Mac and Cheese', 'Churros', 'Pad Thai', 'Fried Rice', 'Mushroom Soup', 'Spring Rolls', 'Pretzel'
+        ]
+      }
+    },
+    {
+      id: 'liar_food_ja',
+      gameId: 'liar-game',
+      title: '🍣 [公式] 美味しい料理＆夜食ワードパック (日本語)',
+      description: '寿司、ラーメン、ピザ、焼肉、カレー、たこ焼き、おにぎりなど人気料理40種',
+      author: 'PartyHub 公式',
+      tags: ['料理', '夜食', '定番', '日本語'],
+      itemCount: 40,
+      isPublic: true,
+      likes: 4720,
+      createdAt: 1700000000000,
+      language: 'ja',
+      data: {
+        category: '料理 / 夜食',
+        words: [
+          '寿司', 'ラーメン', 'ピザ', '焼肉', 'カレー', 'たこ焼き', 'おにぎり', '天ぷら', 'うどん', 'そば',
+          'ハンバーガー', '唐揚げ', 'オムライス', '餃子', 'パスタ', 'ステーキ', '親子丼', 'かつ丼', '焼き鳥', '豚汁',
+          'すき焼き', 'お好み焼き', '鍋料理', 'チャーハン', 'グラタン', 'サンドイッチ', 'フライドポテト', '肉まん', 'たい焼き', 'みたらし団子',
+          'パフェ', 'チーズケーキ', 'プリン', 'アイスクリーム', 'クレープ', 'ショートケーキ', 'どら焼き', 'わらび餅', 'メロンパン', 'エビフライ'
         ]
       }
     },
@@ -670,14 +715,16 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
     {
       id: 'voice_real_meme_korean',
       gameId: 'voice-battle',
-      title: '🔥 [실제 원본 음성 100%] 한국 레전드 밈 & 인터넷 방송 시그니처 팩',
+      title: '🔥 [🇰🇷 한국 문화 전용] 한국 레전드 밈 & 인터넷 방송 시그니처 팩',
       description: '사딸라, 랄로, 괴물쥐, 오징어게임, 이병헌, 강남스타일 등 원본 오디오가 100% 재생되는 레전드 팩',
       author: 'PartyHub 공식',
-      tags: ['실제음성', '레전드밈', '김두한', '랄로', '괴물쥐', '오징어게임'],
+      tags: ['한국문화전용', '실제음성', '레전드밈', '김두한', '랄로', '괴물쥐', '오징어게임'],
       itemCount: 14,
       isPublic: true,
-      likes: 0,
+      likes: 4200,
       createdAt: 1700000000000,
+      language: 'ko',
+      isKoreanCultureOnly: true,
       data: [
         { character: '야인시대 김두한', line: '사딸라!', hint: '미군과 담판 짓는 협상의 달인 김영철', audioUrl: '/audio/voice-battle/saddalra.mp3' },
         { character: '괴물쥐', line: '말대꾸 하지마!', hint: '쥐환이의 찰진 버럭 호통', audioUrl: '/audio/voice-battle/maldaeggu.mp3' },
@@ -774,14 +821,16 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
     {
       id: 'voice_kr_streamer_memes',
       gameId: 'voice-battle',
-      title: '🇰🇷 [공식] 한국 스트리머 레전드 유행어 & 찰진 명대사 팩 (12선)',
+      title: '🇰🇷 [한국 문화 전용] 한국 스트리머 레전드 유행어 & 찰진 명대사 팩 (12선)',
       description: '감스트 "개새끼 열매", "이래도 지랄", 랄로 "꼬추때라", 거제 야호, 나문희 "호박고구마", 심영 등 한국 인터넷 역사에 남은 레전드 밈 모음!',
       author: 'PartyHub 공식',
-      tags: ['한국밈', '감스트', '랄로', '나문희', '스트리머', '실제음성'],
+      tags: ['한국문화전용', '한국밈', '감스트', '랄로', '나문희', '스트리머', '실제음성'],
       itemCount: 12,
       isPublic: true,
-      likes: 0,
+      likes: 3850,
       createdAt: 1700000000000,
+      language: 'ko',
+      isKoreanCultureOnly: true,
       data: [
         { character: '감스트 (GAMST)', line: '너 개새끼 열매 먹었냐?!', hint: '목청 터지며 외치는 레전드 극대노 호통', audioUrl: '/audio/voice-battle/kr_gamst_fruit.mp3' },
         { character: '감스트 (GAMST)', line: '이래도 지랄 저래도 지랄!', hint: '억까에 지쳐 쏟아내는 분노의 랩핑', audioUrl: '/audio/voice-battle/kr_gamst_jiral.mp3' },
@@ -871,6 +920,56 @@ export const REAL_DEFAULT_PACKS: Record<string, CustomPack[]> = {
         { character: '드래곤볼 손오공', line: '손오공 드립 BGM (Goku Drip)', hint: '패딩 입은 손오공 짤과 함께 울려 퍼지는 극의 트랩 비트', audioUrl: '/audio/voice-battle/anime_goku_drip.mp3' },
         { character: '수퍼 아이돌 (Super Idol)', line: 'Super Idol de xiaorong (수퍼 아이돌)', hint: '물병을 뿌리며 청량하게 부르는 중국 틱톡 전설의 챌린지', audioUrl: '/audio/voice-battle/anime_super_idol.mp3' },
         { character: 'YIPPEE 밈 (TBH Creature)', line: 'YIPPEEEEEEEEEEEEEE!!', hint: '콜라 마시고 포트나이트 할 때 내지르는 초고음 환호성', audioUrl: '/audio/voice-battle/meme_yippee.mp3' }
+      ]
+    },
+    {
+      id: 'voice_global_en',
+      gameId: 'voice-battle',
+      title: '🎬 [Global English] Famous Movie & Pop Culture Quotes',
+      description: 'SpongeBob, Star Wars, Terminator, Batman, Gordon Ramsay, Mario - 10 Universal English Voice Lines',
+      author: 'PartyHub Official',
+      tags: ['English', 'Movies', 'PopCulture', 'Global'],
+      itemCount: 10,
+      isPublic: true,
+      likes: 6410,
+      createdAt: 1700000000000,
+      language: 'en',
+      data: [
+        { character: 'SpongeBob SquarePants', line: 'I\'m ready! I\'m ready! I\'m ready!', hint: 'High-pitched excited laugh and bounce', audioUrl: '/audio/voice-battle/meme_two_hours_later.mp3' },
+        { character: 'Gordon Ramsay', line: 'Where is the lamb sauce?!', hint: 'Explosive kitchen shouting with pure rage', audioUrl: '/audio/voice-battle/lamb_sauce.mp3' },
+        { character: 'Steven He', line: 'Emotional Damage!', hint: 'Slapping a sandal with disappointed dad tone', audioUrl: '/audio/voice-battle/emotional_damage.mp3' },
+        { character: 'Cristiano Ronaldo', line: 'SIUUUUU!', hint: 'Iconic roaring jumping stadium celebration', audioUrl: '/audio/voice-battle/ronaldo_siu.mp3' },
+        { character: 'StarCraft Marine', line: 'You wanna piece of me, boy?', hint: 'Gruff space marine cocking a heavy rifle', audioUrl: '/audio/voice-battle/sc_marine.mp3' },
+        { character: 'StarCraft Battlecruiser', line: 'Battlecruiser operational.', hint: 'Deep calm commanding captain radio', audioUrl: '/audio/voice-battle/battlecruiser.mp3' },
+        { character: 'Valorant Jett', line: 'Jett revive me!', hint: 'Desperate hilarious gaming teammate plea', audioUrl: '/audio/voice-battle/jett_revive.mp3' },
+        { character: 'LoL Legendary Caster', line: 'Faker, what was that?!', hint: 'Insane hyped English esports casting moment', audioUrl: '/audio/voice-battle/faker_what_was_that.mp3' },
+        { character: 'Super Mario', line: 'It\'s-a me, Mario! Yahoo!', hint: 'Cheerful Italian plumber accent with jump sound', audioUrl: '/audio/voice-battle/meme_mario_yahoo.mp3' },
+        { character: 'Supa Hot Fire', line: 'OHHHHHHHHHHHHHHH!!', hint: 'The whole crowd screaming after a savage rap diss', audioUrl: '/audio/voice-battle/meme_ohhhhh.mp3' }
+      ]
+    },
+    {
+      id: 'voice_global_ja',
+      gameId: 'voice-battle',
+      title: '⚡ [日本語] アニメ名言＆名セリフ 声真似バトルパック',
+      description: 'ナルト、ワンピース、呪術廻戦、ジョジョ、ポケモンなど世界中で大人気のアニメ決めゼリフ10選',
+      author: 'PartyHub 公式',
+      tags: ['日本語', 'アニメ', '名言', 'ジャンプ'],
+      itemCount: 10,
+      isPublic: true,
+      likes: 5820,
+      createdAt: 1700000000000,
+      language: 'ja',
+      data: [
+        { character: 'NARUTO - ナルト', line: '螺旋丸！(らせんがん！)', hint: '手のひらにチャクラを回転させて叫ぶ熱血ボイス', audioUrl: '/audio/voice-battle/rasengan.mp3' },
+        { character: 'NARUTO - サスケ', line: '千鳥！(ちどり！)', hint: '千羽の鳥が鳴くような雷鳴の叫び', audioUrl: '/audio/voice-battle/chidori.mp3' },
+        { character: '呪術廻戦 - 五条悟', line: '領域展開 - 無量空処 (むりょうくうしょ)', hint: '目隠しを外しながら静かに放つ最強の術式', audioUrl: '/audio/voice-battle/anime_gojo_domain.mp3' },
+        { character: '呪術廻戦 - 両面宿儺', line: '領域展開 - 伏魔御厨子 (ふくまみづし)', hint: '低く響き渡る呪いの王の圧倒的威圧感', audioUrl: '/audio/voice-battle/sukuna_ryoiki.mp3' },
+        { character: '進撃の巨人 - エレン・イェーガー', line: '戦え、戦え！(たたかえ！)', hint: '鏡に向かって決意を燃やす魂の叫び', audioUrl: '/audio/voice-battle/tatakae.mp3' },
+        { character: 'ONE PIECE - ルフィ', line: 'ゴムゴムの〜 ピストル！', hint: '腕を力強く伸ばして放つ痛快な必殺パンチ', audioUrl: '/audio/voice-battle/gomu_gomu.mp3' },
+        { character: 'ジョジョ - ディオ', line: 'このDIOだッ！WRYYYYYY！', hint: '傲慢で狂気に満ちた吸血鬼の絶叫', audioUrl: '/audio/voice-battle/kono_dio_da.mp3' },
+        { character: 'ジョジョ - 承太郎', line: 'やれやれだぜ... オラオラオラ！', hint: '帽子を深く被りため息から超高速連打へ', audioUrl: '/audio/voice-battle/yare_yare_daze.mp3' },
+        { character: '北斗の拳 - ケンシロウ', line: 'お前はもう死んでいる。', hint: '秘孔を突いた後の静かな決め台詞', audioUrl: '/audio/voice-battle/omaewa.mp3' },
+        { character: 'ポケットモンスター - ピカチュウ', line: 'ピッカチュウ〜！ ピカピカ！', hint: '世界一可愛らしい声からの10万ボルト気合', audioUrl: '/audio/voice-battle/pikachu_thunderbolt.mp3' }
       ]
     }
   ],

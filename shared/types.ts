@@ -75,6 +75,8 @@ export interface Room {
   createdAt: number;
 }
 
+export type SupportedLanguage = 'ko' | 'en' | 'ja' | 'zh-TW' | 'de' | 'pt' | 'es' | 'fr';
+
 export interface CustomPack {
   id: string;
   gameId: string;
@@ -87,6 +89,8 @@ export interface CustomPack {
   likes: number;
   createdAt: number;
   data: any;
+  language?: SupportedLanguage | 'all';
+  isKoreanCultureOnly?: boolean;
 }
 
 // 실시간 소켓 이벤트 정의
@@ -100,6 +104,8 @@ export interface ServerToClientEvents {
   'game:state-sync': (gameState: any) => void;
   'game:ended': (data: { room: Room; results: any }) => void;
   'game:returned-to-lobby': () => void;
+  'game:play-count-updated': (data: { gameId: string; playCount: number; topGames: GameInfo[] }) => void;
+  'packs:updated': (data: { gameId: string; pack?: CustomPack; packs?: CustomPack[] }) => void;
 }
 
 export interface ClientToServerEvents {
@@ -113,4 +119,7 @@ export interface ClientToServerEvents {
   'room:change-game': (data: { gameId: string; packId?: string; packTitle?: string; customPackData?: any }) => void;
   'room:return-to-waiting': () => void;
   'game:action': (action: { type: string; payload?: any }) => void;
+  'pack:upload': (pack: CustomPack, callback: (response: { success: boolean; pack?: CustomPack; error?: string }) => void) => void;
+  'pack:like': (data: { packId: string; gameId: string }, callback: (response: { success: boolean; likes: number }) => void) => void;
+  'packs:get': (gameId: string, callback: (response: { success: boolean; packs: CustomPack[] }) => void) => void;
 }
