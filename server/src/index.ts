@@ -376,6 +376,34 @@ app.get('/ads.txt', (req, res) => {
   res.send('google.com, pub-6602940684312548, DIRECT, f08c47fec0942fa0\n');
 });
 
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /socket.io/\n\nSitemap: https://www.discordparty.com/sitemap.xml\n');
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.discordparty.com/</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.discordparty.com/?lang=ko" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.discordparty.com/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.discordparty.com/?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://www.discordparty.com/?lang=zh-TW" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.discordparty.com/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.discordparty.com/?lang=pt" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.discordparty.com/?lang=es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.discordparty.com/?lang=fr" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.discordparty.com/" />
+  </url>
+</urlset>`);
+});
+
 app.use(express.static(clientBuildPath));
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {

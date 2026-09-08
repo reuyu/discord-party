@@ -109,6 +109,11 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
 
     // Filter & Categories
     allGames: '전체 게임',
+    filterPlayerCount: '인원',
+    filterCategory: '카테고리',
+    randomGameRoll: '🎲 랜덤 게임',
+    kickPlayer: '플레이어 강퇴',
+    pointsUnit: '점',
     catPopular: '🔥 인기 게임',
     catNew: '✨ 신규 게임',
     catPsychological: '🧠 심리 / 마피아',
@@ -321,6 +326,11 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
 
     // Filter & Categories
     allGames: 'All Games',
+    filterPlayerCount: 'Players',
+    filterCategory: 'Category',
+    randomGameRoll: '🎲 Random Game',
+    kickPlayer: 'Kick Player',
+    pointsUnit: 'pts',
     catPopular: '🔥 Popular',
     catNew: '✨ New',
     catPsychological: '🧠 Social / Mafia',
@@ -533,6 +543,11 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
 
     // Filter & Categories
     allGames: 'すべてのゲーム',
+    filterPlayerCount: '人数',
+    filterCategory: 'カテゴリー',
+    randomGameRoll: '🎲 ランダム',
+    kickPlayer: 'プレイヤー追放',
+    pointsUnit: '点',
     catPopular: '🔥 人気ゲーム',
     catNew: '✨ 新作ゲーム',
     catPsychological: '🧠 心理戦 / 人狼',
@@ -745,6 +760,11 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
 
     // Filter & Categories
     allGames: '全部遊戲',
+    filterPlayerCount: '人數',
+    filterCategory: '分類',
+    randomGameRoll: '🎲 隨機遊戲',
+    kickPlayer: '踢出玩家',
+    pointsUnit: '分',
     catPopular: '🔥 熱門推薦',
     catNew: '✨ 最新推出',
     catPsychological: '🧠 心理戰 / 狼人殺',
@@ -957,6 +977,11 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
 
     // Filter & Categories
     allGames: 'Alle Spiele',
+    filterPlayerCount: 'Spieler',
+    filterCategory: 'Kategorie',
+    randomGameRoll: '🎲 Zufallsspiel',
+    kickPlayer: 'Spieler kicken',
+    pointsUnit: 'Pkt.',
     catPopular: '🔥 Beliebt',
     catNew: '✨ Neu',
     catPsychological: '🧠 Social Deduction / Mafia',
@@ -1169,6 +1194,11 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
 
     // Filter & Categories
     allGames: 'Todos os Jogos',
+    filterPlayerCount: 'Jogadores',
+    filterCategory: 'Categoria',
+    randomGameRoll: '🎲 Jogo Aleatório',
+    kickPlayer: 'Expulsar Jogador',
+    pointsUnit: 'pts',
     catPopular: '🔥 Populares',
     catNew: '✨ Novos',
     catPsychological: '🧠 Dedução / Máfia',
@@ -1381,6 +1411,11 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
 
     // Filter & Categories
     allGames: 'Todos los Juegos',
+    filterPlayerCount: 'Jugadores',
+    filterCategory: 'Categoría',
+    randomGameRoll: '🎲 Juego Aleatorio',
+    kickPlayer: 'Expulsar Jugador',
+    pointsUnit: 'pts',
     catPopular: '🔥 Populares',
     catNew: '✨ Nuevos',
     catPsychological: '🧠 Deducción / Mafia',
@@ -1593,6 +1628,11 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
 
     // Filter & Categories
     allGames: 'Tous les Jeux',
+    filterPlayerCount: 'Joueurs',
+    filterCategory: 'Catégorie',
+    randomGameRoll: '🎲 Jeu Aléatoire',
+    kickPlayer: 'Expulser le joueur',
+    pointsUnit: 'pts',
     catPopular: '🔥 Populaires',
     catNew: '✨ Nouveautés',
     catPsychological: '🧠 Déduction / Mafia',

@@ -47,7 +47,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       <div className="filter-row">
         <div className="filter-label">
           <Users size={16} color="#A5B4FC" />
-          <span>{t('minMaxPlayers', { min: '', max: '' }).replace('~', '').replace('-', '')}:</span>
+          <span>{t('filterPlayerCount')}:</span>
         </div>
         <div className="pill-group">
           {playerCountOptions.map((item) => (
@@ -66,7 +66,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       <div className="filter-row">
         <div className="filter-label">
           <Tag size={16} color="#EC4899" />
-          <span>{t('uploadCategory')}:</span>
+          <span>{t('filterCategory')}:</span>
         </div>
         <div className="pill-group">
           {categoryOptions.map((item) => (

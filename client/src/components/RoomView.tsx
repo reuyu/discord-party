@@ -202,10 +202,10 @@ export const RoomView: React.FC<RoomViewProps> = ({
                   }}
                   onClick={handleRollRandomGame}
                   disabled={isRollingRandom}
-                  title="Random Game Roll"
+                  title={t('randomGameRoll')}
                 >
                   <Dices size={16} />
-                  <span>{isRollingRandom ? '...' : '🎲 Random'}</span>
+                  <span>{isRollingRandom ? '...' : t('randomGameRoll')}</span>
                 </button>
               </>
             )}
@@ -249,7 +249,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
                   >
                     {isHost && !p.isHost && (
                       <button
-                        title="Kick"
+                        title={t('kickPlayer')}
                         style={{
                           position: 'absolute',
                           top: '8px',

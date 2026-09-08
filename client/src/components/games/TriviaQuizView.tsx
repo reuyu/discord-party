@@ -255,7 +255,7 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
             .sort((a, b) => (state.scores?.[b.id] || 0) - (state.scores?.[a.id] || 0))
             .map((p, rank) => (
               <div key={p.id} className="badge-pill" style={{ background: 'var(--bg-surface-elevated)', border: '1px solid var(--border-glass)', padding: '6px 12px', fontSize: '0.85rem' }}>
-                <span>{rank + 1}{t('rankUnit')}</span> {p.avatar} <strong>{p.name}</strong>: {state.scores?.[p.id] || 0} {t('inGamePoints', { points: '' }).replace(/[0-9]/g, '').trim() || 'pts'}
+                <span>{rank + 1}{t('rankUnit')}</span> {p.avatar} <strong>{p.name}</strong>: {state.scores?.[p.id] || 0} {t('pointsUnit')}
               </div>
             ))}
         </div>

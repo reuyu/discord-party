@@ -182,7 +182,7 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
             className="btn btn-primary"
             onClick={() => setSelectedGameForPack(INITIAL_GAMES[0])}
           >
-            🔥 {t('catPopular')}
+            {t('catPopular')}
           </button>
         </div>
 
