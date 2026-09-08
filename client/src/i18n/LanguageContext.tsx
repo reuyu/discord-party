@@ -52,7 +52,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const t = (key: string, params?: Record<string, string | number>): string => {
     const dict = translations[language] || translations.ko;
-    let str = dict[key] || translations.en[key] || translations.ko[key] || key;
+    let str = dict[key] ?? translations.en[key] ?? translations.ko[key] ?? key;
 
     if (params) {
       Object.entries(params).forEach(([paramKey, val]) => {

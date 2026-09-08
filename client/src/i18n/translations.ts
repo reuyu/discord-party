@@ -298,7 +298,7 @@ export const translations: Record<SupportedLanguage, Record<string, string>> = {
     timeoutNoSubmission: "⚠️ Timed out without submission (Treated as wrong):",
     answerExplanationTitle: "Answer & Explanation",
     realtimeScoreRank: "🏆 Live Leaderboard",
-    rankUnit: "",
+    rankUnit: ".",
     ttsNotSupported: "Browser does not support text-to-speech synthesis.",
     minPlayersRequired: "Minimum {min} players required",
     // Header & Brand
