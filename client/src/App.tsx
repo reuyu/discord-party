@@ -137,7 +137,7 @@ export const App: React.FC = () => {
   }, [myPlayerId]);
 
   // 1. 방 생성 핸들러 (팩 선택 완료 후 또는 시스템 룰 방 생성)
-  const handleCreateRoom = (data: { gameId: string; packId?: string; packTitle?: string; playerName: string; avatar: string }) => {
+  const handleCreateRoom = (data: { gameId: string; packId?: string; packTitle?: string; customPackData?: any; playerName: string; avatar: string }) => {
     socket.emit('room:create', data, (response) => {
       if (!response.success) {
         alert(response.error || t('roomCreateFailed'));

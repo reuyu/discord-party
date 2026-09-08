@@ -94,10 +94,10 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
       {state.phase === 'vote1' && (
         <div className="glass-panel" style={{ padding: '14px 20px', marginBottom: '20px', textAlign: 'center', background: 'rgba(139, 92, 246, 0.15)', borderColor: '#8B5CF6' }}>
           <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#DDD6FE' }}>
-            🗳️ 1차 실시간 비밀 투표: <strong style={{ color: '#FFF' }}>{Object.keys(state.votesPhase1 || {}).length} / {room.players.length}명 완료</strong>
+            {t('secretVote1Title', { completed: Object.keys(state.votesPhase1 || {}).length, total: room.players.length })}
           </div>
           <div style={{ fontSize: '0.85rem', color: '#C4B5FD', marginTop: '4px' }}>
-            {myVote1 ? '✓ 투표 완료! 다른 참가자들의 선택을 기다리는 중입니다...' : '마음에 드는 쪽을 하나 골라 투표하세요.'}
+            {myVote1 ? t('vote1Waiting') : t('vote1PickPrompt')}
           </div>
         </div>
       )}
@@ -106,10 +106,10 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
       {(state.phase === 'debate' || state.phase === 'vote2') && (
         <div className="glass-panel" style={{ padding: '18px 24px', marginBottom: '20px', textAlign: 'center', background: 'linear-gradient(135deg, rgba(236,72,153,0.25), rgba(99,102,241,0.25))', borderColor: '#EC4899' }}>
           <h4 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#F472B6', marginBottom: '6px' }}>
-            🗣️ [2차 설득 & 진영 변경 토론] 상대 진영을 설득하여 표를 가져오세요!
+            {t('debateBannerTitle')}
           </h4>
           <p style={{ color: '#E2E8F0', fontSize: '0.95rem', margin: 0 }}>
-            디스코드 마이크를 켜고 내 선택지의 장점을 어필하세요! 언제든 [진영 변경하기] 버튼으로 마음을 바꿀 수 있습니다.
+            {t('debateBannerDesc')}
           </p>
         </div>
       )}
@@ -121,10 +121,10 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
             <Trophy size={24} />
             <span>
               {winnerOption === 'A'
-                ? `🏆 [A 선택지] "${currentQ?.optionA}" 과반수 승리! (${countA}표)`
+                ? t('roundWinnerA', { option: currentQ?.optionA, count: countA })
                 : winnerOption === 'B'
-                ? `🏆 [B 선택지] "${currentQ?.optionB}" 과반수 승리! (${countB}표)`
-                : `🤝 팽팽한 황금 밸런스 무승부! (${countA} : ${countB})`}
+                ? t('roundWinnerB', { option: currentQ?.optionB, count: countB })
+                : t('goldenBalanceTie', { countA, countB })}
             </span>
           </div>
         </div>
@@ -145,7 +145,7 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
           }}
         >
           <span className="badge-pill" style={{ background: '#6366F1', color: '#FFF', fontSize: '1rem', padding: '6px 16px', fontWeight: 900 }}>
-            옵션 A
+            {t('balanceOptionA')}
           </span>
           <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: '20px 0', lineHeight: 1.4, minHeight: '80px' }}>
             {currentQ?.optionA}
@@ -159,7 +159,7 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
               style={{ width: '100%', padding: '14px', background: '#6366F1', borderColor: '#6366F1' }}
               disabled={!!myVote1}
             >
-              {myVote1 === 'A' ? '✓ 내 선택 완료' : 'A 선택하기'}
+              {myVote1 === 'A' ? t('myChoiceDone') : t('chooseOptionA')}
             </button>
           )}
 
@@ -177,7 +177,7 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
               }}
             >
               <RefreshCw size={16} />
-              <span>{myVote2 === 'A' ? '✓ A 진영 지지 중' : 'A로 진영 변경하기'}</span>
+              <span>{myVote2 === 'A' ? t('supportingTeamA') : t('switchTeamA')}</span>
             </button>
           )}
 
@@ -185,7 +185,7 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
           {state.phase !== 'vote1' && (
             <div style={{ marginTop: '20px', borderTop: '1px solid var(--border-glass)', paddingTop: '14px', textAlign: 'left' }}>
               <div style={{ fontSize: '0.85rem', color: '#A5B4FC', fontWeight: 700, marginBottom: '8px' }}>
-                👥 A 진영 지지자 ({countA}명)
+                {t('teamASupporters', { count: countA })}
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {supportersA.map(p => (
@@ -211,7 +211,7 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
           }}
         >
           <span className="badge-pill" style={{ background: '#EC4899', color: '#FFF', fontSize: '1rem', padding: '6px 16px', fontWeight: 900 }}>
-            옵션 B
+            {t('balanceOptionB')}
           </span>
           <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: '20px 0', lineHeight: 1.4, minHeight: '80px' }}>
             {currentQ?.optionB}
@@ -225,7 +225,7 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
               style={{ width: '100%', padding: '14px', background: '#EC4899', borderColor: '#EC4899' }}
               disabled={!!myVote1}
             >
-              {myVote1 === 'B' ? '✓ 내 선택 완료' : 'B 선택하기'}
+              {myVote1 === 'B' ? t('myChoiceDone') : t('chooseOptionB')}
             </button>
           )}
 
@@ -243,7 +243,7 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
               }}
             >
               <RefreshCw size={16} />
-              <span>{myVote2 === 'B' ? '✓ B 진영 지지 중' : 'B로 진영 변경하기'}</span>
+              <span>{myVote2 === 'B' ? t('supportingTeamB') : t('switchTeamB')}</span>
             </button>
           )}
 
@@ -251,7 +251,7 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
           {state.phase !== 'vote1' && (
             <div style={{ marginTop: '20px', borderTop: '1px solid var(--border-glass)', paddingTop: '14px', textAlign: 'left' }}>
               <div style={{ fontSize: '0.85rem', color: '#F472B6', fontWeight: 700, marginBottom: '8px' }}>
-                👥 B 진영 지지자 ({countB}명)
+                {t('teamBSupporters', { count: countB })}
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {supportersB.map(p => (
@@ -270,13 +270,13 @@ export const BalanceDebateView: React.FC<Props> = ({ room, myPlayerId }) => {
         <div className="glass-panel" style={{ padding: '16px 20px', display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
           {state.phase === 'debate' && (
             <button className="btn btn-primary" onClick={handleStartVote2}>
-              <span>2차 마음바꾸기 투표로 전환</span>
+              <span>{t('startVote2Btn')}</span>
               <ArrowRight size={16} />
             </button>
           )}
           {state.phase === 'vote2' && (
             <button className="btn btn-primary" onClick={handleFinishRound}>
-              <span>투표 마감 & 라운드 결과 발표</span>
+              <span>{t('finishRoundBtn')}</span>
               <ArrowRight size={16} />
             </button>
           )}
