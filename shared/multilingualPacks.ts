@@ -1,6 +1,7 @@
 // shared/multilingualPacks.ts
 import { CustomPack, SupportedLanguage } from './types';
 import { REAL_DEFAULT_PACKS } from './defaultPacks';
+import { PACK_DATA_TRANSLATIONS } from './defaultPacksDataTranslations';
 
 export interface PackMetadataTranslation {
   title: string;
@@ -395,21 +396,17 @@ export function getDefaultPacksForGame(gameId: string, language: SupportedLangua
 
   return packs.map(pack => {
     const packTrans = PACK_TRANSLATIONS[pack.id];
-    if (!packTrans) {
-      return { ...pack, likes: 0 };
-    }
-
-    const trans = packTrans[language] || packTrans['en'];
-    if (!trans) {
-      return { ...pack, likes: 0 };
-    }
+    const packDataTrans = PACK_DATA_TRANSLATIONS[pack.id];
+    const trans = packTrans ? (packTrans[language] || packTrans['en']) : null;
+    const translatedData = packDataTrans ? (packDataTrans[language] || packDataTrans['en']) : null;
 
     return {
       ...pack,
-      title: trans.title || pack.title,
-      description: trans.description || pack.description,
-      tags: trans.tags || pack.tags,
-      author: trans.author || 'PartyHub Official',
+      title: trans?.title || pack.title,
+      description: trans?.description || pack.description,
+      tags: trans?.tags || pack.tags,
+      author: trans?.author || 'PartyHub Official',
+      data: translatedData || pack.data,
       likes: 0
     };
   });
