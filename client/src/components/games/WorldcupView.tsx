@@ -157,8 +157,8 @@ export const WorldcupView: React.FC<Props> = ({ room, myPlayerId }) => {
       {/* 실시간 득표율 게이지 바 */}
       <div className="glass-panel" style={{ padding: '16px 20px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', fontWeight: 800, marginBottom: '6px' }}>
-          <span style={{ color: '#6366F1' }}>{candA?.name} ({percentA}%, {votesA}표)</span>
-          <span style={{ color: '#EC4899' }}>{candB?.name} ({percentB}%, {votesB}표)</span>
+          <span style={{ color: '#6366F1' }}>{candA?.name} ({percentA}%, {votesA}{t('votesUnit')})</span>
+          <span style={{ color: '#EC4899' }}>{candB?.name} ({percentB}%, {votesB}{t('votesUnit')})</span>
         </div>
         <div style={{ width: '100%', height: '12px', background: 'rgba(255,255,255,0.1)', borderRadius: '6px', overflow: 'hidden', display: 'flex' }}>
           <div style={{ width: `${percentA}%`, background: '#6366F1', transition: 'width 0.3s ease' }} />

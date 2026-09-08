@@ -8,6 +8,8 @@ import { JoinModal } from './components/JoinModal';
 import { InGameRouter } from './components/games/InGameRouter';
 import { Sparkles, RotateCcw, LogOut } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { useLanguage } from './i18n/LanguageContext';
+import { getLocalizedGame } from '../../shared/gamesData';
 
 export const App: React.FC = () => {
   const [currentRoom, setCurrentRoom] = useState<Room | null>(null);
@@ -16,6 +18,8 @@ export const App: React.FC = () => {
   const [urlRoomCode, setUrlRoomCode] = useState<string | null>(null);
   const [isDirectJoinModalOpen, setIsDirectJoinModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const { language, t } = useLanguage();
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -40,7 +44,7 @@ export const App: React.FC = () => {
           setCurrentRoom(null);
           setIsGameStarted(false);
           setIsDirectJoinModalOpen(false);
-          showToast('🏠 메인 로비로 돌아왔습니다.');
+          showToast(t('toastReturnedToLobby'));
         }
       }
     };
@@ -64,7 +68,8 @@ export const App: React.FC = () => {
       setMyPlayerId(pId);
       setIsGameStarted(room.status === 'playing');
       window.history.pushState({}, '', `/room/${room.code}`);
-      showToast(`🎉 '${room.gameInfo.title}' 대기실에 입장했습니다!`);
+      const locGame = getLocalizedGame(room.gameInfo, language);
+      showToast(t('toastEnteredWaitingRoom', { game: locGame.title }));
     });
 
     socket.on('room:updated', (updatedRoom) => {
@@ -73,18 +78,18 @@ export const App: React.FC = () => {
 
     socket.on('room:player-joined', ({ player, room }) => {
       setCurrentRoom(room);
-      showToast(`👋 ${player.avatar} ${player.name} 님이 방에 참가했습니다!`);
+      showToast(t('toastPlayerJoined', { avatar: player.avatar, name: player.name }));
     });
 
     socket.on('room:player-left', ({ room, newHostId }) => {
       setCurrentRoom(room);
       if (newHostId && newHostId === myPlayerId) {
-        showToast('👑 방장이 퇴장하여 회원님이 새로운 방장이 되었습니다!');
+        showToast(t('toastBecameHost'));
       }
     });
 
     socket.on('room:error', (errorMsg) => {
-      alert(`[안내] ${errorMsg}`);
+      alert(errorMsg);
       if (errorMsg.includes('퇴장') || errorMsg.includes('종료')) {
         setCurrentRoom(null);
         setIsGameStarted(false);
@@ -100,7 +105,7 @@ export const App: React.FC = () => {
         spread: 100,
         origin: { y: 0.5 }
       });
-      showToast('🚀 게임이 시작되었습니다!');
+      showToast(t('toastGameStarted'));
     });
 
     socket.on('game:state-sync', (gameState) => {
@@ -110,12 +115,12 @@ export const App: React.FC = () => {
     socket.on('game:ended', ({ room }) => {
       setCurrentRoom(prev => prev ? { ...prev, ...room, status: 'ended' } : null);
       confetti({ particleCount: 120, spread: 90 });
-      showToast('🏆 게임이 종료되었습니다! 최종 결과를 확인하세요.');
+      showToast(t('toastGameEnded'));
     });
 
     socket.on('game:returned-to-lobby', () => {
       setIsGameStarted(false);
-      showToast('🔄 파티 대기실로 돌아왔습니다! 다음 게임을 준비하세요.');
+      showToast(t('toastReturnedToWaitingRoom'));
     });
 
     return () => {
@@ -135,7 +140,7 @@ export const App: React.FC = () => {
   const handleCreateRoom = (data: { gameId: string; packId?: string; packTitle?: string; playerName: string; avatar: string }) => {
     socket.emit('room:create', data, (response) => {
       if (!response.success) {
-        alert(response.error || '방 생성에 실패했습니다.');
+        alert(response.error || t('roomCreateFailed'));
       }
     });
   };
@@ -149,7 +154,7 @@ export const App: React.FC = () => {
       avatar: data.avatar
     }, (response) => {
       if (!response.success) {
-        alert(response.error || '방 참가에 실패했습니다. 유효하지 않은 초대 링크이거나 인원이 가득 찼습니다.');
+        alert(response.error || t('roomJoinFailed'));
       } else {
         setIsDirectJoinModalOpen(false);
       }
@@ -184,7 +189,7 @@ export const App: React.FC = () => {
     setUrlRoomCode(null);
     setIsDirectJoinModalOpen(false);
     window.history.pushState({}, '', '/');
-    showToast('🏠 메인 로비로 돌아왔습니다.');
+    showToast(t('toastReturnedToLobby'));
   };
 
   return (
@@ -196,10 +201,10 @@ export const App: React.FC = () => {
           <div style={{ maxWidth: '950px', margin: '0 auto 16px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ fontSize: '1rem', fontWeight: 800, color: '#A5B4FC' }}>
-                🎮 {currentRoom.gameInfo.title}
+                🎮 {getLocalizedGame(currentRoom.gameInfo, language).title}
               </span>
               <span className="badge-pill" style={{ background: 'rgba(99, 102, 241, 0.2)', color: '#C7D2FE', fontSize: '0.8rem' }}>
-                파티 코드: {currentRoom.code}
+                {t('partyCodeText', { code: currentRoom.code })}
               </span>
             </div>
 
@@ -210,16 +215,16 @@ export const App: React.FC = () => {
                   className="btn btn-secondary"
                   onClick={() => socket.emit('room:return-to-waiting')}
                   style={{ padding: '6px 12px', fontSize: '0.85rem', background: 'rgba(99, 102, 241, 0.25)', border: '1px solid #6366F1', color: '#FFF' }}
-                  title="게임을 중단하고 다 함께 대기실로 돌아갑니다"
+                  title={t('returnLobbyHostDesc')}
                 >
                   <RotateCcw size={14} />
-                  <span>대기실로 복귀</span>
+                  <span>{t('returnLobbyBtn')}</span>
                 </button>
               )}
 
-              <button className="btn btn-secondary" onClick={handleLeaveRoom} style={{ padding: '6px 14px', fontSize: '0.85rem' }} title="파티에서 완전히 나갑니다">
+              <button className="btn btn-secondary" onClick={handleLeaveRoom} style={{ padding: '6px 14px', fontSize: '0.85rem' }} title={t('leavePartyDesc')}>
                 <LogOut size={14} />
-                <span>파티 나가기</span>
+                <span>{t('leavePartyBtn')}</span>
               </button>
             </div>
           </div>

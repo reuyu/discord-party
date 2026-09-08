@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const state = room.gameState;
   const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
 
@@ -37,7 +37,6 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
   if (!state) return null;
 
   const currentQ = state.currentQuestion;
-  const myAnswer = state.answers?.[myPlayerId];
   const isHost = room.hostId === myPlayerId;
   const isRevealed = state.phase === 'answer_reveal';
   const submittedCount = (state.submittedPlayerIds || []).length;
@@ -99,12 +98,12 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
           {state.phase === 'question' ? (
             <>
               <Users size={16} />
-              <span>⏱️ 5초 제한시간! 모두가 선택하면 정답과 각자의 선택이 공개됩니다 ({submittedCount} / {room.players.length}명 선택 완료)</span>
+              <span>{language === 'ko' ? `⏱️ 5초 제한시간! 모두가 선택하면 정답과 각자의 선택이 공개됩니다 (${submittedCount} / ${room.players.length}명 선택 완료)` : `⏱️ 5s Limit! Choices revealed once everyone chooses (${submittedCount} / ${room.players.length} ready)`}</span>
             </>
           ) : (
             <>
               <CheckCircle2 size={16} color="#10B981" />
-              <span>결과 공개: 각자 선택한 보기와 정답을 확인하세요!</span>
+              <span>{language === 'ko' ? '결과 공개: 각자 선택한 보기와 정답을 확인하세요!' : 'Results Revealed: Check out everyone\'s choices and the correct answer!'}</span>
             </>
           )}
         </div>
@@ -114,58 +113,57 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
         </h2>
 
         {/* 4지선다 보기 */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-          {currentQ?.options?.map((option: string, idx: number) => {
-            const isMySelected = selectedChoice === idx || myAnswer?.choice === idx;
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '14px' }}>
+          {(currentQ?.options || []).map((option: string, idx: number) => {
+            const isMySelected = selectedChoice === idx;
             const isCorrect = idx === currentQ.answerIndex;
-
-            // 해당 보기를 선택한 모든 플레이어 목록
-            const playersWhoPickedThis = isRevealed
-              ? room.players.filter(p => state.answers?.[p.id]?.choice === idx)
+            const playersWhoPickedThis = isRevealed 
+              ? room.players.filter(p => state.answers?.[p.id]?.choice === idx) 
               : [];
 
-            let bgColor = 'var(--bg-surface-elevated)';
-            let borderColor = 'var(--border-glass)';
-            let textColor = 'var(--text-primary)';
+            let btnBg = 'var(--bg-surface-elevated)';
+            let btnBorder = '1px solid var(--border-glass)';
+            let btnColor = '#FFF';
 
             if (isRevealed) {
               if (isCorrect) {
-                bgColor = 'rgba(16, 185, 129, 0.25)';
-                borderColor = '#10B981';
-                textColor = '#6EE7B7';
+                btnBg = 'rgba(16, 185, 129, 0.25)';
+                btnBorder = '2px solid #10B981';
+                btnColor = '#6EE7B7';
               } else if (isMySelected && !isCorrect) {
-                bgColor = 'rgba(239, 68, 68, 0.25)';
-                borderColor = '#EF4444';
-                textColor = '#FCA5A5';
+                btnBg = 'rgba(239, 68, 68, 0.25)';
+                btnBorder = '2px solid #EF4444';
+                btnColor = '#FCA5A5';
+              } else {
+                btnBg = 'rgba(255, 255, 255, 0.03)';
+                btnColor = '#94A3B8';
               }
             } else if (isMySelected) {
-              bgColor = 'rgba(139, 92, 246, 0.35)';
-              borderColor = 'var(--primary)';
+              btnBg = 'rgba(99, 102, 241, 0.3)';
+              btnBorder = '2px solid #818CF8';
             }
 
             return (
               <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 <button
                   type="button"
-                  className="btn"
+                  onClick={() => handleSelectChoice(idx)}
+                  disabled={isRevealed}
                   style={{
-                    background: bgColor,
-                    borderColor: borderColor,
-                    color: textColor,
                     padding: '16px 20px',
+                    borderRadius: '14px',
+                    background: btnBg,
+                    border: btnBorder,
+                    color: btnColor,
                     fontSize: '1rem',
                     fontWeight: 700,
-                    textAlign: 'left',
+                    cursor: isRevealed ? 'default' : 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    borderRadius: '12px',
-                    transition: 'all 0.2s ease',
-                    cursor: state.phase === 'question' ? 'pointer' : 'default',
-                    boxShadow: isMySelected ? '0 0 15px rgba(139, 92, 246, 0.3)' : 'none'
+                    textAlign: 'left',
+                    transition: 'all 0.15s ease'
                   }}
-                  disabled={state.phase !== 'question'}
-                  onClick={() => handleSelectChoice(idx)}
                 >
                   <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <strong>{idx + 1}.</strong> {option}
@@ -174,7 +172,7 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
                   {/* question 페이즈에서 내가 선택했을 때는 자물쇠 표시 */}
                   {!isRevealed && isMySelected && (
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.8rem', color: '#C4B5FD' }}>
-                      <Lock size={14} /> 선택완료
+                      <Lock size={14} /> {t('selectionComplete')}
                     </span>
                   )}
 
@@ -198,7 +196,7 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
                           padding: '3px 8px'
                         }}
                       >
-                        {p.avatar} {p.name} {p.id === myPlayerId && '(나)'}
+                        {p.avatar} {p.name} {p.id === myPlayerId && ` (${t('meBadge')})`}
                       </span>
                     ))}
                   </div>
@@ -214,7 +212,7 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
           if (timedOutPlayers.length === 0) return null;
           return (
             <div style={{ marginTop: '16px', fontSize: '0.85rem', color: '#F87171', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-              <span>⚠️ 시간 초과 미제출 (오답 처리):</span>
+              <span>{t('timeoutNoSubmission')}</span>
               {timedOutPlayers.map(p => (
                 <span key={p.id} className="badge-pill" style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#FCA5A5', fontSize: '0.75rem' }}>
                   {p.avatar} {p.name}
@@ -230,10 +228,10 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
         <div className="glass-panel" style={{ padding: '20px 24px', marginBottom: '20px', background: 'rgba(16, 185, 129, 0.15)', borderColor: '#10B981' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: '#6EE7B7' }}>
             <BookOpen size={18} />
-            <h4 style={{ fontWeight: 800, fontSize: '1.05rem' }}>정답 & 상식 해설</h4>
+            <h4 style={{ fontWeight: 800, fontSize: '1.05rem' }}>{t('answerExplanationTitle')}</h4>
           </div>
           <p style={{ fontSize: '0.95rem', color: 'var(--text-primary)', lineHeight: 1.6 }}>
-            {currentQ?.explanation || `정답은 '${currentQ?.options?.[currentQ?.answerIndex]}'입니다.`}
+            {currentQ?.explanation || (language === 'ko' ? `정답은 '${currentQ?.options?.[currentQ?.answerIndex]}'입니다.` : `The correct answer is '${currentQ?.options?.[currentQ?.answerIndex]}'.`)}
           </p>
 
           {isHost && (
@@ -250,14 +248,14 @@ export const TriviaQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
       {/* 실시간 랭킹 리더보드 */}
       <div className="glass-panel" style={{ padding: '18px 24px' }}>
         <h4 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: '12px', color: '#A5B4FC' }}>
-          🏆 실시간 점수 순위
+          {t('realtimeScoreRank')}
         </h4>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
           {room.players
             .sort((a, b) => (state.scores?.[b.id] || 0) - (state.scores?.[a.id] || 0))
             .map((p, rank) => (
               <div key={p.id} className="badge-pill" style={{ background: 'var(--bg-surface-elevated)', border: '1px solid var(--border-glass)', padding: '6px 12px', fontSize: '0.85rem' }}>
-                <span>{rank + 1}위</span> {p.avatar} <strong>{p.name}</strong>: {state.scores?.[p.id] || 0}점
+                <span>{rank + 1}{t('rankUnit')}</span> {p.avatar} <strong>{p.name}</strong>: {state.scores?.[p.id] || 0} {t('inGamePoints', { points: '' }).replace(/[0-9]/g, '').trim() || 'pts'}
               </div>
             ))}
         </div>

@@ -110,7 +110,7 @@ export const ZoomQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
           {/* 이미지 로딩 중 검은 가림막 오버레이 (전체 사진 깜빡임 100% 차단) */}
           {!imageLoaded && (
             <div style={{ position: 'absolute', inset: 0, background: '#0B0E14', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748B', fontWeight: 700 }}>
-              <span>🔍 초근접 줌인 이미지 로딩 중...</span>
+              <span>{t('zoomLoadingImage')}</span>
             </div>
           )}
 
@@ -146,7 +146,7 @@ export const ZoomQuizView: React.FC<Props> = ({ room, myPlayerId }) => {
               zIndex: 5
             }}
           >
-            줌 배율: {Math.round(zoomScale * 100)}%
+            {t('zoomScaleText', { scale: Math.round(zoomScale * 100) })}
           </div>
         </div>
       </div>

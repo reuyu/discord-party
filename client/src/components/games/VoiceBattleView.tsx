@@ -82,7 +82,7 @@ export const VoiceBattleView: React.FC<Props> = ({ room, myPlayerId }) => {
 
   const speakTTS = () => {
     if (!('speechSynthesis' in window)) {
-      alert('브라우저가 음성 합성을 지원하지 않습니다.');
+      alert(t('ttsNotSupported'));
       return;
     }
 

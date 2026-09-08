@@ -1,5 +1,5 @@
 // client/src/components/RoomView.tsx
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   Copy, 
   LogOut, 
@@ -51,6 +51,15 @@ export const RoomView: React.FC<RoomViewProps> = ({
 
   const { language, t } = useLanguage();
   const localizedGame = getLocalizedGame(room.gameInfo, language);
+
+  const displayPackTitle = useMemo(() => {
+    if (room.settings.customPackId) {
+      const defaultPacks = getDefaultPacksForGame(room.gameId, language);
+      const found = defaultPacks.find((p) => p.id === room.settings.customPackId);
+      if (found) return found.title;
+    }
+    return room.settings.customPackTitle || t('defaultPack');
+  }, [room.settings.customPackId, room.settings.customPackTitle, room.gameId, language, t]);
 
   const me = room.players.find((p) => p.id === myPlayerId);
   const isHost = me?.isHost ?? false;
@@ -164,7 +173,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
                 </span>
               </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-                {room.settings.customPackTitle ? `📦 ${room.settings.customPackTitle}` : localizedGame.subtitle}
+                {room.settings.customPackTitle ? `📦 ${displayPackTitle}` : localizedGame.subtitle}
               </p>
             </div>
           </div>
@@ -180,7 +189,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
                   title="Change Game"
                 >
                   <Gamepad2 size={16} />
-                  <span>{t('changePackBtn') ? t('changePackBtn').replace(/^[^\s]+\s*/, '') : '게임 변경'}</span>
+                  <span>{t('changeGameBtn')}</span>
                 </button>
 
                 <button
@@ -317,7 +326,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
                 <span>{localizedGame.hasCustomPack ? t('packSupportedGame') : t('systemRuleGame')}</span>
               </div>
               <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-                {room.settings.customPackTitle || 'Default Pack'}
+                {displayPackTitle}
               </div>
             </div>
 
@@ -339,7 +348,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
               {room.gameId === 'worldcup' && (
                 <div className="form-group">
                   <label className="form-label" style={{ marginBottom: '8px' }}>
-                    🏆 Tournament Size
+                    🏆 {t('tournamentSize')}
                   </label>
                   {isHost ? (
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
@@ -357,13 +366,13 @@ export const RoomView: React.FC<RoomViewProps> = ({
                             fontSize: '0.9rem'
                           }}
                         >
-                          Round of {size}
+                          {t('roundOfN', { count: size })}
                         </button>
                       ))}
                     </div>
                   ) : (
                     <div style={{ fontSize: '0.9rem', color: '#F472B6', fontWeight: 700 }}>
-                      Round of {room.settings.rounds || 8}
+                      {t('roundOfN', { count: room.settings.rounds || 8 })}
                     </div>
                   )}
                 </div>
@@ -410,7 +419,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
                       />
                     ) : (
                       <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                        {currentVal} Rounds
+                        {t('roundsCount', { count: currentVal })}
                       </div>
                     )}
                   </div>
@@ -438,7 +447,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
                     {!allGuestsReady
                       ? t('waitingForReady')
                       : room.players.length < localizedGame.minPlayers
-                      ? `Min ${localizedGame.minPlayers} players required`
+                      ? t('minPlayersRequired', { min: localizedGame.minPlayers })
                       : t('startGameBtn')}
                   </span>
                 </button>
@@ -538,7 +547,7 @@ export const RoomView: React.FC<RoomViewProps> = ({
           isOpen={isPackSelectModalOpen}
           onClose={() => setIsPackSelectModalOpen(false)}
           game={localizedGame}
-          initialPackTitle={room.settings.customPackTitle}
+          initialPackTitle={displayPackTitle}
           onConfirmSelectPack={handlePackSelected}
         />
       )}

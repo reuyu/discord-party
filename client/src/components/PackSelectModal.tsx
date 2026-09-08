@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { X, Search, ArrowRight, Package, UploadCloud, CheckCircle2, User, Sparkles, FileText, Code2, ThumbsUp, Globe } from 'lucide-react';
 import { GameInfo, CustomPack, SupportedLanguage } from '../../../shared/types';
-import { DEFAULT_AVATARS } from '../../../shared/gamesData';
+import { DEFAULT_AVATARS, getLocalizedGame } from '../../../shared/gamesData';
 import { getDefaultPacksForGame } from '../../../shared/multilingualPacks';
 import { useLanguage } from '../i18n/LanguageContext';
 import { socket } from '../socket';
@@ -265,6 +265,8 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
   // 서버에서 영구 저장된 실제 추천수 맵
   const [serverPackLikes, setServerPackLikes] = useState<Record<string, number>>({});
 
+  const localizedGame = useMemo(() => game ? getLocalizedGame(game, language) : null, [game, language]);
+
   useEffect(() => {
     if (!isOpen) return;
     fetch('/api/packs/likes')
@@ -371,7 +373,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
     const list = availablePacks.filter(p => {
       const matchesSearch =
         p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (p.tags && p.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())));
+        (p.description && p.description.toLowerCase().includes(searchQuery.toLowerCase()));
 
       const matchesLang =
         selectedPackLang === 'all' ||
@@ -596,9 +598,9 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
         id: `user_pack_${Date.now()}`,
         gameId: game.id,
         title: `📦 [${uploadLanguage.toUpperCase()}] ${uploadTitle.trim()}`,
-        description: `유저 등록 팩 (${itemCount}개 항목)`,
-        author: playerName || '플레이어',
-        tags: ['유저제작', '커스텀', uploadCategory.trim() || '일반', uploadLanguage],
+        description: t('userPackDesc', { count: itemCount }),
+        author: playerName || t('playerDefault'),
+        tags: ['custom', uploadCategory.trim() || 'general', uploadLanguage],
         itemCount,
         isPublic: true,
         likes: 1,
@@ -631,7 +633,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
         setActiveTab('packs');
       }
     } catch (err) {
-      alert('데이터 파싱 오류: 올바른 형식 또는 유효한 JSON으로 입력해주세요.');
+      alert(t('dataParsingError'));
     }
   };
 
@@ -650,7 +652,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
 
     const finalPlayerName = playerName.trim();
     if (!finalPlayerName) {
-      alert('방장으로 사용할 닉네임을 입력해주세요!');
+      alert(t('enterNicknameAlert'));
       return;
     }
 
@@ -686,7 +688,7 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <h2 style={{ fontSize: '1.4rem', fontWeight: 900 }}>
-                  {isRoomMode ? `📦 '${game.title}' 팩 설정` : game.title}
+                  {isRoomMode ? t('roomPackSettingsTitle', { game: localizedGame?.title || game.title }) : (localizedGame?.title || game.title)}
                 </h2>
                 <span className="badge-pill" style={{
                   background: game.hasCustomPack ? 'rgba(139, 92, 246, 0.2)' : 'rgba(16, 185, 129, 0.2)',
@@ -694,11 +696,11 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
                   fontSize: '0.75rem',
                   fontWeight: 700
                 }}>
-                  {game.hasCustomPack ? '📦 팩 지원 게임' : '⚡ 시스템 룰 전용'}
+                  {game.hasCustomPack ? t('packBadge') : t('ruleBadge')}
                 </span>
               </div>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '2px' }}>
-                {isRoomMode ? '대기실에서 플레이할 문제/테마 팩을 선택하거나 직접 커스텀 팩을 업로드하세요.' : game.description}
+                {isRoomMode ? t('roomPackSettingsDesc') : (localizedGame?.description || game.description)}
               </p>
             </div>
           </div>
@@ -867,11 +869,6 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
                         <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
                           {pack.description}
                         </p>
-                        <div style={{ display: 'flex', gap: '6px', marginTop: '8px', flexWrap: 'wrap' }}>
-                          {pack.tags?.map((tTag, idx) => (
-                            <span key={idx} style={{ fontSize: '0.75rem', color: '#A5B4FC', background: 'rgba(99, 102, 241, 0.1)', padding: '2px 8px', borderRadius: '4px' }}>#{tTag}</span>
-                          ))}
-                        </div>
                       </div>
 
                       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -1052,10 +1049,10 @@ export const PackSelectModal: React.FC<PackSelectModalProps> = ({
               {/* 하단 실시간 파싱 상태 카운터 */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '6px', fontSize: '0.8rem' }}>
                 <span style={{ color: parsedCount > 0 ? '#10B981' : 'var(--text-muted)', fontWeight: 700 }}>
-                  {parsedCount > 0 ? `✨ 유효한 항목 ${parsedCount}개가 실시간 인식되었습니다.` : '내용을 입력해주세요.'}
+                  {parsedCount > 0 ? t('parsedCountText', { count: parsedCount }) : t('pleaseEnterContent')}
                 </span>
                 <span style={{ color: 'var(--text-muted)' }}>
-                  줄 수: {uploadText.split('\n').filter(l => l.trim()).length}줄
+                  {t('lineCountText', { count: uploadText.split('\n').filter(l => l.trim()).length })}
                 </span>
               </div>
             </div>

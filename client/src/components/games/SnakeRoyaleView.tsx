@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Room } from '../../../../shared/types';
 import { socket } from '../../socket';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Props {
   room: Room;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export const SnakeRoyaleView: React.FC<Props> = ({ room, myPlayerId }) => {
+  const { language } = useLanguage();
   const state = room.gameState;
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -295,7 +297,7 @@ export const SnakeRoyaleView: React.FC<Props> = ({ room, myPlayerId }) => {
               fontSize: '1rem',
               marginTop: '10px'
             }}>
-              📍 노란색 ★ 핀이 당신의 지렁이입니다!
+              {language === 'ko' ? '📍 노란색 ★ 핀이 당신의 지렁이입니다!' : '📍 Yellow ★ pin marks your snake!'}
             </div>
           </div>
         )}
