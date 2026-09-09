@@ -207,7 +207,7 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
         </div>
 
         {/* 상단 광고 슬롯 */}
-        <AdBanner slotId="lobby-top" />
+        <AdBanner />
 
         {/* 필터 & 컨트롤 바 */}
         <FilterBar
@@ -221,15 +221,33 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
           onSearchChange={setSearchQuery}
         />
 
-        {/* 게임 카드 그리드 목록 */}
+        {/* 게임 카드 그리드 목록 (6개마다 광고 삽입) */}
         <div className="game-grid">
-          {filteredGames.map((game) => (
-            <GameCard
-              key={game.id}
-              game={game}
-              onSelectGame={(g) => setSelectedGameForPack(g)}
-            />
-          ))}
+          {filteredGames.reduce<React.ReactNode[]>((acc, game, idx) => {
+            // 게임 카드 추가
+            acc.push(
+              <GameCard
+                key={game.id}
+                game={game}
+                onSelectGame={(g) => setSelectedGameForPack(g)}
+              />
+            );
+            // 6개마다 (0-indexed: 5, 11, 17...) 광고 그리드 삽입
+            if ((idx + 1) % 6 === 0 && idx + 1 < filteredGames.length) {
+              acc.push(
+                <div
+                  key={`ad-${idx}`}
+                  style={{
+                    gridColumn: '1 / -1',  // 그리드 전체 너비 차지
+                    margin: '4px 0',
+                  }}
+                >
+                  <AdBanner />
+                </div>
+              );
+            }
+            return acc;
+          }, [])}
         </div>
 
         {filteredGames.length === 0 && (
@@ -252,7 +270,7 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
         )}
 
         {/* 하단 광고 슬롯 */}
-        <AdBanner slotId="lobby-bottom" />
+        <AdBanner />
       </main>
 
       {/* 하단 정책 및 정보 푸터 (애드센스 심사 필수 요건) */}

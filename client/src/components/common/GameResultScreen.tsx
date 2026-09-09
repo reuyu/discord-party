@@ -7,6 +7,7 @@ import confetti from 'canvas-confetti';
 import { socket } from '../../socket';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { getLocalizedGame } from '../../../../shared/gamesData';
+import { AdBanner } from '../AdBanner';
 
 interface GameResultScreenProps {
   room: Room;
@@ -382,6 +383,15 @@ export const GameResultScreen: React.FC<GameResultScreenProps> = ({
             })}
           </div>
         </div>
+
+        {/* 결과 화면 광고 배너 (순위표와 버튼 사이) */}
+        <AdBanner
+          style={{
+            maxWidth: '728px',
+            margin: '8px auto 20px',
+            opacity: 0.92,
+          }}
+        />
 
         {/* 지속형 파티 룸: 대기실 복귀 및 퇴장 버튼 그룹 (방장 권한 제한) */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'center', marginTop: '16px' }}>

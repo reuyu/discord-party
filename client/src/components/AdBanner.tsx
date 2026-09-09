@@ -1,14 +1,12 @@
 // client/src/components/AdBanner.tsx
 import React, { useEffect, useRef } from 'react';
 
-// AdSense 퍼블리셔 ID (ca-pub-xxxxxxxx)
+// ===== 애드센스 설정 =====
 const AD_CLIENT = 'ca-pub-6602940684312548';
+const AD_SLOT = '8598551995'; // 기본 슬롯 ID
 
 interface AdBannerProps {
-  // 애드센스 광고 단위 슬롯 ID
-  // 애드센스 콘솔 → 광고 → 광고 단위 기준 → 디스플레이 광고 → 저장 및 코드 가져오기 에서 확인
-  // 예: slotId="1234567890"
-  slotId?: string;
+  slotId?: string;        // 특정 슬롯을 지정할 때만 사용, 기본값은 AD_SLOT
   format?: 'auto' | 'horizontal' | 'rectangle' | 'vertical';
   style?: React.CSSProperties;
   className?: string;
@@ -28,25 +26,18 @@ export const AdBanner: React.FC<AdBannerProps> = ({
   className = '',
   height,
 }) => {
-  const adRef = useRef<HTMLModElement>(null);
   const pushed = useRef(false);
+  const resolvedSlot = slotId || AD_SLOT;
 
   useEffect(() => {
-    // slotId가 없거나 숫자 형식이 아니면 광고 로드 안 함
-    if (!slotId || !/^\d+$/.test(slotId)) return;
     if (pushed.current) return;
     pushed.current = true;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
+    } catch (_) {
       // 개발 환경 무시
     }
-  }, [slotId]);
-
-  // 실제 슬롯 ID가 없으면 렌더링 안 함
-  if (!slotId || !/^\d+$/.test(slotId)) {
-    return null;
-  }
+  }, []);
 
   return (
     <div
@@ -55,14 +46,13 @@ export const AdBanner: React.FC<AdBannerProps> = ({
     >
       <span className="ad-label">ADVERTISEMENT</span>
       <ins
-        ref={adRef}
         className="adsbygoogle"
         style={{
           display: 'block',
           height: height ? `${height}px` : undefined,
         }}
         data-ad-client={AD_CLIENT}
-        data-ad-slot={slotId}
+        data-ad-slot={resolvedSlot}
         data-ad-format={format}
         data-full-width-responsive="true"
       />
