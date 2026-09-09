@@ -20,6 +20,7 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
   // 필터 & 정렬 상태
   const [selectedCategory, setSelectedCategory] = useState<GameCategory>('all');
   const [selectedPlayerCount, setSelectedPlayerCount] = useState<PlayerCountFilter>('all');
+  // 기본 정렬: 추천 순서 (큐레이션된 추천 게임이 상위 노출)
   const [selectedSort, setSelectedSort] = useState<SortOption>('popular');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -44,9 +45,8 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
           setPlayCountOverrides(prev => {
             const next = { ...prev };
             data.games.forEach((g: GameInfo) => {
-              if (g.playCount) {
-                next[g.id] = Math.max(next[g.id] || 0, g.playCount);
-              }
+              // 서버가 권위: 항상 서버 값으로 갱신 (localStorage 오래된 캐시가 더 크더라도 덧써 안 함)
+              next[g.id] = g.playCount ?? 0;
             });
             localStorage.setItem('partyhub_game_play_counts', JSON.stringify(next));
             return next;
@@ -86,6 +86,9 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
       .map(g => g.id);
   }, [gamesWithStats]);
 
+  // 초기 큐레이션 추천 게임 순서 (HOT 게임 없을 때 상위 노출)
+  const FEATURED_ORDER = ['snake-royale', 'high-noon-duel', 'taboo-talk', 'relay-novel', 'anonymous-exposed'];
+
   // 상위 5개에만 동적으로 isPopular = true 적용 및 NEW 태그는 완전 제거(false)
   const activeGames = useMemo(() => {
     return gamesWithStats.map(g => ({
@@ -123,7 +126,23 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
       return true;
     }).sort((a, b) => {
       if (selectedSort === 'popular') {
-        return (b.playCount || 0) - (a.playCount || 0);
+        // HOT 게임(100회 이상)이 있으면 playCount 순, 없으면 큐레이션 순서
+        const hasHotGames = top5PopularGameIds.length > 0;
+        if (hasHotGames) {
+          const aIsHot = top5PopularGameIds.includes(a.id);
+          const bIsHot = top5PopularGameIds.includes(b.id);
+          if (aIsHot && !bIsHot) return -1;
+          if (!aIsHot && bIsHot) return 1;
+          return (b.playCount || 0) - (a.playCount || 0);
+        } else {
+          // HOT 게임 없을 때: 큐레이션 추천 게임 우선
+          const aIdx = FEATURED_ORDER.indexOf(a.id);
+          const bIdx = FEATURED_ORDER.indexOf(b.id);
+          if (aIdx !== -1 && bIdx === -1) return -1;
+          if (aIdx === -1 && bIdx !== -1) return 1;
+          if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
+          return 0;
+        }
       }
       if (selectedSort === 'newest') {
         return b.id.localeCompare(a.id);
@@ -136,9 +155,10 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
   }, [activeGames, selectedCategory, selectedPlayerCount, selectedSort, searchQuery]);
 
   const handleCreateRoom = (data: { gameId: string; packId?: string; packTitle?: string; customPackData?: any; playerName: string; avatar: string }) => {
-    // 해당 게임 플레이 카운트 즉시 +1 반영
+    // 해당 게임 플레이 카운트 즉시 +1 반영 (서버 동기화 전 낙관적 업데이트)
     setPlayCountOverrides(prev => {
-      const current = prev[data.gameId] ?? (INITIAL_GAMES.find(g => g.id === data.gameId)?.playCount || 100);
+      // 버그 수정: || 100 → || 0 (0은 falsy이므로 반드시 ?? 사용)
+      const current = prev[data.gameId] ?? (INITIAL_GAMES.find(g => g.id === data.gameId)?.playCount ?? 0);
       const next = { ...prev, [data.gameId]: current + 1 };
       localStorage.setItem('partyhub_game_play_counts', JSON.stringify(next));
       return next;
