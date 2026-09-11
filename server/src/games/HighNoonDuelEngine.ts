@@ -71,11 +71,15 @@ export class HighNoonDuelEngine extends BaseEngine {
       if ((state.ammo[playerId] || 0) <= 0) return; // 잔여 총알 없음
 
       const now = Date.now();
-      const isEarly = now < state.targetTime;
+      const targetDurationMs = (state.delaySec || 10) * 1000;
+      const clientElapsedMs = typeof action.payload?.clientElapsedMs === 'number'
+        ? Math.max(0, action.payload.clientElapsedMs)
+        : (now - (state.startedAt || now));
+      const isEarly = clientElapsedMs < targetDurationMs;
       const player = room.players.find(p => p.id === playerId);
       const targetId = action.payload?.targetPlayerId || state.aims[playerId]?.targetPlayerId;
 
-      // 1) 12:00 정각 이전 부정출발(Early shot) -> 총알 빗나가며 오발 폭사 탈락!
+      // 1) 12:00 정각(10,000ms) 이전 부정출발(Early shot) -> 총알 빗나가며 오발 폭사 탈락!
       if (isEarly) {
         state.ammo[playerId] = 0;
         state.alivePlayers = state.alivePlayers.filter((id: string) => id !== playerId);
@@ -85,6 +89,7 @@ export class HighNoonDuelEngine extends BaseEngine {
           type: 'misfire',
           shooterId: playerId,
           shooterName: player?.name,
+          clientElapsedMs,
           time: now
         });
 
@@ -95,7 +100,8 @@ export class HighNoonDuelEngine extends BaseEngine {
             shooterName: player?.name,
             angle: action.payload?.angle ?? state.aims[playerId]?.angle ?? 0,
             isEarly: true,
-            killed: false
+            killed: false,
+            clientElapsedMs
           }
         });
 
@@ -130,6 +136,7 @@ export class HighNoonDuelEngine extends BaseEngine {
           shooterName: player?.name,
           victimId: targetId,
           victimName: victimPlayer?.name,
+          clientElapsedMs,
           time: now
         });
       } else {
@@ -138,6 +145,7 @@ export class HighNoonDuelEngine extends BaseEngine {
           type: 'miss',
           shooterId: playerId,
           shooterName: player?.name,
+          clientElapsedMs,
           time: now
         });
       }
@@ -151,7 +159,8 @@ export class HighNoonDuelEngine extends BaseEngine {
           victimName: victimPlayer?.name,
           angle: action.payload?.angle ?? state.aims[playerId]?.angle ?? 0,
           isEarly: false,
-          killed: hitSuccess
+          killed: hitSuccess,
+          clientElapsedMs
         }
       });
 

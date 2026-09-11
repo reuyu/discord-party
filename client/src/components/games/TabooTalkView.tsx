@@ -46,7 +46,13 @@ export const TabooTalkView: React.FC<Props> = ({ room, myPlayerId }) => {
     });
   };
 
-  // 3. 시간 만료 시
+  // 3. 대화 주제 새로고침 (방장)
+  const handleChangeTopic = () => {
+    sounds.playClick();
+    socket.emit('game:action', { type: 'change_topic' });
+  };
+
+  // 4. 시간 만료 시
   const handleTimeout = () => {
     if (isHost && state.phase === 'talking') {
       socket.emit('game:action', { type: 'timeout_talk' });
@@ -112,13 +118,48 @@ export const TabooTalkView: React.FC<Props> = ({ room, myPlayerId }) => {
       {/* 2. 실시간 일상 대화 & 적발 페이즈 */}
       {state.phase === 'talking' && (
         <div>
+          {/* 라운드 공식 대화 주제 (침묵 방지 & 자연스러운 수다 유도) */}
+          {state.currentTopic && (
+            <div className="glass-panel" style={{
+              padding: '24px 20px',
+              marginBottom: '20px',
+              textAlign: 'center',
+              background: 'radial-gradient(circle, rgba(236,72,153,0.22) 0%, rgba(30,27,75,0.95) 100%)',
+              borderColor: '#EC4899',
+              boxShadow: '0 0 20px rgba(236,72,153,0.25)'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span className="badge-pill" style={{ background: '#EC4899', color: '#FFF', fontWeight: 800 }}>
+                  🎯 이번 라운드 공식 대화 주제 (침묵 금지)
+                </span>
+                {isHost && (
+                  <button
+                    className="btn btn-secondary"
+                    onClick={handleChangeTopic}
+                    style={{ padding: '3px 10px', fontSize: '0.75rem', borderRadius: '12px', background: 'rgba(255,255,255,0.1)' }}
+                    title="다른 주제로 바꾸기"
+                  >
+                    🎲 다른 주제 뽑기
+                  </button>
+                )}
+              </div>
+
+              <h2 style={{ fontSize: '1.35rem', fontWeight: 900, color: '#FFF', lineHeight: 1.4, margin: '8px 0 6px 0' }}>
+                "{state.currentTopic}"
+              </h2>
+              <p style={{ color: '#CBD5E1', fontSize: '0.88rem', margin: 0 }}>
+                💡 위 주제로 자유롭게 수다를 떨며 친구가 금기어를 말하도록 자연스럽게 유도해보세요!
+              </p>
+            </div>
+          )}
+
           {/* 내 상태 안내 */}
-          <div className="glass-panel" style={{ padding: '18px 24px', marginBottom: '20px', textAlign: 'center', background: 'rgba(239,68,68,0.15)', borderColor: 'rgba(239,68,68,0.4)' }}>
-            <div style={{ fontSize: '0.9rem', color: '#FCA5A5', fontWeight: 700 }}>
+          <div className="glass-panel" style={{ padding: '16px 24px', marginBottom: '20px', textAlign: 'center', background: 'rgba(239,68,68,0.15)', borderColor: 'rgba(239,68,68,0.4)' }}>
+            <div style={{ fontSize: '0.85rem', color: '#FCA5A5', fontWeight: 700 }}>
               ⚠️ 주의: 당신에게 지정된 금기어는 나만 볼 수 없습니다!
             </div>
-            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#FFF', marginTop: '4px' }}>
-              자유롭게 대화하면서 상대방이 금기어를 말하도록 유도하고, 상대가 말하는 순간 즉시 [적발 🚨] 버튼을 누르세요!
+            <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#FFF', marginTop: '4px' }}>
+              상대방이 금기어를 말하는 순간 즉시 아래의 [적발 🚨] 버튼을 누르세요!
             </div>
           </div>
 

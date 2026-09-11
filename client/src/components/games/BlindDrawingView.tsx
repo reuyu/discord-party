@@ -102,7 +102,7 @@ export const BlindDrawingView: React.FC<Props> = ({ room, myPlayerId }) => {
   };
 
   const handleTimeout = () => {
-    if (isHost) {
+    if (isHost || isDrawer) {
       socket.emit('game:action', { type: 'timeout_round' });
     }
   };

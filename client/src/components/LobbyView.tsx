@@ -232,17 +232,31 @@ export const LobbyView: React.FC<LobbyViewProps> = ({ onCreateRoom }) => {
                 onSelectGame={(g) => setSelectedGameForPack(g)}
               />
             );
-            // 6개마다 (0-indexed: 5, 11, 17...) 광고 그리드 삽입
+            // 6개마다 (0-indexed: 5, 11, 17...) 게임 카드와 동일한 크기의 광고 카드 삽입
             if ((idx + 1) % 6 === 0 && idx + 1 < filteredGames.length) {
               acc.push(
                 <div
                   key={`ad-${idx}`}
+                  className="game-card ad-game-card"
                   style={{
-                    gridColumn: '1 / -1',  // 그리드 전체 너비 차지
-                    margin: '4px 0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '16px',
+                    minHeight: '380px',
+                    cursor: 'default',
+                    overflow: 'hidden'
                   }}
                 >
-                  <AdBanner />
+                  <div style={{ alignSelf: 'flex-start', marginBottom: '8px' }}>
+                    <span className="badge-pill" style={{ background: 'rgba(255, 255, 255, 0.08)', color: 'var(--text-muted)', fontSize: '0.7rem' }}>
+                      SPONSORED
+                    </span>
+                  </div>
+                  <div style={{ flex: 1, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <AdBanner />
+                  </div>
                 </div>
               );
             }

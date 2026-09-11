@@ -43,6 +43,21 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       localStorage.setItem('partyhub_lang', language);
     } catch {}
     document.documentElement.lang = language;
+
+    const titles: Record<SupportedLanguage, string> = {
+      ko: 'PartyHub - 디스코드 파티게임 & 미니게임 플랫폼 | 웹 게임',
+      en: 'PartyHub - Discord Party Games & Mini-Games Platform | Web Games',
+      ja: 'PartyHub - Discord パーティーゲーム＆ミニゲーム | ウェブゲーム',
+      'zh-TW': 'PartyHub - Discord 派對遊戲與迷你遊戲平台 | 網頁遊戲',
+      de: 'PartyHub - Discord Partyspiele & Minispiele Plattform | Webspiele',
+      pt: 'PartyHub - Jogos de festa e minigames para Discord | Jogos web',
+      es: 'PartyHub - Juegos de fiesta y minijuegos para Discord | Juegos web',
+      fr: 'PartyHub - Jeux de fête et mini-jeux pour Discord | Jeux Web'
+    };
+
+    if (titles[language]) {
+      document.title = titles[language];
+    }
   }, [language]);
 
   const setLanguage = (newLang: SupportedLanguage) => {

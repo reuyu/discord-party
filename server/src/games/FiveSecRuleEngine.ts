@@ -35,7 +35,7 @@ export class FiveSecRuleEngine extends BaseEngine {
       currentMission: missions[0],
       firstAnswer: null as { playerId: string; playerName: string; playerAvatar: string; text: string } | null,
       votingStartedAt: 0,
-      votingDurationSec: 3,
+      votingDurationSec: 5,
       votes: {} as Record<string, 'pass' | 'fail'>,
       scores,
       lastResultNotice: '',
@@ -62,19 +62,19 @@ export class FiveSecRuleEngine extends BaseEngine {
         text
       };
 
-      // 3초 카운트다운 투표 페이즈 즉시 전환!
+      // 5초 카운트다운 투표 페이즈 즉시 전환!
       state.phase = 'voting';
       state.votes = {};
       state.votingStartedAt = Date.now();
-      state.votingDurationSec = 3;
+      state.votingDurationSec = 5;
 
       this.broadcastState(room, io);
 
-      // 정확히 3.2초 뒤 수동 조작 없이 자동으로 다음 문제 진행!
+      // 정확히 5.2초 뒤 수동 조작 없이 자동으로 다음 문제 진행!
       if (this.turnTimeout) clearTimeout(this.turnTimeout);
       this.turnTimeout = setTimeout(() => {
         this.finishVotingAndAdvance(room, io);
-      }, 3200);
+      }, 5200);
 
       return;
     }

@@ -38,9 +38,32 @@ export const AnonymousExposedView: React.FC<Props> = ({ room, myPlayerId }) => {
     });
   };
 
+  const selectedTargetRef = React.useRef(selectedTarget);
+  selectedTargetRef.current = selectedTarget;
+  const anonymousReasonRef = React.useRef(anonymousReason);
+  anonymousReasonRef.current = anonymousReason;
+
   const handleTimeout = () => {
+    // 시간 만료 시 미제출 상태라도 입력창에 작성 중이던 글이 있다면 자동 제출!
+    const draftReason = anonymousReasonRef.current.trim();
+    if (!hasSubmitted && draftReason) {
+      let target = selectedTargetRef.current;
+      if (!target) {
+        const otherPlayer = room.players.find(p => p.id !== myPlayerId) || room.players[0];
+        target = otherPlayer?.id || '';
+      }
+      if (target) {
+        socket.emit('game:action', {
+          type: 'submit_expose',
+          payload: { targetId: target, reason: draftReason }
+        });
+      }
+    }
+
     if (isHost && state.phase === 'submitting') {
-      socket.emit('game:action', { type: 'timeout_submitting' });
+      setTimeout(() => {
+        socket.emit('game:action', { type: 'timeout_submitting' });
+      }, 350);
     }
   };
 

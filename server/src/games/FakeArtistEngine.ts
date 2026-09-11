@@ -24,7 +24,7 @@ export class FakeArtistEngine extends BaseEngine {
       currentDrawerId: room.players[0].id,
       currentTurnPlayerIndex: 0,
       currentRound: 1,
-      maxRounds: 2, // 2바퀴
+      maxRounds: room.settings.rounds || 3, // 3바퀴
       turnDurationSec: 10, // 턴당 10초
       turnStartedAt: Date.now(),
       strokes: [] as any[], // { playerId: string, color: string, points: [number, number][] }

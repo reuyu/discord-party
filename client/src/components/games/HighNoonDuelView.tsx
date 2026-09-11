@@ -36,6 +36,7 @@ export const HighNoonDuelView: React.FC<Props> = ({ room, myPlayerId }) => {
   const lastTickedStepRef = useRef<number>(0);
   const clockBellPlayedRef = useRef<boolean>(false);
   const lastStartedAtRef = useRef<number>(0);
+  const localRoundStartPerfRef = useRef<number>(performance.now());
 
   // 로컬 마우스 및 조준 상태 (60fps 즉시 반응)
   const [localAimAngle, setLocalAimAngle] = useState<number>(0);
@@ -112,6 +113,7 @@ export const HighNoonDuelView: React.FC<Props> = ({ room, myPlayerId }) => {
   // 라운드 변경 또는 재시작 시 틱 사운드 상태 리셋
   if (startedAt > 0 && startedAt !== lastStartedAtRef.current) {
     lastStartedAtRef.current = startedAt;
+    localRoundStartPerfRef.current = performance.now();
     lastTickedStepRef.current = 0;
     clockBellPlayedRef.current = false;
   }
@@ -334,7 +336,11 @@ export const HighNoonDuelView: React.FC<Props> = ({ room, myPlayerId }) => {
     if (!isAlive || myAmmo <= 0) return;
     if (state.phase !== 'standoff' && state.phase !== 'shootout') return;
 
-    if (now < targetTime) {
+    // 각자의 로컬 고정밀 시계 기준 경과 시간(ms) 측정 (10,000ms 기준 판정)
+    const clientElapsedMs = Math.max(0, Math.round(performance.now() - localRoundStartPerfRef.current));
+    const isEarlyLocal = clientElapsedMs < durationMs;
+
+    if (isEarlyLocal) {
       sounds.playMiss();
     } else {
       sounds.playGunshot();
@@ -344,7 +350,8 @@ export const HighNoonDuelView: React.FC<Props> = ({ room, myPlayerId }) => {
       type: 'shoot',
       payload: {
         angle: localAimAngle,
-        targetPlayerId: targetedOpponentId || undefined
+        targetPlayerId: targetedOpponentId || undefined,
+        clientElapsedMs
       }
     });
   };
@@ -756,7 +763,6 @@ export const HighNoonDuelView: React.FC<Props> = ({ room, myPlayerId }) => {
             const playerAlive = state.alivePlayers?.includes(p.id);
             const isMe = p.id === myPlayerId;
             const ammo = state.ammo?.[p.id] || 0;
-            const isTargetedByMe = targetedOpponentId === p.id;
             const isAimingAtMe = !isMe && playerAlive && (remoteAims[p.id]?.targetPlayerId === myPlayerId || state.aims?.[p.id]?.targetPlayerId === myPlayerId);
 
             const aimAngle = isMe
@@ -831,18 +837,14 @@ export const HighNoonDuelView: React.FC<Props> = ({ room, myPlayerId }) => {
                   background: playerAlive
                     ? (isMe
                         ? 'radial-gradient(circle, #10B981 0%, #064E3B 100%)'
-                        : isTargetedByMe
-                          ? 'radial-gradient(circle, #7F1D1D 0%, #450A0A 100%)'
-                          : 'radial-gradient(circle, #451A03 0%, #1C1917 100%)')
+                        : 'radial-gradient(circle, #451A03 0%, #1C1917 100%)')
                     : 'rgba(0,0,0,0.65)',
                   border: playerAlive
                     ? (isMe
                         ? '2.5px solid #34D399'
-                        : isTargetedByMe
-                          ? '2.5px solid #EF4444'
-                          : isAimingAtMe
-                            ? '2.5px solid #F87171'
-                            : '2px solid #D97706')
+                        : isAimingAtMe
+                          ? '2px solid #F59E0B'
+                          : '2px solid #D97706')
                     : '2px dashed #475569',
                   display: 'flex',
                   flexDirection: 'column',
@@ -889,7 +891,7 @@ export const HighNoonDuelView: React.FC<Props> = ({ room, myPlayerId }) => {
             );
           })}
 
-          {/* 커스텀 마우스 레티클 (깔끔한 원형 크로스헤어) */}
+          {/* 커스텀 마우스 조준점 (빨간 원 제거, 은은한 서부풍 조준 십자선) */}
           {isMouseInside && mousePos && isAlive && myAmmo > 0 && (
             <div
               style={{
@@ -903,22 +905,15 @@ export const HighNoonDuelView: React.FC<Props> = ({ room, myPlayerId }) => {
             >
               <div style={{
                 position: 'relative',
-                width: '32px',
-                height: '32px',
+                width: '18px',
+                height: '18px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  borderRadius: '50%',
-                  border: targetedOpponentId ? '2px solid #EF4444' : '1.5px solid rgba(245, 158, 11, 0.8)',
-                  boxShadow: targetedOpponentId ? '0 0 10px #EF4444' : '0 0 6px rgba(245, 158, 11, 0.4)'
-                }} />
-                <div style={{ position: 'absolute', width: '1.5px', height: '100%', background: targetedOpponentId ? '#EF4444' : '#F59E0B' }} />
-                <div style={{ position: 'absolute', height: '1.5px', width: '100%', background: targetedOpponentId ? '#EF4444' : '#F59E0B' }} />
-                <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: targetedOpponentId ? '#EF4444' : '#FBBF24' }} />
+                <div style={{ position: 'absolute', width: '1.5px', height: '100%', background: 'rgba(245, 158, 11, 0.7)' }} />
+                <div style={{ position: 'absolute', height: '1.5px', width: '100%', background: 'rgba(245, 158, 11, 0.7)' }} />
+                <div style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#FBBF24' }} />
               </div>
             </div>
           )}

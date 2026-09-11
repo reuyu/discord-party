@@ -74,8 +74,9 @@ export class BlindDrawingEngine extends BaseEngine {
       return;
     }
 
-    // 4. 타이머 만료
-    if (action.type === 'timeout_drawing' && state.phase === 'drawing') {
+    // 4. 타이머 만료 (정답자 없이 시간 종료 시 라운드 결과로 정상 전이)
+    if ((action.type === 'timeout_drawing' || action.type === 'timeout_round') && state.phase === 'drawing') {
+      state.correctPlayerId = null;
       state.phase = 'round_result';
       this.broadcastState(room, io);
       return;

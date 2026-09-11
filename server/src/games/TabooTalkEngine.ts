@@ -2,6 +2,7 @@
 import { BaseEngine, GameAction } from './BaseEngine';
 import { Room } from '../../../shared/types';
 import { Server } from 'socket.io';
+import { TABOO_ROUND_TOPICS } from '../../../shared/tabooTopics';
 
 export class TabooTalkEngine extends BaseEngine {
   onStart(room: Room): any {
@@ -15,11 +16,16 @@ export class TabooTalkEngine extends BaseEngine {
     const userTaboos: Record<string, string[]> = {};
     alivePlayers.forEach(id => { userTaboos[id] = []; });
 
+    const topics = [...TABOO_ROUND_TOPICS].sort(() => Math.random() - 0.5);
+
     room.gameState = {
       phase: 'setting', // setting -> talking -> gameEnd
       round: 1,
       tabooAssignments,
       userTaboos,
+      topics,
+      topicIndex: 0,
+      currentTopic: topics[0],
       currentRoundSubmissions: {} as Record<string, string>, // creatorId -> word
       alivePlayers,
       caughtHistory: [] as { victimId: string; reporterId: string; word: string }[],
@@ -100,10 +106,24 @@ export class TabooTalkEngine extends BaseEngine {
     // 3. 시간 초과로 추가 금기어 페이즈 발동
     if (action.type === 'timeout_talk' && state.phase === 'talking') {
       state.round++;
+      if (state.topics?.length) {
+        state.topicIndex = ((state.topicIndex || 0) + 1) % state.topics.length;
+        state.currentTopic = state.topics[state.topicIndex];
+      }
       state.phase = 'setting';
       state.currentRoundSubmissions = {};
       state.startedAt = Date.now();
       this.broadcastState(room, io);
+      return;
+    }
+
+    // 4. 대화 주제 새로고침
+    if ((action.type === 'change_topic' || action.type === 'next_topic') && state.phase === 'talking') {
+      if (state.topics?.length) {
+        state.topicIndex = ((state.topicIndex || 0) + 1) % state.topics.length;
+        state.currentTopic = state.topics[state.topicIndex];
+        this.broadcastState(room, io);
+      }
       return;
     }
 

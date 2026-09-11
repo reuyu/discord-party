@@ -258,110 +258,110 @@ export const FakeArtistView: React.FC<Props> = ({ room, myPlayerId }) => {
         </div>
       </div>
 
-      {/* 1. 한 획 릴레이 드로잉 페이즈 */}
+      {/* 상단 차례 안내 및 잉크 게이지 (드로잉 단계 전용) */}
       {state.phase === 'drawing' && (
-        <div>
-          {/* 차례 안내 및 잉크 게이지 */}
-          <div style={{
-            background: isMyTurn ? 'rgba(236,72,153,0.25)' : 'var(--bg-surface)',
-            border: isMyTurn ? '1px solid #EC4899' : '1px solid var(--border-glass)',
-            padding: '14px 20px',
-            borderRadius: '14px',
-            marginBottom: '16px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
-            <div style={{ fontWeight: 800, color: '#FFF', fontSize: '1rem' }}>
-              {isMyTurn ? (
-                <span style={{ color: '#F472B6' }}>🖌️ [당신 차례] 캔버스에 마우스를 누른 채 [한 획]을 그리고 떼세요! (제한 10초)</span>
-              ) : (
-                <span>⏳ <strong style={{ color: '#60A5FA' }}>[{currentDrawer?.name}]</strong> 님이 한 획을 그리고 있습니다...</span>
-              )}
-            </div>
-
-            {/* 잉크 게이지 */}
-            {isMyTurn && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Droplet size={18} color={inkPercentage < 20 ? '#EF4444' : '#60A5FA'} />
-                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: inkPercentage < 20 ? '#EF4444' : '#E2E8F0' }}>
-                  잉크 {inkPercentage}%
-                </span>
-                <div style={{ width: '100px', height: '10px', background: 'rgba(0,0,0,0.5)', borderRadius: '6px', overflow: 'hidden', border: '1px solid #475569' }}>
-                  <div style={{
-                    width: `${inkPercentage}%`,
-                    height: '100%',
-                    background: inkPercentage < 20 ? '#EF4444' : '#3B82F6',
-                    transition: 'width 0.1s linear'
-                  }} />
-                </div>
-              </div>
+        <div style={{
+          background: isMyTurn ? 'rgba(236,72,153,0.25)' : 'var(--bg-surface)',
+          border: isMyTurn ? '1px solid #EC4899' : '1px solid var(--border-glass)',
+          padding: '14px 20px',
+          borderRadius: '14px',
+          marginBottom: '16px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <div style={{ fontWeight: 800, color: '#FFF', fontSize: '1rem' }}>
+            {isMyTurn ? (
+              <span style={{ color: '#F472B6' }}>🖌️ [당신 차례] 캔버스에 마우스를 누른 채 [한 획]을 그리고 떼세요! (제한 10초)</span>
+            ) : (
+              <span>⏳ <strong style={{ color: '#60A5FA' }}>[{currentDrawer?.name}]</strong> 님이 한 획을 그리고 있습니다...</span>
             )}
           </div>
 
-          <div className="glass-panel" style={{ padding: '16px', marginBottom: '20px' }}>
-            <canvas
-              ref={canvasRef}
-              width={600}
-              height={380}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-              style={{
-                background: '#1E1B4B',
-                borderRadius: '12px',
-                cursor: isMyTurn ? 'crosshair' : 'default',
-                width: '100%',
-                maxWidth: '600px',
-                height: '380px',
-                touchAction: 'none',
-                boxShadow: isMyTurn ? `0 0 16px ${myColor}55` : 'none'
-              }}
-            />
-          </div>
-
-          {/* 하단 참가자 드로잉 순서 및 라운드 현황 */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
-            {room.players.map((p, idx) => {
-              const isCurrent = p.id === state.currentDrawerId;
-              const color = PLAYER_COLORS[idx % PLAYER_COLORS.length];
-              return (
-                <div
-                  key={p.id}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    padding: '6px 14px',
-                    borderRadius: '20px',
-                    background: isCurrent ? 'rgba(236,72,153,0.3)' : 'rgba(255,255,255,0.06)',
-                    border: isCurrent ? `2px solid ${color}` : '1px solid transparent',
-                    transform: isCurrent ? 'scale(1.06)' : 'none',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: color }} />
-                  <span style={{ fontSize: '1.2rem' }}>{p.avatar}</span>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#FFF' }}>{p.name}</span>
-                </div>
-              );
-            })}
-          </div>
+          {/* 잉크 게이지 */}
+          {isMyTurn && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Droplet size={18} color={inkPercentage < 20 ? '#EF4444' : '#60A5FA'} />
+              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: inkPercentage < 20 ? '#EF4444' : '#E2E8F0' }}>
+                잉크 {inkPercentage}%
+              </span>
+              <div style={{ width: '100px', height: '10px', background: 'rgba(0,0,0,0.5)', borderRadius: '6px', overflow: 'hidden', border: '1px solid #475569' }}>
+                <div style={{
+                  width: `${inkPercentage}%`,
+                  height: '100%',
+                  background: inkPercentage < 20 ? '#EF4444' : '#3B82F6',
+                  transition: 'width 0.1s linear'
+                }} />
+              </div>
+            </div>
+          )}
         </div>
       )}
 
+      {/* 공통: 드로잉 캔버스 (드로잉 중, 투표 중, 가짜 화가 정답 추리 중 모두 항상 노출) */}
+      <div className="glass-panel" style={{ padding: '16px', marginBottom: '16px' }}>
+        <canvas
+          ref={canvasRef}
+          width={600}
+          height={360}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          style={{
+            background: '#1E1B4B',
+            borderRadius: '12px',
+            cursor: (state.phase === 'drawing' && isMyTurn) ? 'crosshair' : 'default',
+            width: '100%',
+            maxWidth: '600px',
+            height: '360px',
+            touchAction: 'none',
+            boxShadow: (state.phase === 'drawing' && isMyTurn) ? `0 0 16px ${myColor}55` : 'none',
+            display: 'block',
+            margin: '0 auto'
+          }}
+        />
+
+        {/* 플레이어별 선 색상 범례 */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', marginTop: '14px' }}>
+          {room.players.map((p, idx) => {
+            const isCurrent = state.phase === 'drawing' && p.id === state.currentDrawerId;
+            const color = PLAYER_COLORS[idx % PLAYER_COLORS.length];
+            return (
+              <div
+                key={p.id}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '5px 12px',
+                  borderRadius: '20px',
+                  background: isCurrent ? 'rgba(236,72,153,0.3)' : 'rgba(255,255,255,0.06)',
+                  border: isCurrent ? `2px solid ${color}` : `1px solid ${color}44`,
+                  transform: isCurrent ? 'scale(1.06)' : 'none',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: color }} />
+                <span style={{ fontSize: '1.1rem' }}>{p.avatar}</span>
+                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#FFF' }}>{p.name}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* 2. 가짜 화가 지목 투표 페이즈 */}
       {state.phase === 'voting' && (
-        <div className="glass-panel" style={{ padding: '36px 20px', marginBottom: '20px' }}>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 900, marginBottom: '8px', color: '#FBBF24' }}>
-            🗳️ 가짜 화가로 의심되는 사람을 지목하세요!
+        <div className="glass-panel" style={{ padding: '24px 20px', marginBottom: '20px' }}>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 900, marginBottom: '6px', color: '#FBBF24' }}>
+            🗳️ 위 그림을 보고 가짜 화가로 의심되는 사람을 지목하세요!
           </h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-            제시어를 몰라 엉뚱한 선을 그렸거나 눈치를 보던 가짜 화가를 찾아내세요.
+          <p style={{ color: 'var(--text-secondary)', marginBottom: '18px', fontSize: '0.9rem' }}>
+            제시어를 몰라 엉뚱한 선을 그렸거나 눈치를 보던 색상의 화가를 찾아내세요.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '14px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '12px' }}>
             {room.players.map(p => (
               <button
                 key={p.id}
@@ -371,17 +371,17 @@ export const FakeArtistView: React.FC<Props> = ({ room, myPlayerId }) => {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  padding: '20px 10px',
+                  padding: '16px 10px',
                   borderRadius: '16px',
                   background: myVote === p.id ? 'rgba(236, 72, 153, 0.4)' : 'var(--bg-surface-elevated)',
                   border: myVote === p.id ? '2px solid #EC4899' : '1px solid var(--border-glass)',
                   cursor: myVote ? 'default' : 'pointer'
                 }}
               >
-                <div style={{ fontSize: '2.5rem', marginBottom: '6px' }}>{p.avatar}</div>
+                <div style={{ fontSize: '2.2rem', marginBottom: '4px' }}>{p.avatar}</div>
                 <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#FFF' }}>{p.name}</div>
                 {myVote === p.id && (
-                  <span className="badge-pill" style={{ marginTop: '8px', background: '#EC4899', color: '#FFF', fontSize: '0.75rem' }}>
+                  <span className="badge-pill" style={{ marginTop: '6px', background: '#EC4899', color: '#FFF', fontSize: '0.75rem' }}>
                     지목 완료
                   </span>
                 )}
@@ -391,14 +391,14 @@ export const FakeArtistView: React.FC<Props> = ({ room, myPlayerId }) => {
         </div>
       )}
 
-      {/* 3. 가짜 화가의 정답 역전 시도 (fake_guess 또는 fakeGuess 모두 완벽 대응) */}
+      {/* 3. 가짜 화가의 정답 역전 시도 */}
       {(state.phase === 'fake_guess' || state.phase === 'fakeGuess') && (
-        <div className="glass-panel" style={{ padding: '36px 20px', background: 'rgba(239,68,68,0.2)', borderColor: '#EF4444' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#F87171', marginBottom: '12px' }}>
+        <div className="glass-panel" style={{ padding: '28px 20px', background: 'rgba(239,68,68,0.2)', borderColor: '#EF4444' }}>
+          <h2 style={{ fontSize: '1.45rem', fontWeight: 900, color: '#F87171', marginBottom: '8px' }}>
             🚨 가짜 화가가 발각되었습니다!
           </h2>
-          <p style={{ color: '#E2E8F0', fontSize: '1.05rem', marginBottom: '24px' }}>
-            가짜 화가가 그림을 보고 비밀 제시어가 무엇이었는지 맞히면 <strong>대역전승</strong>을 거둡니다!
+          <p style={{ color: '#E2E8F0', fontSize: '1rem', marginBottom: '20px' }}>
+            가짜 화가가 <strong>위 그림을 관찰</strong>하여 비밀 제시어가 무엇이었는지 맞히면 <strong>대역전승</strong>을 거둡니다!
           </p>
 
           {isFake ? (
@@ -406,7 +406,7 @@ export const FakeArtistView: React.FC<Props> = ({ room, myPlayerId }) => {
               <input
                 type="text"
                 className="input-field"
-                placeholder="추리한 그림의 정답 제시어 입력..."
+                placeholder="그림을 보고 추리한 정답 제시어 입력..."
                 value={fakeGuess}
                 onChange={(e) => setFakeGuess(e.target.value)}
                 autoFocus
@@ -419,7 +419,7 @@ export const FakeArtistView: React.FC<Props> = ({ room, myPlayerId }) => {
             </form>
           ) : (
             <div style={{ color: '#FDE68A', fontSize: '1.1rem', fontWeight: 800 }}>
-              ⏳ 가짜 화가가 정답 단어를 추리 중입니다...
+              ⏳ 가짜 화가가 그림을 보며 정답 단어를 추리 중입니다...
             </div>
           )}
         </div>

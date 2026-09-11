@@ -14,23 +14,24 @@ interface Props {
 export const RelayNovelView: React.FC<Props> = ({ room, myPlayerId }) => {
   const state = room.gameState;
   const [sentenceInput, setSentenceInput] = useState('');
+  const sentenceInputRef = React.useRef(sentenceInput);
+  sentenceInputRef.current = sentenceInput;
+
+  React.useEffect(() => {
+    setSentenceInput('');
+  }, [state?.step]);
 
   if (!state) return null;
 
   const isHost = room.hostId === myPlayerId;
   const currentStepIdx = (state.step || 1) - 1;
   const totalSteps = state.totalSteps || room.players.length;
-  const playerCount = room.players.length;
 
   // 현재 스텝에서 내가 작성해야 할 소설 탐색
   const myAssignedNovelOriginId = Object.keys(state.schedule || {}).find(
     originId => state.schedule[originId]?.[currentStepIdx] === myPlayerId
   );
   const myAssignedNovel = myAssignedNovelOriginId ? state.novels?.[myAssignedNovelOriginId] : null;
-
-  // 현재 라운드 및 스텝 계산
-  const currentRound = Math.floor(currentStepIdx / playerCount) + 1;
-  const stepInRound = (currentStepIdx % playerCount) + 1;
 
   const mySubmission = state.currentSubmissions?.[myPlayerId];
   const isSubmitted = !!mySubmission;
@@ -52,8 +53,19 @@ export const RelayNovelView: React.FC<Props> = ({ room, myPlayerId }) => {
   };
 
   const handleTimeout = () => {
+    // 시간 만료 시 입력창에 작성 중이던 문장이 있다면 즉시 자동 제출!
+    const draft = sentenceInputRef.current.trim();
+    if (!isSubmitted && draft) {
+      socket.emit('game:action', {
+        type: 'submit_sentence',
+        payload: { sentence: draft }
+      });
+    }
+
     if (isHost) {
-      socket.emit('game:action', { type: 'timeout_step' });
+      setTimeout(() => {
+        socket.emit('game:action', { type: 'timeout_step' });
+      }, 350);
     }
   };
 
@@ -97,11 +109,15 @@ export const RelayNovelView: React.FC<Props> = ({ room, myPlayerId }) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
             <span className="badge-pill" style={{ background: '#14B8A6', color: '#FFF' }}>
               {state.phase === 'writing'
-                ? `제 ${currentRound}라운드 · ${stepInRound}/${playerCount}번째 릴레이`
+                ? (state.step === 1
+                    ? '✨ 1단계: 첫 도입부 작성'
+                    : state.step === totalSteps
+                      ? '🎬 마지막 단계: 기상천외 결말 완성!'
+                      : `📖 ${state.step}/${totalSteps}단계: 릴레이 이어쓰기`)
                 : '📖 막장 릴레이 완성작 낭독쇼'}
             </span>
             <span className="badge-pill" style={{ background: 'rgba(255,255,255,0.08)', color: '#A5B4FC' }}>
-              총 {totalSteps}단계 완주 도전
+              총 {totalSteps}단계 릴레이
             </span>
           </div>
           <h3 style={{ marginTop: '6px', fontSize: '1.25rem', fontWeight: 800, textAlign: 'left' }}>

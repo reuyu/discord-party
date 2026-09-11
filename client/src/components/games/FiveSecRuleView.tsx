@@ -14,7 +14,7 @@ export const FiveSecRuleView: React.FC<Props> = ({ room, myPlayerId }) => {
   const state = room.gameState;
   const [answerInput, setAnswerInput] = useState('');
   const [gaugePercent, setGaugePercent] = useState<number>(100);
-  const [timeLeftSec, setTimeLeftSec] = useState<string>('3.0');
+  const [timeLeftSec, setTimeLeftSec] = useState<string>('5.0');
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   // 미션이 바뀔 때 인풋창 자동 포커스 & 텍스트 초기화
@@ -32,7 +32,7 @@ export const FiveSecRuleView: React.FC<Props> = ({ room, myPlayerId }) => {
       return;
     }
 
-    const duration = 3000; // 3초
+    const duration = (state.votingDurationSec || 5) * 1000; // 5초 투표
     const startTime = state.votingStartedAt;
 
     const interval = setInterval(() => {
@@ -205,7 +205,7 @@ export const FiveSecRuleView: React.FC<Props> = ({ room, myPlayerId }) => {
                 <Clock size={16} /> 판정 남은 시간: {timeLeftSec}초
               </span>
               <span style={{ fontSize: '0.85rem', color: '#CBD5E1', fontWeight: 700 }}>
-                (3초 종료 즉시 자동 다음 턴 전환)
+                (5초 종료 즉시 자동 다음 턴 전환)
               </span>
             </div>
             <div style={{ height: '14px', background: 'rgba(0,0,0,0.6)', borderRadius: '8px', overflow: 'hidden', border: '1px solid #78350F' }}>

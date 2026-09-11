@@ -229,7 +229,7 @@ export const INITIAL_GAMES: GameInfo[] = [
       '작성된 글이 릴레이로 전달되며 직전 문장을 보고 다음 문장을 이어 씁니다.',
       '모든 완성이 끝나면 화면에 슬라이드쇼로 한 편씩 공개되며 음성 낭독을 진행합니다.'
     ],
-    defaultSettings: { rounds: 6, timeLimitSec: 45 }
+    defaultSettings: { rounds: 1, timeLimitSec: 45 }
   },
 
   // 10. 폭탄 돌리기 단어 폭파 배틀 (커스텀 팩 불필요 - 즉석 단어 입력 순발력 배틀)
@@ -427,9 +427,9 @@ export const INITIAL_GAMES: GameInfo[] = [
     rulesOverview: [
       '1명만 가짜 화가로 배정되며, 나머지는 제시어를 알고 시작합니다.',
       '순서대로 마우스를 떼지 않고 정확히 한 획씩만 이어 그립니다.',
-      '2바퀴 종료 후 가짜 화가 지목 투표를 진행하며, 가짜는 정답 맞히기 역전이 가능합니다.'
+      '3바퀴 종료 후 가짜 화가 지목 투표를 진행하며, 가짜는 정답 맞히기 역전이 가능합니다.'
     ],
-    defaultSettings: { rounds: 2, timeLimitSec: 10 }
+    defaultSettings: { rounds: 3, timeLimitSec: 10 }
   },
 
   // 20. 절대 금기어 배틀 (커스텀 팩 불필요 - 인게임 플레이어 상호 금기어 지정)
